@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.predev.gymcrm.repository.UserMapper">
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
+        <id property="userId" column="user_id" />
+        <result property="roleId" column="role_id" />
+        <result property="userUsername" column="user_username" />
+        <result property="userPassword" column="user_password" />
+        <result property="userName" column="user_name" />
+        <result property="userPhone" column="user_phone" />
+        <result property="userEmail" column="user_email" />
+    </resultMap>
+
+    <insert
+            id="saveUser"
+            parameterType="com.predev.gymcrm.entity.User"
+            keyProperty="userId"
+            useGeneratedKeys="true"
+    >
+        insert into user_tb
+        values(0, 1, #{userUsername}, #{userPassword}, #{userName}, #{userPhone}, #{userEmail}, now(), now())
+    </insert>
+
+</mapper>
