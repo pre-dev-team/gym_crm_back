@@ -11,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //web mvc cors 설정 가져옴
