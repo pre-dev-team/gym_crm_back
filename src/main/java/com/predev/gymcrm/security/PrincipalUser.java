@@ -1,5 +1,6 @@
 package com.predev.gymcrm.security;
 
+import com.predev.gymcrm.entity.Reservation;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

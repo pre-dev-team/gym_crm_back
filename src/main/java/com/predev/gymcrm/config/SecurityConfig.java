@@ -19,9 +19,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
         //jwt 토큰으로 인증할것이기 때문에 csrf 비활성
         http.csrf().disable();
-        //우선 모든 요청에 대해 열어두겠습니다.
+        //auth로 받는 모든 요청제외하고 jwt인가받겠습니다
         http.authorizeRequests()
+                .antMatchers("/auth/**")
+                .permitAll()
+                .antMatchers("/user/**")
+                .hasRole("USER")
                 .anyRequest()
-                .permitAll();
+                .authenticated();
     }
 }
