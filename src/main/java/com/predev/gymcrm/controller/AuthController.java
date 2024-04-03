@@ -18,6 +18,11 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @PostMapping("/trainer/signup")
+    public ResponseEntity<?> trainerSignup(@RequestBody TrainerSignupReqDto trainerSignupReqDto) {
+        authService.trainerSignup(trainerSignupReqDto);
+        return ResponseEntity.created(null).body(true);
+    }
 
     @ValidAspect
     @PostMapping("/user/signup")
