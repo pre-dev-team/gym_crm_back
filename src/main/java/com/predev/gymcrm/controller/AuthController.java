@@ -1,6 +1,7 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.aop.annotation.ValidAspect;
+import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
 import com.predev.gymcrm.dto.req.UserSignupReqDto;
 import com.predev.gymcrm.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
