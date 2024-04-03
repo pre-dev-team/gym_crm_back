@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -7,7 +6,6 @@
 <mapper namespace="com.predev.gymcrm.repository.UserMapper">
     <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
         <id property="userId" column="user_id" />
-        <result property="roleId" column="role_id" />
         <result property="userUsername" column="user_username" />
         <result property="userPassword" column="user_password" />
         <result property="userName" column="user_name" />
@@ -22,7 +20,32 @@
             useGeneratedKeys="true"
     >
         insert into user_tb
-        values(0, 1, #{userUsername}, #{userPassword}, #{userName}, #{userPhone}, #{userEmail}, now(), now())
+        values(0, #{userUsername}, #{userPassword}, #{userName}, #{userPhone}, #{userEmail}, now(), now())
     </insert>
+
+    <select
+            id="findUserByUsername"
+            parameterType="String"
+            resultMap="UserResultMap">
+        select
+            ut.user_id,
+            ut.user_username,
+            ut.user_password,
+            ut.user_name,
+            ut.user_phone,
+            ut.user_email,
+            ut.create_date,
+            ut.update_date,
+            rrt.role_register_id,
+            rrt.role_id,
+            rt.role_name,
+            rt.role_name_kor
+        from
+            user_tb ut
+            left outer join role_register_tb rrt on(rrt.user_id = ut.user_id)
+            left outer join role_tb rt on(rt.role_id = rrt.role_id)
+        where
+            ut.user_username = #{userUsername}
+    </select>
 
 </mapper>
