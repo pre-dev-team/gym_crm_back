@@ -6,7 +6,6 @@
 <mapper namespace="com.predev.gymcrm.repository.UserMapper">
     <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
         <id property="userId" column="user_id" />
-        <result property="roleId" column="role_id" />
         <result property="userUsername" column="user_username" />
         <result property="userPassword" column="user_password" />
         <result property="userName" column="user_name" />
@@ -21,7 +20,7 @@
             useGeneratedKeys="true"
     >
         insert into user_tb
-        values(0, 1, #{userUsername}, #{userPassword}, #{userName}, #{userPhone}, #{userEmail}, now(), now())
+        values(0, #{userUsername}, #{userPassword}, #{userName}, #{userPhone}, #{userEmail}, now(), now())
     </insert>
 
 </mapper>

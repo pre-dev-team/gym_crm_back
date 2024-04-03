@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Data
 public class Trainer {
     private int trainerId;
-    private int roleId;
     private String trainerUserName;
     private String trainerName;
     private String trainerPassword;
