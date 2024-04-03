@@ -76,13 +76,13 @@
             rrt.role_register_id,
             rrt.role_id,
             rt.role_name,
-            rt.role_name_kor,
+            rt.role_name_kor
         from
             user_tb ut
             left outer join role_register_tb rrt on(rrt.user_id = ut.user_id)
             left outer join role_tb rt on(rt.role_id = rrt.role_id)
         where
-            username = #{username}
+            ut.user_username = #{username}
     </select>
 
 </mapper>

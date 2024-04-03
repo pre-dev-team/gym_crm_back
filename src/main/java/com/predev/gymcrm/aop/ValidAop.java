@@ -24,7 +24,7 @@ public class ValidAop {
     @Autowired
     private UserMapper userMapper;
 
-    @Pointcut("@annotaion(com.predev.gtmcrm.aop.annotation.ValidAspect)")
+    @Pointcut("@annotation(com.predev.gymcrm.aop.annotation.ValidAspect)")
     private void pointCut() {
 
     }
@@ -43,7 +43,7 @@ public class ValidAop {
             }
         }
 
-        if(methodName.equals("signup")) {
+        if(methodName.equals("userSignup")) {
             UserSignupReqDto userSignupReqDto = null;
 
             for (Object arg : args) {
