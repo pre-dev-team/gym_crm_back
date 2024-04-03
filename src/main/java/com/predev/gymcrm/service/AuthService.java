@@ -13,6 +13,13 @@ public class AuthService {
     @Autowired
     private TrainerMapper trainerMapper;
 
+    public boolean isDuplicatedByUsername(String username) {
+        return userMapper.findUserByUsername(username) != null;
+    }
+
+    public void userSignup(UserSignupReqDto userSignupReqDto) {
+        userMapper.saveUser(userSignupReqDto.toEntity());
+      
     @Autowired
     private UserMapper userMapper;
     public void userSignup(UserSignupReqDto userSignupReqDto) {
@@ -21,4 +28,5 @@ public class AuthService {
     public void trainerSignup(TrainerSignupReqDto trainerSignupReqDto) {
         trainerMapper.saveTrainer(trainerSignupReqDto.toEntity());
     }
+
 }

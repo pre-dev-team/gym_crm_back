@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 @Data
 public class RoleRegister {
     private int roleRegisterId;
-    private String roleId;
+    private int roleId;
+    private int userId;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
