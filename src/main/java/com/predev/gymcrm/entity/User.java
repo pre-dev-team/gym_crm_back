@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -13,7 +14,6 @@ import java.time.LocalDateTime;
 @Data
 public class User {
     private int userId;
-    private int roleId;
     private String userUsername;
     private String userPassword;
     private String userName;
@@ -21,4 +21,6 @@ public class User {
     private String userEmail;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
+
+    private List<RoleRegister> roleRegisters;
 }
