@@ -1,7 +1,7 @@
 package com.predev.gymcrm.entity;
 
 import com.predev.gymcrm.dto.req.SearchUserReqDto;
-import com.predev.gymcrm.security.PrincipalUser;
+import com.predev.gymcrm.security.Principal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,8 +35,8 @@ public class User {
                     .collect(Collectors.toList());
     }
 
-    public PrincipalUser toPrincipal() {
-        return PrincipalUser.builder()
+    public Principal toPrincipal() {
+        return Principal.builder()
                 .userId(userId)
                 .username(userUsername)
                 .authorities(this.getAuthorities())

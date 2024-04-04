@@ -62,7 +62,7 @@
 
     <insert id="saveRole">
         insert into role_user_register_tb
-        values(0, #{userId}, #{roleId}, now(), now())
+        values(0, #{roleId}, #{userId}, now(), now())
     </insert>
 
 
@@ -148,6 +148,5 @@
                </if>
                                       db명 수정으로 추후 바꿀 예정입니다.
        </select>-->
-
 
 </mapper>

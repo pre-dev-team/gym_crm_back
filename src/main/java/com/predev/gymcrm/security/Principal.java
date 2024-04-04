@@ -1,6 +1,5 @@
 package com.predev.gymcrm.security;
 
-import com.predev.gymcrm.entity.Reservation;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -10,7 +9,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class PrincipalUser implements UserDetails {
+public class Principal implements UserDetails {
     private int userId;
     private String username;
     private String name;
