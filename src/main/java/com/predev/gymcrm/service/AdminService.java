@@ -19,15 +19,15 @@ public class AdminService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<SearchUserReqDto> searchUsers(SearchUserReqDto searchUserReqDto) {
-        int startIndex = (searchUserReqDto.getPage() - 1) * searchUserReqDto.getCount();
-
-        List<User> users = userMapper.findUsers(
-                startIndex,
-                searchUserReqDto.getCount(),
-                searchUserReqDto.getUserId()
-        );
-
-        return users.stream().map(User::toSearchUserReqDto).collect(Collectors.toList());
-    }
+//    public List<SearchUserReqDto> searchUsers(SearchUserReqDto searchUserReqDto) {
+//        int startIndex = (searchUserReqDto.getPage() - 1) * searchUserReqDto.getCount();
+//
+////        List<User> users = userMapper.findUsers(
+////                startIndex,
+////                searchUserReqDto.getCount(),
+////                searchUserReqDto.getUserId()
+////        );
+//
+//        return users.stream().map(User::toSearchUserReqDto).collect(Collectors.toList());
+//    }
 }

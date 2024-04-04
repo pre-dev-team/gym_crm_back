@@ -1,6 +1,6 @@
 package com.predev.gymcrm.controller;
 
-import com.predev.gymcrm.dto.req.SearchUserReqDto;
+import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
 import com.predev.gymcrm.dto.req.UserSigninReqDto;
 import com.predev.gymcrm.service.AuthService;
@@ -22,6 +22,7 @@ public class AuthController {
         return ResponseEntity.created(null).body(true);
     }
 
+    @ValidAspect
     @PostMapping("/user/signup")
     public ResponseEntity<?> userSignup(@RequestBody UserSignupReqDto userSignupReqDto, BindingResult bindingResult) {
         authService.userSignup(userSignupReqDto);
