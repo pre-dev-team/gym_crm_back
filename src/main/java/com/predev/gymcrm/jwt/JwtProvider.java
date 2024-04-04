@@ -1,6 +1,5 @@
 package com.predev.gymcrm.jwt;
 
-import com.predev.gymcrm.entity.Reservation;
 import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.User;
 import com.predev.gymcrm.repository.TrainerMapper;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class JwtProvider {
@@ -28,7 +26,7 @@ public class JwtProvider {
     private final Key key;
     private final UserMapper userMapper;
     private final TrainerMapper trainerMapper;
-    private Date expireDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 6));
+    private final Date expireDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 6));
 
     public JwtProvider(
             @Value("${jwt.secret}") String secret,
@@ -71,6 +69,7 @@ public class JwtProvider {
 
         return accessToken;
     }
+
     public Claims getClaims(String encodedToken) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -78,12 +77,17 @@ public class JwtProvider {
                 .parseClaimsJws(encodedToken)
                 .getBody();
     }
-    public Authentication getAuthentication(Claims claims) {
-        String username = claims.get("username").toString();
-        User user = userMapper.findUserByUsername(username);
 
-        if(user == null) {
+    public Authentication getAuthentication(Claims claims) {
+        String username = claims.get("username").toString() == null ? claims.get("trainerUsername").toString() : claims.get("username").toString();
+
+        User user = userMapper.findUserByUsername(username);
+        Trainer trainer = trainerMapper.findTrainerByTrainerUsername(username);
+
+        if(trainer == null && user == null) {
             return null;
+        } else if (user == null) {
+            return new UsernamePasswordAuthenticationToken(trainer.toPrincipal(),null,trainer.getAuthorities());
         }
 
         return new UsernamePasswordAuthenticationToken(user.toPrincipal(),null,user.getAuthorities());

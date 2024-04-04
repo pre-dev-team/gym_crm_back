@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface TrainerMapper {
     public int saveTrainer(Trainer trainer);
-
+    public Trainer findTrainerByTrainerUsername(String TrainerUsername);
 }

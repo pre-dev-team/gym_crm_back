@@ -26,11 +26,11 @@ public class User {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    private List<RoleRegister> roleRegisters;
+    private List<RoleUserRegister> roleUserRegisters;
     private List<Reservation> reservations;
 
     public List<SimpleGrantedAuthority> getAuthorities() {
-            return roleRegisters.stream()
+            return roleUserRegisters.stream()
                     .map(register -> new SimpleGrantedAuthority(register.getRole().getRoleName()))
                     .collect(Collectors.toList());
     }
