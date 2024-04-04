@@ -3,6 +3,7 @@ package com.predev.gymcrm.service;
 import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
 import com.predev.gymcrm.dto.req.UserSigninReqDto;
 import com.predev.gymcrm.entity.User;
+import com.predev.gymcrm.jwt.JwtProvider;
 import com.predev.gymcrm.repository.TrainerMapper;
 import com.predev.gymcrm.dto.req.UserSignupReqDto;
 import com.predev.gymcrm.repository.UserMapper;
@@ -19,6 +20,9 @@ public class AuthService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private JwtProvider jwtProvider;
+
     public boolean isDuplicatedByUsername(String username) {
         return userMapper.findUserByUsername(username) != null;
     }
@@ -34,11 +38,11 @@ public class AuthService {
 
     public String userSignin(UserSigninReqDto userSigninReqDto) {
         User user = userMapper.findUserByUsername(userSigninReqDto.getUserUsername());
+        System.out.println(user);
         if(user == null ) {
             throw new UsernameNotFoundException("사용자 정보를 확인하세요.");
         }
-
-        return null;
+        return jwtProvider.generateJwt(user);
     }
 
 }

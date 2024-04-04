@@ -26,22 +26,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        Authentication authentication = null;
+        boolean isPermitAll = (boolean) request.getAttribute("isPermitAll");
 
-        try {
-            Claims claims = Optional.ofNullable(request.getHeader(AUTHORIZATION_NAME_IN_HEADER))
-                    .map(wrappedToken -> wrappedToken.substring(PREFIX_OF_TOKEN.length()))
-                    .map(jwtProvider::getClaims)
-                    .orElseThrow(() -> new IllegalStateException());
+        if(!isPermitAll) {
+            Authentication authentication = null;
+            try {
+                Claims claims = Optional.ofNullable(request.getHeader(AUTHORIZATION_NAME_IN_HEADER))
+                        .map(wrappedToken -> wrappedToken.substring(PREFIX_OF_TOKEN.length()))
+                        .map(jwtProvider::getClaims)
+                        .orElseThrow(() -> new IllegalStateException());
 
-            authentication = Optional.ofNullable(jwtProvider.getAuthentication(claims))
-                    .orElseThrow(() -> new IllegalStateException());
+                authentication = Optional.ofNullable(jwtProvider.getAuthentication(claims))
+                        .orElseThrow(() -> new IllegalStateException());
 
-        } catch (Exception e) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value());
+            } catch (Exception e) {
+                System.out.println("여기임?");
+                response.sendError(HttpStatus.UNAUTHORIZED.value());
+            }
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request,response);
     }
