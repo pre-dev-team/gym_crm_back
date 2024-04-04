@@ -1,5 +1,6 @@
 package com.predev.gymcrm.controller;
 
+import com.predev.gymcrm.dto.req.SearchTrainerReqDto;
 import com.predev.gymcrm.dto.req.SearchUserReqDto;
 import com.predev.gymcrm.service.AdminService;
 import com.predev.gymcrm.service.AuthService;
@@ -15,8 +16,13 @@ public class AdminUserController {
     @Autowired
     private AdminService adminService;
 
-//    @GetMapping("/users")
-//    public ResponseEntity<?> searchUsers(SearchUserReqDto searchUserReqDto) {
-//        return ResponseEntity.ok(adminService.searchUsers(searchUserReqDto));
-//    }
+    @GetMapping("/users")
+    public ResponseEntity<?> searchUsers(SearchUserReqDto searchUserReqDto) {
+        return ResponseEntity.ok(adminService.searchUsers(searchUserReqDto));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> searchTrainers(SearchTrainerReqDto searchTrainerReqDto) {
+        return ResponseEntity.ok(adminService.searchTrainers(searchTrainerReqDto));
+    }
 }

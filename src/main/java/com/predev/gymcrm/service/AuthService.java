@@ -1,13 +1,11 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.SearchUserReqDto;
-import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
-import com.predev.gymcrm.dto.req.UserSigninReqDto;
+import com.predev.gymcrm.dto.req.*;
+import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.User;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
 import com.predev.gymcrm.repository.TrainerMapper;
-import com.predev.gymcrm.dto.req.UserSignupReqDto;
 import com.predev.gymcrm.repository.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -52,8 +50,19 @@ public class AuthService {
 
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void trainerSignup(TrainerSignupReqDto trainerSignupReqDto) {
-        trainerMapper.saveTrainer(trainerSignupReqDto.toEntity());
+        int successCount = 0;
+        Trainer trainer = trainerSignupReqDto.toEntity(passwordEncoder);
+
+        successCount += trainerMapper.saveTrainer(trainer);
+        // trainer role관련 코드가 필요합니다.
+
+        if(successCount < 1) {  //  role추가 후 2로 수정해야합니다.
+            throw new SaveException();
+        }
+
+        trainerMapper.saveTrainer(trainerSignupReqDto.toEntity(passwordEncoder));
     }
 
     public String userSignin(UserSigninReqDto userSigninReqDto) {
@@ -68,6 +77,21 @@ public class AuthService {
 
         return jwtProvider.generateJwt(user);
     }
+
+    public String trainerSignin(TrainerSigninReqDto trainerSigninReqDto) {
+        Trainer trainer = trainerMapper.findTrainerByTrainerUsername(trainerSigninReqDto.getTrainerUsername());
+        System.out.println(trainer);
+        if(trainer == null ) {
+            throw new UsernameNotFoundException("사용자 정보를 확인하세요.");
+        }
+        if(!passwordEncoder.matches(trainerSigninReqDto.getTrainerPassword(), trainer.getTrainerPassword())) {
+                throw new BadCredentialsException("사용자 정보를 확인하세요.");
+        }
+
+//        return jwtProvider.generateJwt(trainer); jwt에 trainer관련이 없어 주석처리해놨습니다.
+    }
+
+
 
 
 

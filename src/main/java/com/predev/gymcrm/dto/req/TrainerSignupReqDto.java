@@ -2,6 +2,7 @@ package com.predev.gymcrm.dto.req;
 
 import com.predev.gymcrm.entity.Trainer;
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
@@ -21,10 +22,10 @@ public class TrainerSignupReqDto {
 
     private String trainerProfileImgUrl;
 
-    public Trainer toEntity() {
+    public Trainer toEntity(BCryptPasswordEncoder passwordEncoder) {
         return Trainer.builder()
                 .trainerUserName(trainerUsername)
-                .trainerPassword(trainerPassword)
+                .trainerPassword(passwordEncoder.encode(trainerPassword))
                 .trainerName(trainerName)
                 .trainerEmail(trainerEmail)
                 .trainerPhone(trainerPhone)

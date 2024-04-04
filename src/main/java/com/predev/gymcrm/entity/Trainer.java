@@ -1,5 +1,6 @@
 package com.predev.gymcrm.entity;
 
+import com.predev.gymcrm.dto.req.SearchTrainerReqDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,9 @@ public class Trainer {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
+    public SearchTrainerReqDto toSearchTrainerReqDto() {
+        return SearchTrainerReqDto.builder()
+                .trainerId(trainerId)
+                .build();
+    }
 }

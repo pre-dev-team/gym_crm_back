@@ -25,4 +25,29 @@
         insert into trainer_tb
         values(0, #{trainerName}, #{trainerPassword}, #{trainerName}, #{trainerEmail}, #{trainerPhone}, #{trainerProfileImgUrl}, now(), now())
     </insert>
+
+    <select id="findTrainers" resultMap="TrainerResultMap">
+        select
+            tt.trainer_id,
+            tt.trainer_username,
+            tt.trainer_password,
+            tt.trainer_name,
+            tt.trainer_phone,
+            tt.trainer_email,
+            tt.create_date,
+            tt.update_date,
+            rtrt.role_trainer_register_id,
+            rt.role_id,
+            rt.role_name,
+            rt.role_name_kor
+        from
+            trainer_tb tt
+            left outer join role_trainer_register_tb rtrt on(rtrt.trainer_id = tt.trainer_id)
+            left outer join role_tb rt on(rt.role_id = rtrt.role_id)
+        where
+            1 = 1
+            <if test="searchTrainerName != null and searchTrainerName != ''">
+                and tt.trainer_name like concat('%', #{searchTrainerName}, '%')
+            </if>
+    </select>
 </mapper>

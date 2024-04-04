@@ -2,6 +2,7 @@ package com.predev.gymcrm.jwt;
 
 import com.predev.gymcrm.entity.Reservation;
 import com.predev.gymcrm.entity.User;
+import com.predev.gymcrm.repository.TrainerMapper;
 import com.predev.gymcrm.repository.UserMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -27,6 +28,8 @@ public class JwtProvider {
     private final UserMapper userMapper;
     private Date expireDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 6));
 
+
+    // 이거 그대로 trainerMapper에도 적용 가능한가요?
     public JwtProvider(
             @Value("${jwt.secret}") String secret,
             @Autowired UserMapper userMapper) {
@@ -34,6 +37,7 @@ public class JwtProvider {
         key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         this.userMapper = userMapper;
     }
+
 
     public String generateJwt(User user) {
 
