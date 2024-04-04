@@ -1,5 +1,6 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.dto.req.SearchUserReqDto;
 import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
 import com.predev.gymcrm.dto.req.UserSigninReqDto;
 import com.predev.gymcrm.entity.User;
@@ -14,6 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
@@ -64,5 +68,7 @@ public class AuthService {
 
         return jwtProvider.generateJwt(user);
     }
+
+
 
 }
