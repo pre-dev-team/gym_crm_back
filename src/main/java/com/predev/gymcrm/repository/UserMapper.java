@@ -9,7 +9,5 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
     public int saveUser(User user);
     public User findUserByUsername(String userUsername);
-
-    public RoleRegister findRoleRegisterByUserIdAndRoleId(@Param("userId") int userId, @Param("roleId") int roleId);
-
+    public int saveRole(@Param("userId") int userId, @Param("roleId") int roleId);
 }
