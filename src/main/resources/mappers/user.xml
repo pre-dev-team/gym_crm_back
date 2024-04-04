@@ -58,7 +58,6 @@
         where
             rrt.user_id = #{userId}
             and rrt.role_id = #{roleId}
-
     </select>
 
     <insert id="saveRole">
@@ -93,8 +92,11 @@
             ut.user_username = #{userUsername}
 
     </select>
-
- <!--   <select id="findUsersByName" resultMap="UserResultMap">
+    <select
+            id="findUserByPhone"
+            resultType="com.predev.gymcrm.entity.User"
+            resultMap="UserResultMap"
+    >
         select
             ut.user_id,
             ut.user_username,
@@ -104,26 +106,48 @@
             ut.user_email,
             ut.create_date,
             ut.update_date,
-            rrt.role_register_id,
+            rrt.role_user_register_id,
             rrt.role_id,
             rt.role_name,
             rt.role_name_kor
         from
             user_tb ut
-            left outer join role_register_tb rrt on(rrt.user_id = ut.user_id)
+            left outer join role_user_register_tb rrt on(rrt.user_id = ut.user_id)
             left outer join role_tb rt on(rt.role_id = rrt.role_id)
         where
-            1 = 1
-            예시: 사용자 이름이 특정 문자열을 포함하는 경우
-            <if test="searchUserName != null and searchUserName != ''">
-                and ut.user_name like concat('%', #{searchUserName}, '%')
-            </if>
-            <!- 권한 이름이 특정 문자열을 포함하는 경우
-            <if test="searchRoleNameKor != null and searchRoleNameKor != ''">
-                and rt.role_name_kor like concat('%', #{searchRoleNameKor}, '%')
-            </if>
-                                   db명 수정으로 추후 바꿀 예정입니다.
-    </select>-->
+            ut.user_phone = #{userPhone}
+    </select>
+
+    <!--   <select id="findUsersByName" resultMap="UserResultMap">
+           select
+               ut.user_id,
+               ut.user_username,
+               ut.user_password,
+               ut.user_name,
+               ut.user_phone,
+               ut.user_email,
+               ut.create_date,
+               ut.update_date,
+               rrt.role_register_id,
+               rrt.role_id,
+               rt.role_name,
+               rt.role_name_kor
+           from
+               user_tb ut
+               left outer join role_register_tb rrt on(rrt.user_id = ut.user_id)
+               left outer join role_tb rt on(rt.role_id = rrt.role_id)
+           where
+               1 = 1
+               예시: 사용자 이름이 특정 문자열을 포함하는 경우
+               <if test="searchUserName != null and searchUserName != ''">
+                   and ut.user_name like concat('%', #{searchUserName}, '%')
+               </if>
+               <!- 권한 이름이 특정 문자열을 포함하는 경우
+               <if test="searchRoleNameKor != null and searchRoleNameKor != ''">
+                   and rt.role_name_kor like concat('%', #{searchRoleNameKor}, '%')
+               </if>
+                                      db명 수정으로 추후 바꿀 예정입니다.
+       </select>-->
 
 
 </mapper>

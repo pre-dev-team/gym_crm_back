@@ -20,7 +20,8 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<?> badCredentialsException(BadCredentialsException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
-    
+    }
+
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<?> UsernameNotFoundException(UsernameNotFoundException e) {
         return ResponseEntity.badRequest().body(Map.of("error","사용자가 존재하지 않습니다"));

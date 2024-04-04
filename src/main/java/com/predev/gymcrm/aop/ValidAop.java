@@ -57,6 +57,11 @@ public class ValidAop {
                 bindingResult.addError(objectError);
             }
 
+            if(userMapper.findUserByPhone(userSignupReqDto.getUserPhone()) != null) {
+                ObjectError objectError = new FieldError("userPhone", "userPhone", "이미 사용중인 전화번호입니다.");
+                bindingResult.addError(objectError);
+            }
+
             if(bindingResult.hasErrors()) {
                 List<FieldError> fieldErrors = bindingResult.getFieldErrors();
                 Map<String, String> errorMap = new HashMap<>();

@@ -15,8 +15,8 @@ public class AdminUserController {
     @Autowired
     private AdminService adminService;
 
-    @GetMapping("/users")
-    public ResponseEntity<?> searchUsers(SearchUserReqDto searchUserReqDto) {
-        return ResponseEntity.ok(adminService.searchUsers(searchUserReqDto));
-    }
+//    @GetMapping("/users")
+//    public ResponseEntity<?> searchUsers(SearchUserReqDto searchUserReqDto) {
+//        return ResponseEntity.ok(adminService.searchUsers(searchUserReqDto));
+//    }
 }
