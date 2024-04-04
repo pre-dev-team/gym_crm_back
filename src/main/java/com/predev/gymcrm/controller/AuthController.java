@@ -10,6 +10,11 @@ import com.predev.gymcrm.dto.req.UserSignupReqDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.DateFormatter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -36,5 +41,10 @@ public class AuthController {
         return ResponseEntity.ok(authService.userSignin(userSigninReqDto));
     }
 
+    @PostMapping("/test")
+    public ResponseEntity<?> test(@RequestBody LocalDateTime date) {
+        System.out.println(date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        return ResponseEntity.ok(date);
+    }
 
 }
