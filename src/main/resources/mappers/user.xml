@@ -13,7 +13,7 @@
     </resultMap>
 
     <resultMap id="RoleRegisterResultMap" type="com.predev.gymcrm.entity.RoleRegister">
-        <id property="roleRegisterId" column="role_register_id" />
+        <id property="roleRegisterId" column="role_user_register_id" />
         <result property="roleId" column="role_id" />
         <result property="userId" column="user_id" />
         <result property="createDate" column="create_date" />
@@ -41,32 +41,16 @@
         values(0, #{userUsername}, #{userPassword}, #{userName}, #{userPhone}, #{userEmail}, now(), now())
     </insert>
 
-
-
-    <select id="findRoleRegisterByUserIdAndRoleId" resultMap="RoleRegisterResultMap">
-        select
-            rrt.role_register_id,
-            rrt.user_id,
-            rrt.role_id,
-            rt.role_name,
-            rt.role_name_kor,
-            rrt.create_date,
-            rrt.update_date
-        from
-            role_register_tb rrt
-            left outer join role_tb rt on(rt.role_id = rrt.role_id)
-        where
-            rrt.user_id = #{userId}
-            and rrt.role_id = #{roleId}
-
-    </select>
+    <insert id="saveRole">
+        insert into role_user_register_tb
+        values(0, #{userId}, #{roleId}, now(), now())
+    </insert>
 
     <select
             id="findUserByUsername"
             parameterType="string"
             resultMap="UserResultMap"
     >
-
         select
             ut.user_id,
             ut.user_username,
@@ -76,13 +60,13 @@
             ut.user_email,
             ut.create_date,
             ut.update_date,
-            rrt.role_register_id,
+            rrt.role_user_register_id,
             rrt.role_id,
             rt.role_name,
             rt.role_name_kor
         from
             user_tb ut
-            left outer join role_register_tb rrt on(rrt.user_id = ut.user_id)
+            left outer join role_user_register_tb rrt on(rrt.user_id = ut.user_id)
             left outer join role_tb rt on(rt.role_id = rrt.role_id)
         where
 
