@@ -2,14 +2,14 @@ package com.predev.gymcrm.config;
 
 import com.predev.gymcrm.security.exception.AuthEntryPoint;
 import com.predev.gymcrm.security.filter.JwtAuthenticationFilter;
+import com.predev.gymcrm.security.filter.PermitAllFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -19,7 +19,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Autowired
+    PermitAllFilter permitAllFilter;
+
+    @Autowired
     AuthEntryPoint authEntryPoint;
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -36,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
+                .addFilterAfter(permitAllFilter, LogoutFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPoint);

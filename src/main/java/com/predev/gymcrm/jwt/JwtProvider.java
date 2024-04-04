@@ -43,26 +43,13 @@ public class JwtProvider {
         List<Reservation> reservations = user.getReservations();
         // 6시간
 
-        String accessToken = "";
-
-        if(user.getAuthorities() == null) {
-            accessToken = Jwts.builder()
+        String accessToken = Jwts.builder()
                     .claim("userId",userId)
                     .claim("username",username)
                     .claim("authorities",authorities)
                     .setExpiration(expireDate)
                     .signWith(key, SignatureAlgorithm.HS256)
                     .compact();
-        } else {
-            accessToken = Jwts.builder()
-                    .claim("userId", userId)
-                    .claim("username", username)
-                    .claim("authorities", authorities)
-                    .claim("reservations", reservations)
-                    .setExpiration(expireDate)
-                    .signWith(key, SignatureAlgorithm.HS256)
-                    .compact();
-        }
 
         return accessToken;
     }
