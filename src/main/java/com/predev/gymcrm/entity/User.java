@@ -29,9 +29,9 @@ public class User {
     private List<Reservation> reservations;
 
     public List<SimpleGrantedAuthority> getAuthorities() {
-        return roleRegisters.stream()
-                .map(register -> new SimpleGrantedAuthority(register.getRole().getRoleName()))
-                .collect(Collectors.toList());
+            return roleRegisters.stream()
+                    .map(register -> new SimpleGrantedAuthority(register.getRole().getRoleName()))
+                    .collect(Collectors.toList());
     }
 
     public PrincipalUser toPrincipal() {
