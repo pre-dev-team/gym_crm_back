@@ -1,6 +1,7 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
+import com.predev.gymcrm.dto.req.UserSigninReqDto;
 import com.predev.gymcrm.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,5 +28,10 @@ public class AuthController {
     public ResponseEntity<?> userSignup(@RequestBody UserSignupReqDto userSignupReqDto, BindingResult bindingResult) {
         authService.userSignup(userSignupReqDto);
         return ResponseEntity.created(null).body(true);
+    }
+
+    @PostMapping("/user/signin")
+    public ResponseEntity<?> userSignin(@RequestBody UserSigninReqDto userSigninReqDto) {
+        return ResponseEntity.ok(authService.userSignin(userSigninReqDto));
     }
 }
