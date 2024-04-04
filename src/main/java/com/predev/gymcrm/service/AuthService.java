@@ -1,5 +1,6 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.dto.req.SearchUserReqDto;
 import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
 import com.predev.gymcrm.dto.req.UserSigninReqDto;
 import com.predev.gymcrm.entity.User;
@@ -9,6 +10,9 @@ import com.predev.gymcrm.repository.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
@@ -40,5 +44,7 @@ public class AuthService {
 
         return null;
     }
+
+
 
 }

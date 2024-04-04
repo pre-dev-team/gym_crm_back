@@ -1,5 +1,6 @@
 package com.predev.gymcrm.entity;
 
+import com.predev.gymcrm.dto.req.SearchUserReqDto;
 import com.predev.gymcrm.security.PrincipalUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +40,12 @@ public class User {
                 .userId(userId)
                 .username(userUsername)
                 .authorities(this.getAuthorities())
+                .build();
+    }
+
+    public SearchUserReqDto toSearchUserReqDto() {
+        return SearchUserReqDto.builder()
+                .userId(userId)
                 .build();
     }
 

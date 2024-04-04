@@ -1,5 +1,6 @@
 package com.predev.gymcrm.controller;
 
+import com.predev.gymcrm.dto.req.SearchUserReqDto;
 import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
 import com.predev.gymcrm.dto.req.UserSigninReqDto;
 import com.predev.gymcrm.service.AuthService;
@@ -7,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import com.predev.gymcrm.dto.req.UserSignupReqDto;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -32,6 +30,10 @@ public class AuthController {
 
     @PostMapping("/user/signin")
     public ResponseEntity<?> userSignin(@RequestBody UserSigninReqDto userSigninReqDto) {
+        authService.userSignin(userSigninReqDto);
+        System.out.println(authService.userSignin(userSigninReqDto));
         return ResponseEntity.ok(authService.userSignin(userSigninReqDto));
     }
+
+
 }
