@@ -10,27 +10,43 @@
         <result property="userId" column="user_id" />
         <result property="trainerId" column="trainer_id" />
         <result property="timeId" column="time_id" />
-        <result property="reservationDateId" column="reservation_date_id" />
+        <result property="reservationDate" column="reservation_date" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
         <association property="time" resultMap="TimeResultMap" />
-        <association property="reservationDate" resultMap="ReservationDateResultMap" />
-        <association property="account" resultMap="UserResultMap" />
+        <association property="user" resultMap="UserResultMap" />
+        <association property="trainer" resultMap="TrainerResultMap" />
     </resultMap>
 
-    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.Account">
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
         <id property="userId" column="user_id" />
-        <result property="userUsername" column="user_username" />
-        <result property="userPassword" column="user_password" />
-        <result property="userName" column="user_name" />
-        <result property="userPhone" column="user_phone" />
-        <result property="userEmail" column="user_email" />
+        <result property="accountId" column="account_id" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="account" resultMap="AccountResultMap"/>
     </resultMap>
 
+    <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
+        <id property="trainer_id" column="user_id" />
+        <result property="account_id" column="account_id" />
+        <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="account" resultMap="AccountResultMap"/>
+    </resultMap>
+
+    <resultMap id="AccountResultMap" type="com.predev.gymcrm.entity.Account">
+        <id property="accountId" column="account_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
 
     <resultMap id="TimeResultMap" type="com.predev.gymcrm.entity.Time">
         <id property="timeId" column="time_id" />
-        <result property="timePeriod" column="time_period" />
+        <result property="timeDuration" column="time_duration" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
     </resultMap>
@@ -41,22 +57,18 @@
     >
         select
             rvt.reservation_id,
-            ut.user_id,
-            ut.user_username,
-            tit.trainer_id,
-            tit.trainer_username,
-            tt.time_id,
-            tt.time_period,
-            rdt.reservation_date_id,
-            rdt.reservation_date_name,
+            rvt.user_id,
+            rvt.trainer_id,
+            rvt.time_id,
+            rvt.reservation_date,
             rvt.create_date,
-            rvt.update_date
+            rvt.update_date,
+            tt.time_duration
         from
             reservation_tb rvt
+            left outer join time_tb tt on (tt.time_id = rvt.time_id)
             left outer join user_tb ut on (ut.user_id = rvt.user_id)
             left outer join trainer_tb tit on (tit.trainer_id = rvt.trainer_id)
-            left outer join time_tb tt on (tt.time_id = rvt.time_id)
-            left outer join reservation_date_tb rdt on (rdt.reservation_date_id = rvt.reservation_date_id);
     </select>
 
     <select id="findReservationByUserId" parameterType="integer" resultMap="ReservationResultMap">
@@ -81,24 +93,5 @@
         where
             rvt.user_id = #{userId}
     </select>
-
-<resultMap id="ReservationDateResultMap" type="com.predev.gymcrm.entity.ReservationDate">
-    <id property="reservationDateId" column="reservation_date_id" />
-    <result property="reservationDateName" column="reservation_date_name" />
-    <result property="createDate" column="create_date" />
-    <result property="updateDate" column="update_date" />
-</resultMap>
-
-    <insert
-            id="saveReservationDate"
-            parameterType="com.predev.gymcrm.entity.ReservationDate"
-            useGeneratedKeys="true"
-            keyProperty="reservationDateId"
-    >
-        insert into
-            reservation_date_tb
-        values
-            (0,#{reservationDateName},now(),now());
-    </insert>
 
 </mapper>

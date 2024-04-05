@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -17,7 +18,10 @@ public class User {
     private int userId;
     private int accountId;
     private int inbodyId;
+    private LocalDateTime createDate;
+    private LocalDateTime updateDate;
 
     private List<Reservation> reservations;
     private List<TrainerReview> trainerReviews;
+    private Account account;
 }

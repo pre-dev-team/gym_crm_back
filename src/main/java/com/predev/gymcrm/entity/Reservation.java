@@ -1,5 +1,6 @@
 package com.predev.gymcrm.entity;
 
+import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,17 @@ public class Reservation {
     private LocalDateTime updateDate;
 
     private Time time;
-    private Account user;
+    private User user;
     private Trainer trainer;
     private List<WorkoutRoutine> workoutRoutines;
+
+    public SearchReservationRespDto toSearchReservationRespDto() {
+        return SearchReservationRespDto.builder()
+                .reservationId(reservationId)
+                .userId(userId)
+                .trainerId(trainerId)
+                .timeId(timeId)
+                .timeDuration(time.getTimeDuration())
+                .build();
+    }
 }

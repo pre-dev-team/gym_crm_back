@@ -6,18 +6,18 @@
 <mapper namespace="com.predev.gymcrm.repository.CommonMapper">
     <resultMap id="TimeResultMap" type="com.predev.gymcrm.entity.Time">
         <id property="timeId" column="time_id"/>
-        <result property="timePeriod" column="time_period"/>
+        <result property="timeDuration" column="time_duration"/>
         <result property="createDate" column="create_date"/>
         <result property="updateDate" column="update_date"/>
     </resultMap>
 
     <select id="getTimes" resultMap="TimeResultMap">
-        SELECT
+        select
             time_id,
-            time_period,
+            time_duration,
             create_date,
             update_date
-        FROM
+        from
             time_tb
     </select>
 </mapper>

@@ -5,7 +5,7 @@ import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
 import com.predev.gymcrm.dto.req.AccountSignupReqDto;
-import com.predev.gymcrm.repository.UserMapper;
+import com.predev.gymcrm.repository.AuthMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     @Autowired
-    private UserMapper userMapper;
+    private AuthMapper authMapper;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -25,18 +25,18 @@ public class AuthService {
     @Autowired
     private JwtProvider jwtProvider;
 
-    public boolean isDuplicatedByUsername(String username) {
-        return userMapper.findUserByUsername(username) != null;
+    public boolean isDuplicatedUsername(String username) {
+        return authMapper.findAccountByUsername(username) != null;
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void userSignup(AccountSignupReqDto accountSignupReqDto) {
+    public void userSignup(AccountSignupReqDto reqDto) {
         int successCount = 0;
 
-        Account account = accountSignupReqDto.toEntity(passwordEncoder);
+        Account account = reqDto.toEntity(passwordEncoder);
 
-        successCount += userMapper.saveUser(account);
-        successCount += userMapper.saveRole(account.getUserId(), 1);
+        successCount += authMapper.saveAccount(1,account);
+        successCount += authMapper.saveUser(account.getAccountId());
 
         if(successCount < 2) {
             throw new SaveException();
@@ -44,13 +44,13 @@ public class AuthService {
     }
 
 
-    public String userSignin(AccountSigninReqDto accountSigninReqDto) {
-        Account account = userMapper.findUserByUsername(accountSigninReqDto.getUserUsername());
-        System.out.println(account);
+    public String userSignin(AccountSigninReqDto reqDto) {
+        Account account = authMapper.findAccountByUsername(reqDto.getUsername());
+
         if(account == null ) {
             throw new UsernameNotFoundException("사용자 정보를 확인하세요.");
         }
-        if (!passwordEncoder.matches(accountSigninReqDto.getUserPassword(), account.getUserPassword())) {
+        if (!passwordEncoder.matches(reqDto.getPassword(), account.getPassword())) {
             throw new BadCredentialsException("사용자 정보를 확인하세요.");
         }
 

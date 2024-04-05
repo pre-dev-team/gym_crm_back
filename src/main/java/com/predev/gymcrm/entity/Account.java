@@ -10,7 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Builder
 @NoArgsConstructor
@@ -27,13 +26,13 @@ public class Account {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
+    private User user;
+    private Trainer trainer;
+    private Role role;
     private List<Reservation> reservations;
-    private List<Role> roles;
 
     public List<SimpleGrantedAuthority> getAuthorities() {
-            return roles.stream()
-                    .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
-                    .collect(Collectors.toList());
+            return List.of(new SimpleGrantedAuthority(role.getRoleName()));
     }
 
     public Principal toPrincipal() {

@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class TimeReqDto {
     private int timeId;
-    private String timePeriod;
+    private String timeDuration;
 
     public Time toEntity() {
         return Time.builder()
                 .timeId(timeId)
-                .timePeriod(timePeriod)
+                .timeDuration(timeDuration)
                 .build();
     }
 }

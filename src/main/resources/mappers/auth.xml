@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.predev.gymcrm.repository.AuthMapper">
+
+    <!--###################       RESULT_MAP       ###################    -->
+
+    <resultMap id="RoleResultMap" type="com.predev.gymcrm.entity.Role">
+        <id property="roleId" column="role_id" />
+        <result property="roleName" column="role_name" />
+        <result property="roleNameKor" column="role_name_kor" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+    </resultMap>
+
+    <resultMap id="AccountResultMap" type="com.predev.gymcrm.entity.Account">
+        <id property="accountId" column="account_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+
+    </resultMap>
+
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
+        <id property="userId" column="user_id" />
+        <result property="accountId" column="account_id" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="account" resultMap="AccountResultMap" />
+    </resultMap>
+
+    <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
+        <id property="trainer_id" column="user_id" />
+        <result property="account_id" column="account_id" />
+        <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="account" resultMap="AccountResultMap"/>
+    </resultMap>
+
+    <!--###################       INSERT       ###################    -->
+
+    <insert
+            id="saveAccount"
+            parameterType="com.predev.gymcrm.entity.Account"
+            keyProperty="accountId"
+            useGeneratedKeys="true"
+    >
+        insert into
+            account_tb
+        values
+            (0, #{roleId}, #{username}, #{password}, #{name}, #{phone}, #{email}, now(), now())
+    </insert>
+
+    <insert id="saveUser">
+        insert into
+            user_tb
+        values
+            (0, #{accountId}, now(), now())
+    </insert>
+
+    <!--###################       SELECT       ###################    -->
+
+    <select
+            id="findAccountByUsername"
+            parameterType="string"
+            resultMap="AccountResultMap"
+    >
+        select
+            at.account_id,
+            at.username,
+            at.password,
+            at.name,
+            at.phone,
+            at.email,
+            at.create_date,
+            at.update_date,
+            at.role_id,
+            rt.role_name,
+            rt.role_name_kor
+        from
+            account_tb at
+            left outer join role_tb rt on(at.role_id = rt.role_id)
+        where
+            at.username = #{username}
+    </select>
+
+    <select
+            id="findAccountByPhone"
+            resultType="com.predev.gymcrm.entity.Account"
+            resultMap="AccountResultMap"
+    >
+        select
+            at.account_id,
+            at.username,
+            at.password,
+            at.name,
+            at.phone,
+            at.email,
+            at.create_date,
+            at.update_date,
+            at.role_id,
+            rt.role_name,
+            rt.role_name_kor
+        from
+            account_tb at
+            left outer join role_tb rt on(at.role_id = rt.role_id)
+        where
+            at.phone = #{phone}
+    </select>
+    <select id="findAccountByAccountId"
+            resultType="com.predev.gymcrm.entity.Account">
+        select
+            account_id,
+            role_id,
+            username,
+            password,
+            name,
+            phone,
+            email,
+            create_date,
+            update_date
+        from
+            account_tb
+    </select>
+    <select id="findAccountByUserId" resultType="com.predev.gymcrm.entity.Account">
+        select
+            ut.user_id,
+            at.account_id,
+            at.role_id,
+            at.username,
+            at.password,
+            at.name,
+            at.phone,
+            at.email,
+            at.create_date,
+            at.update_date
+        from
+            user_tb ut
+            left outer join account_tb at on(at.account_id = ut.account_id)
+        where
+            user_id = #{userId}
+    </select>
+    <select id="findAccountByTrainerId" resultType="com.predev.gymcrm.entity.Account">
+        select
+            tt.trainer_id,
+            at.account_id,
+            at.role_id,
+            at.username,
+            at.password,
+            at.name,
+            at.phone,
+            at.email,
+            at.create_date,
+            at.update_date
+        from
+            trainer_tb tt
+            left outer join account_tb at on(at.account_id = tt.account_id)
+        where
+            trainer_id = #{trainerId}
+    </select>
+
+    <!--   <select id="findUsersByName" resultMap="UserResultMap">
+           select
+               ut.user_id,
+               ut.user_username,
+               ut.user_password,
+               ut.user_name,
+               ut.user_phone,
+               ut.user_email,
+               ut.create_date,
+               ut.update_date,
+               rrt.role_register_id,
+               rrt.role_id,
+               rt.role_name,
+               rt.role_name_kor
+           from
+               user_tb ut
+               left outer join role_register_tb rrt on(rrt.user_id = ut.user_id)
+               left outer join role_tb rt on(rt.role_id = rrt.role_id)
+           where
+               1 = 1
+               예시: 사용자 이름이 특정 문자열을 포함하는 경우
+               <if test="searchUserName != null and searchUserName != ''">
+                   and ut.user_name like concat('%', #{searchUserName}, '%')
+               </if>
+               <!- 권한 이름이 특정 문자열을 포함하는 경우
+               <if test="searchRoleNameKor != null and searchRoleNameKor != ''">
+                   and rt.role_name_kor like concat('%', #{searchRoleNameKor}, '%')
+               </if>
+                                      db명 수정으로 추후 바꿀 예정입니다.
+       </select>-->
+
+</mapper>
