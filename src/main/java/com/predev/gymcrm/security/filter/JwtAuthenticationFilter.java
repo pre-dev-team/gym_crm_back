@@ -29,19 +29,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         boolean isPermitAll = (boolean) request.getAttribute("isPermitAll");
 
         if(!isPermitAll) {
-            Authentication authentication = null;
-            try {
-                Claims claims = Optional.ofNullable(request.getHeader(AUTHORIZATION_NAME_IN_HEADER))
+            Claims claims = Optional.ofNullable(request.getHeader(AUTHORIZATION_NAME_IN_HEADER))
                         .map(wrappedToken -> wrappedToken.substring(PREFIX_OF_TOKEN.length()))
                         .map(jwtProvider::getClaims)
                         .orElseThrow(() -> new IllegalStateException());
-
-                authentication = Optional.ofNullable(jwtProvider.getAuthentication(claims))
+            Authentication authentication = Optional.ofNullable(jwtProvider.getAuthentication(claims))
                         .orElseThrow(() -> new IllegalStateException());
 
-            } catch (Exception e) {
-                response.sendError(HttpStatus.UNAUTHORIZED.value());
-            }
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 

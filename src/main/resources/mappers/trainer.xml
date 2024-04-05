@@ -59,7 +59,7 @@
             rt.role_name,
             rt.role_name_kor
         from
-            user_tb ut
+            trainer_tb tt
             left outer join role_trainer_register_tb rrt on(rrt.trainer_id = tt.trainer_id)
             left outer join role_tb rt on(rt.role_id = rrt.role_id)
         where
