@@ -35,8 +35,8 @@ public class JwtProvider {
 
     public String generateJwt(Account account) {
 
-            int userId = account.getUserId();
-            String username = account.getUserUsername();
+            int userId = account.getAccountId();
+            String username = account.getUsername();
             Collection<? extends GrantedAuthority> authorities = account.getAuthorities();
             String accessToken = Jwts.builder()
                     .claim("userId",userId)
