@@ -28,19 +28,5 @@ public class Reservation {
     private ReservationDate reservationDate;
     private Time time;
     private User user;
-    private Trainer trainer;
 
-    public SearchReservationRespDto toSearchReservationRespDto() {
-        return SearchReservationRespDto.builder()
-                .reservationId(reservationId)
-                .userId(userId)
-                .username(user.getUserUsername())
-                .trainerId(trainerId)
-                .trainerName(trainer.getTrainerUserName())
-                .timeId(timeId)
-                .timeName(time.getTimePeriod())
-                .reservationDateId(reservationDateId)
-                .reservationDateName(reservationDate.getReservationDateName())
-                .build();
-    }
 }

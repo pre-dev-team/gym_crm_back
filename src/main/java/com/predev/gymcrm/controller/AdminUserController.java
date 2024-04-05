@@ -19,13 +19,6 @@ public class AdminUserController {
     private AdminService adminService;
 
 
-    @GetMapping("/reviews")
-    public ResponseEntity<?> findAllTrainerReviews() {
-        System.out.println("work");
-        List<TrainerReview> reviews = adminService.findAllTrainerReviews();
-        System.out.println(reviews);
-        return ResponseEntity.ok(reviews);
-    }
 //    @GetMapping("/users")
 //    public ResponseEntity<?> searchUsers(SearchUserReqDto searchUserReqDto) {
 //        return ResponseEntity.ok(adminService.searchUsers(searchUserReqDto));

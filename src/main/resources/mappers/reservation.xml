@@ -16,7 +16,6 @@
         <association property="time" resultMap="TimeResultMap" />
         <association property="reservationDate" resultMap="ReservationDateResultMap" />
         <association property="user" resultMap="UserResultMap" />
-        <association property="trainer" resultMap="TrainerResultMap" />
     </resultMap>
 
     <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
@@ -28,28 +27,10 @@
         <result property="userEmail" column="user_email" />
     </resultMap>
 
-    <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
-        <id property="trainerId" column="trainer_id" />
-        <result property="trainerUserName" column="trainer_username" />
-        <result property="trainerName" column="trainer_name" />
-        <result property="trainerPassword" column="trainer_password" />
-        <result property="trainerPhone" column="trainer_phone" />
-        <result property="trainerEmail" column="trainer_email" />
-        <result property="trainerProfileImgUrl" column="trainer_profile_url" />
-        <result property="createDate" column="create_date" />
-        <result property="updateDate" column="update_date" />
-    </resultMap>
 
     <resultMap id="TimeResultMap" type="com.predev.gymcrm.entity.Time">
         <id property="timeId" column="time_id" />
         <result property="timePeriod" column="time_period" />
-        <result property="createDate" column="create_date" />
-        <result property="updateDate" column="update_date" />
-    </resultMap>
-
-    <resultMap id="ReservationDateResultMap" type="com.predev.gymcrm.entity.ReservationDate">
-        <id property="reservationDateId" column="reservation_date_id" />
-        <result property="reservationDateName" column="reservation_date_name" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
     </resultMap>
@@ -106,17 +87,6 @@
     <result property="reservationDateName" column="reservation_date_name" />
     <result property="createDate" column="create_date" />
     <result property="updateDate" column="update_date" />
-</resultMap>
-
-<resultMap id="ReservationResultMap" type="com.predev.gymcrm.entity.Reservation">
-    <id property="reservationId" column="reservation_id" />
-    <result property="userId" column="user_id" />
-    <result property="trainerId" column="trainer_id" />
-    <result property="timeId" column="time_id" />
-    <result property="reservationDateId" column="reservation_date_id" />
-    <result property="createDate" column="create_date" />
-    <result property="updateDate" column="update_date" />
-    <association property="reservationDate" resultMap="ReservationDateResultMap" javaType="com.predev.gymcrm.entity.ReservationDate" />
 </resultMap>
 
     <insert

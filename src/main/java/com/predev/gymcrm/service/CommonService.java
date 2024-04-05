@@ -2,9 +2,7 @@ package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.resp.TimeRespDto;
 import com.predev.gymcrm.entity.Time;
-import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.repository.CommonMapper;
-import com.predev.gymcrm.repository.TrainerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -13,12 +11,10 @@ import java.util.stream.Collectors;
 @Service
 public class CommonService {
     private final CommonMapper commonMapper;
-    private final TrainerMapper trainerMapper;
 
     @Autowired
-    public CommonService(CommonMapper commonMapper, TrainerMapper trainerMapper) {
+    public CommonService(CommonMapper commonMapper) {
         this.commonMapper = commonMapper;
-        this.trainerMapper = trainerMapper;
     }
 
 
@@ -40,7 +36,4 @@ public class CommonService {
                 .build();
     }
 
-    public List<Trainer> findAllTrainers() {
-        return trainerMapper.findAllTrainers();
-    }
 }

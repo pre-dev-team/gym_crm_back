@@ -22,7 +22,6 @@ public class TrainerReview {
     private LocalDateTime updateDate;
 
     private User user; // userId
-    private Trainer trainer; // trainerProfileImgUrl
 
 
 

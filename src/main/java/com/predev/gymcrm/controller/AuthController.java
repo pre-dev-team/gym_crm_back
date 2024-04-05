@@ -1,7 +1,6 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.aop.annotation.ValidAspect;
-import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
 import com.predev.gymcrm.dto.req.UserSigninReqDto;
 import com.predev.gymcrm.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     @Autowired
     private AuthService authService;
-
-    @PostMapping("/trainer/signup")
-    public ResponseEntity<?> trainerSignup(@RequestBody TrainerSignupReqDto trainerSignupReqDto) {
-        authService.trainerSignup(trainerSignupReqDto);
-        return ResponseEntity.created(null).body(true);
-    }
 
     @ValidAspect
     @PostMapping("/user/signup")

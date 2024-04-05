@@ -1,12 +1,9 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.SearchUserReqDto;
-import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
 import com.predev.gymcrm.dto.req.UserSigninReqDto;
 import com.predev.gymcrm.entity.User;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
-import com.predev.gymcrm.repository.TrainerMapper;
 import com.predev.gymcrm.dto.req.UserSignupReqDto;
 import com.predev.gymcrm.repository.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +13,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 public class AuthService {
-
-    @Autowired
-    private TrainerMapper trainerMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -52,9 +43,6 @@ public class AuthService {
         }
     }
 
-    public void trainerSignup(TrainerSignupReqDto trainerSignupReqDto) {
-        trainerMapper.saveTrainer(trainerSignupReqDto.toEntity());
-    }
 
     public String userSignin(UserSigninReqDto userSigninReqDto) {
         User user = userMapper.findUserByUsername(userSigninReqDto.getUserUsername());
