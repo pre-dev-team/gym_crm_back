@@ -28,16 +28,6 @@ public class Trainer {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    private List<RoleTrainerRegister> roleRegisters= new ArrayList<>(); // roleRegisters 필드를 초기화
-
-    public List<SimpleGrantedAuthority> getAuthorities() {
-        if (roleRegisters != null) {
-            return roleRegisters.stream()
-                    .map(register -> new SimpleGrantedAuthority(register.getRole().getRoleName()))
-                    .collect(Collectors.toList());
-        } else {
-            return Collections.emptyList();
-        }
     }
 
     public Principal toPrincipal() {
