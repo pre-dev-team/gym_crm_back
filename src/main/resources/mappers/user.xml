@@ -12,7 +12,7 @@
         <result property="updateDate" column="update_date" />
     </resultMap>
 
-    <resultMap id="RoleRegisterResultMap" type="com.predev.gymcrm.entity.RoleRegister">
+    <resultMap id="RoleRegisterResultMap" type="com.predev.gymcrm.entity.RoleUserRegister">
         <id property="roleRegisterId" column="role_user_register_id" />
         <result property="roleId" column="role_id" />
         <result property="userId" column="user_id" />
@@ -28,7 +28,7 @@
         <result property="userName" column="user_name" />
         <result property="userPhone" column="user_phone" />
         <result property="userEmail" column="user_email" />
-        <collection property="roleRegisters" javaType="list" resultMap="RoleRegisterResultMap" />
+        <collection property="roleUserRegisters" javaType="list" resultMap="RoleRegisterResultMap" />
     </resultMap>
 
     <insert
@@ -62,7 +62,7 @@
 
     <insert id="saveRole">
         insert into role_user_register_tb
-        values(0, #{userId}, #{roleId}, now(), now())
+        values(0, #{roleId}, #{userId}, now(), now())
     </insert>
 
 
@@ -90,7 +90,6 @@
             left outer join role_tb rt on(rt.role_id = rrt.role_id)
         where
             ut.user_username = #{userUsername}
-
     </select>
     <select
             id="findUserByPhone"
@@ -148,6 +147,5 @@
                </if>
                                       db명 수정으로 추후 바꿀 예정입니다.
        </select>-->
-
 
 </mapper>

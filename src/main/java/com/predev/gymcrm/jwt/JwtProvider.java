@@ -1,7 +1,8 @@
 package com.predev.gymcrm.jwt;
 
-import com.predev.gymcrm.entity.Reservation;
+import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.User;
+import com.predev.gymcrm.repository.TrainerMapper;
 import com.predev.gymcrm.repository.UserMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,38 +19,53 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Component
 public class JwtProvider {
 
     private final Key key;
     private final UserMapper userMapper;
-    private Date expireDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 6));
+    private final TrainerMapper trainerMapper;
+    private final Date expireDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 6));
 
     public JwtProvider(
             @Value("${jwt.secret}") String secret,
-            @Autowired UserMapper userMapper) {
+            @Autowired UserMapper userMapper,
+            @Autowired TrainerMapper trainerMapper) {
 
         key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         this.userMapper = userMapper;
+        this.trainerMapper = trainerMapper;
     }
 
-    public String generateJwt(User user) {
-
-        int userId = user.getUserId();
-        String username = user.getUserUsername();
-        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-        List<Reservation> reservations = user.getReservations();
-        // 6시간
-
-        String accessToken = Jwts.builder()
+    public String generateJwt(Object object) {
+        String accessToken = "";
+        if(object.getClass() == User.class) {
+            User user = (User) object;
+            int userId = user.getUserId();
+            String username = user.getUserUsername();
+            Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+            accessToken = Jwts.builder()
                     .claim("userId",userId)
                     .claim("username",username)
                     .claim("authorities",authorities)
                     .setExpiration(expireDate)
                     .signWith(key, SignatureAlgorithm.HS256)
                     .compact();
+
+        } else if (object.getClass() == Trainer.class) {
+            Trainer trainer = (Trainer) object;
+            int trainerId = trainer.getTrainerId();
+            String trainerUsername = trainer.getTrainerUserName();
+            Collection<? extends GrantedAuthority> authorities = trainer.getAuthorities();
+            accessToken = Jwts.builder()
+                    .claim("trainerId",trainerId)
+                    .claim("trainerUsername",trainerUsername)
+                    .claim("authorities",authorities)
+                    .setExpiration(expireDate)
+                    .signWith(key, SignatureAlgorithm.HS256)
+                    .compact();
+        }
 
         return accessToken;
     }
@@ -63,11 +79,15 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(Claims claims) {
-        String username = claims.get("username").toString();
-        User user = userMapper.findUserByUsername(username);
+        String username = claims.get("username").toString() == null ? claims.get("trainerUsername").toString() : claims.get("username").toString();
 
-        if(user == null) {
+        User user = userMapper.findUserByUsername(username);
+        Trainer trainer = trainerMapper.findTrainerByTrainerUsername(username);
+
+        if(trainer == null && user == null) {
             return null;
+        } else if (user == null) {
+            return new UsernamePasswordAuthenticationToken(trainer.toPrincipal(),null,trainer.getAuthorities());
         }
 
         return new UsernamePasswordAuthenticationToken(user.toPrincipal(),null,user.getAuthorities());

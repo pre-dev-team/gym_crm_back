@@ -40,7 +40,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .orElseThrow(() -> new IllegalStateException());
 
             } catch (Exception e) {
-                System.out.println("여기임?");
                 response.sendError(HttpStatus.UNAUTHORIZED.value());
             }
             SecurityContextHolder.getContext().setAuthentication(authentication);
