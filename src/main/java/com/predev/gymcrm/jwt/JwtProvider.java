@@ -1,6 +1,6 @@
 package com.predev.gymcrm.jwt;
 
-import com.predev.gymcrm.entity.User;
+import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.repository.UserMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -33,11 +33,11 @@ public class JwtProvider {
         this.userMapper = userMapper;
     }
 
-    public String generateJwt(User user) {
+    public String generateJwt(Account account) {
 
-            int userId = user.getUserId();
-            String username = user.getUserUsername();
-            Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+            int userId = account.getUserId();
+            String username = account.getUserUsername();
+            Collection<? extends GrantedAuthority> authorities = account.getAuthorities();
             String accessToken = Jwts.builder()
                     .claim("userId",userId)
                     .claim("username",username)
@@ -59,13 +59,13 @@ public class JwtProvider {
     public Authentication getAuthentication(Claims claims) {
         String username = claims.get("username").toString() == null ? claims.get("trainerUsername").toString() : claims.get("username").toString();
 
-        User user = userMapper.findUserByUsername(username);
+        Account account = userMapper.findUserByUsername(username);
 
-        if (user == null) {
+        if (account == null) {
             return null;
         }
 
-        return new UsernamePasswordAuthenticationToken(user.toPrincipal(),null,user.toPrincipal().getAuthorities());
+        return new UsernamePasswordAuthenticationToken(account.toPrincipal(),null, account.toPrincipal().getAuthorities());
     }
 
 }

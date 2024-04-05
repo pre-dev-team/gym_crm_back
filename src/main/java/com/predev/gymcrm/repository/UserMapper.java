@@ -1,16 +1,15 @@
 package com.predev.gymcrm.repository;
 
-import com.predev.gymcrm.entity.RoleUserRegister;
-import com.predev.gymcrm.entity.User;
+import com.predev.gymcrm.entity.Account;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface
 UserMapper {
-    public int saveUser(User user);
-    public User findUserByUsername(String userUsername);
-    public User findUserByPhone(String userPhone);
+    public int saveUser(Account account);
+    public Account findUserByUsername(String userUsername);
+    public Account findUserByPhone(String userPhone);
 
     public RoleUserRegister findRoleRegisterByUserIdAndRoleId(@Param("userId") int userId, @Param("roleId") int roleId);
 

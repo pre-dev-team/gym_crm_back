@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 @Data
 public class Time {
     private int timeId;
-    private String timePeriod;
+    private String timeDuration;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
     public TimeRespDto toTimeRespDto() {
         return TimeRespDto.builder()
                 .timeId(timeId)
-                .timePeriod(timePeriod)
+                .timeDuration(timeDuration)
                 .build();
     }
 }

@@ -3,7 +3,6 @@ package com.predev.gymcrm.service;
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
 import com.predev.gymcrm.entity.Reservation;
 
-import com.predev.gymcrm.entity.ReservationDate;
 import com.predev.gymcrm.repository.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

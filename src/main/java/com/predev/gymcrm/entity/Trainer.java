@@ -1,6 +1,5 @@
 package com.predev.gymcrm.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-public class User {
-
-    private int userId;
-    private int accountId;
-    private int inbodyId;
+public class Trainer {
+    private int trainer_id;
+    private int account_id;
+    private String trainerProfileImgUrl;
 
     private List<Reservation> reservations;
     private List<TrainerReview> trainerReviews;

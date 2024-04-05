@@ -21,7 +21,7 @@
         <association property="role" resultMap="RoleResultMap" />
     </resultMap>
 
-    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.Account">
         <id property="userId" column="user_id" />
         <result property="userUsername" column="user_username" />
         <result property="userPassword" column="user_password" />
@@ -33,7 +33,7 @@
 
     <insert
             id="saveUser"
-            parameterType="com.predev.gymcrm.entity.User"
+            parameterType="com.predev.gymcrm.entity.Account"
             keyProperty="userId"
             useGeneratedKeys="true"
     >
@@ -93,7 +93,7 @@
     </select>
     <select
             id="findUserByPhone"
-            resultType="com.predev.gymcrm.entity.User"
+            resultType="com.predev.gymcrm.entity.Account"
             resultMap="UserResultMap"
     >
         select

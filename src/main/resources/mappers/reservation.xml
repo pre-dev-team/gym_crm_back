@@ -15,10 +15,10 @@
         <result property="updateDate" column="update_date" />
         <association property="time" resultMap="TimeResultMap" />
         <association property="reservationDate" resultMap="ReservationDateResultMap" />
-        <association property="user" resultMap="UserResultMap" />
+        <association property="account" resultMap="UserResultMap" />
     </resultMap>
 
-    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.Account">
         <id property="userId" column="user_id" />
         <result property="userUsername" column="user_username" />
         <result property="userPassword" column="user_password" />

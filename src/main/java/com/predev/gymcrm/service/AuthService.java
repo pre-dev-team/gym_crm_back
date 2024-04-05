@@ -1,7 +1,7 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.UserSigninReqDto;
-import com.predev.gymcrm.entity.User;
+import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
 import com.predev.gymcrm.dto.req.UserSignupReqDto;
@@ -33,10 +33,10 @@ public class AuthService {
     public void userSignup(UserSignupReqDto userSignupReqDto) {
         int successCount = 0;
 
-        User user = userSignupReqDto.toEntity(passwordEncoder);
+        Account account = userSignupReqDto.toEntity(passwordEncoder);
 
-        successCount += userMapper.saveUser(user);
-        successCount += userMapper.saveRole(user.getUserId(), 1);
+        successCount += userMapper.saveUser(account);
+        successCount += userMapper.saveRole(account.getUserId(), 1);
 
         if(successCount < 2) {
             throw new SaveException();
@@ -45,16 +45,16 @@ public class AuthService {
 
 
     public String userSignin(UserSigninReqDto userSigninReqDto) {
-        User user = userMapper.findUserByUsername(userSigninReqDto.getUserUsername());
-        System.out.println(user);
-        if(user == null ) {
+        Account account = userMapper.findUserByUsername(userSigninReqDto.getUserUsername());
+        System.out.println(account);
+        if(account == null ) {
             throw new UsernameNotFoundException("사용자 정보를 확인하세요.");
         }
-        if (!passwordEncoder.matches(userSigninReqDto.getUserPassword(), user.getUserPassword())) {
+        if (!passwordEncoder.matches(userSigninReqDto.getUserPassword(), account.getUserPassword())) {
             throw new BadCredentialsException("사용자 정보를 확인하세요.");
         }
 
-        return jwtProvider.generateJwt(user);
+        return jwtProvider.generateJwt(account);
     }
 
 

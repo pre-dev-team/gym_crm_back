@@ -5,7 +5,7 @@
 
 <mapper namespace="com.predev.gymcrm.repository.ReviewMapper">
 
-    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.Account">
         <id property="userId" column="user_id" />
         <result property="userUsername" column="user_username" />
         <result property="userName" column="user_name" />

@@ -1,9 +1,7 @@
 package com.predev.gymcrm.repository;
 
-import com.predev.gymcrm.entity.ReservationDate;
 import com.predev.gymcrm.entity.Reservation;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

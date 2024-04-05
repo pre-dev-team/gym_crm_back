@@ -1,7 +1,6 @@
 package com.predev.gymcrm.dto.req;
 
-import com.predev.gymcrm.entity.User;
-import com.predev.gymcrm.repository.UserMapper;
+import com.predev.gymcrm.entity.Account;
 import lombok.Data;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -22,8 +21,8 @@ public class UserSignupReqDto {
     @Email(regexp = "^[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\\.]?[0-9a-zA-Z])*\\.[a-zA-Z]{1,3}$", message = "이메일 형식이어야 합니다")
     private String userEmail;
 
-    public User toEntity(BCryptPasswordEncoder passwordEncoder) {
-        return User.builder()
+    public Account toEntity(BCryptPasswordEncoder passwordEncoder) {
+        return Account.builder()
                 .userUsername(userUsername)
                 .userPassword(passwordEncoder.encode(userPassword))
                 .userName(userName)

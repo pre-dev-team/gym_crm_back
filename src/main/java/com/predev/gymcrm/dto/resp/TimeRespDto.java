@@ -8,12 +8,12 @@ import lombok.Data;
 public class
 TimeRespDto {
     private int timeId;         // 시간대 ID
-    private String timePeriod;  // 시간대
+    private String timeDuration;  // 시간대
 
     public Time toEntity() {
         return Time.builder()
                 .timeId(timeId)
-                .timePeriod(timePeriod)
+                .timeDuration(timeDuration)
                 .build();
     }
 }
