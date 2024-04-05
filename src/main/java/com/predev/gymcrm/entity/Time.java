@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 public class Time {
     private int timeId;
-    private String timeName;
+    private String timePeriod;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 }
