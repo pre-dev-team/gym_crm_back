@@ -25,6 +25,7 @@ public class AuthController {
     @ValidAspect
     @PostMapping("/user/signup")
     public ResponseEntity<?> userSignup(@RequestBody UserSignupReqDto userSignupReqDto, BindingResult bindingResult) {
+        System.out.println(userSignupReqDto);
         authService.userSignup(userSignupReqDto);
         return ResponseEntity.created(null).body(true);
     }

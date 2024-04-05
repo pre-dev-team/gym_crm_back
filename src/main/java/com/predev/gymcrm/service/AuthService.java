@@ -41,6 +41,7 @@ public class AuthService {
     @Transactional(rollbackFor = Exception.class)
     public void userSignup(UserSignupReqDto userSignupReqDto) {
         int successCount = 0;
+
         User user = userSignupReqDto.toEntity(passwordEncoder);
 
         successCount += userMapper.saveUser(user);
@@ -49,7 +50,6 @@ public class AuthService {
         if(successCount < 2) {
             throw new SaveException();
         }
-
     }
 
     public void trainerSignup(TrainerSignupReqDto trainerSignupReqDto) {

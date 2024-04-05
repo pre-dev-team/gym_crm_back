@@ -22,8 +22,8 @@ public class Trainer {
     private String trainerUserName;
     private String trainerName;
     private String trainerPassword;
-    private String trainerEmail;
     private String trainerPhone;
+    private String trainerEmail;
     private String trainerProfileImgUrl;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
