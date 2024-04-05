@@ -1,12 +1,11 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.aop.annotation.ValidAspect;
-import com.predev.gymcrm.dto.req.TrainerSignupReqDto;
-import com.predev.gymcrm.dto.req.UserSigninReqDto;
+import com.predev.gymcrm.dto.req.AccountSigninReqDto;
 import com.predev.gymcrm.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import com.predev.gymcrm.dto.req.UserSignupReqDto;
+import com.predev.gymcrm.dto.req.AccountSignupReqDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,25 +15,19 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @PostMapping("/trainer/signup")
-    public ResponseEntity<?> trainerSignup(@RequestBody TrainerSignupReqDto trainerSignupReqDto) {
-        authService.trainerSignup(trainerSignupReqDto);
-        return ResponseEntity.created(null).body(true);
-    }
-
     @ValidAspect
     @PostMapping("/user/signup")
-    public ResponseEntity<?> userSignup(@RequestBody UserSignupReqDto userSignupReqDto, BindingResult bindingResult) {
-        System.out.println(userSignupReqDto);
-        authService.userSignup(userSignupReqDto);
+    public ResponseEntity<?> userSignup(@RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
+        System.out.println(reqDto);
+        authService.userSignup(reqDto);
         return ResponseEntity.created(null).body(true);
     }
 
     @PostMapping("/user/signin")
-    public ResponseEntity<?> userSignin(@RequestBody UserSigninReqDto userSigninReqDto) {
-        authService.userSignin(userSigninReqDto);
-        System.out.println(authService.userSignin(userSigninReqDto));
-        return ResponseEntity.ok(authService.userSignin(userSigninReqDto));
+    public ResponseEntity<?> userSignin(@RequestBody AccountSigninReqDto reqDto) {
+        authService.userSignin(reqDto);
+        System.out.println(authService.userSignin(reqDto));
+        return ResponseEntity.ok(authService.userSignin(reqDto));
     }
 
 

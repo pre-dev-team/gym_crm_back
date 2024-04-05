@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -21,12 +20,5 @@ public class TrainerReview {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    private User user; // userId
-    private Trainer trainer; // trainerProfileImgUrl
-
-
-
-
-
-
+    private Account account; // userId
 }

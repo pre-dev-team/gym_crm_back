@@ -8,5 +8,5 @@ import lombok.Data;
 public class SearchUserReqDto {
     private int page;
     private int count;
-    private int userId;
+    private int accountId;
 }

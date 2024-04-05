@@ -1,7 +1,5 @@
 package com.predev.gymcrm.controller;
 
-import com.predev.gymcrm.dto.req.MakeReservationFromUserReqDto;
-import com.predev.gymcrm.repository.ReservationMapper;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +17,4 @@ public class UserController {
         return ResponseEntity.ok("test");
     }
 
-    @PostMapping("/reservation")
-    public ResponseEntity<?> makeReservationByUser(@RequestBody MakeReservationFromUserReqDto reqDto) {
-        reservationService.saveReservationDate(reqDto);
-        return ResponseEntity.ok(null);
-    }
 }

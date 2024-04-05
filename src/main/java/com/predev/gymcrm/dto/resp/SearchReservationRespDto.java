@@ -10,13 +10,12 @@ import java.time.LocalDateTime;
 public class SearchReservationRespDto {
     private int reservationId;
     private int userId;
-    private String username;
     private int trainerId;
-    private String trainerName;
+    private String reservationDate;
     private int timeId;
-    private String timeName;
-    private int reservationDateId;
-    private String reservationDateName;
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+    private String timeDuration;
+    private String username;
+    private String name;
+    private String trainerUsername;
+    private String trainerName;
 }

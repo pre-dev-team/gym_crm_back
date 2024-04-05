@@ -1,9 +1,7 @@
 package com.predev.gymcrm.jwt;
 
-import com.predev.gymcrm.entity.Trainer;
-import com.predev.gymcrm.entity.User;
-import com.predev.gymcrm.repository.TrainerMapper;
-import com.predev.gymcrm.repository.UserMapper;
+import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.repository.AuthMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,49 +22,28 @@ import java.util.Date;
 public class JwtProvider {
 
     private final Key key;
-    private final UserMapper userMapper;
-    private final TrainerMapper trainerMapper;
+    private final AuthMapper authMapper;
     private final Date expireDate = new Date(new Date().getTime() + (1000 * 60 * 60 * 6));
 
     public JwtProvider(
             @Value("${jwt.secret}") String secret,
-            @Autowired UserMapper userMapper,
-            @Autowired TrainerMapper trainerMapper) {
-
+            @Autowired AuthMapper authMapper
+           ) {
         key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
-        this.userMapper = userMapper;
-        this.trainerMapper = trainerMapper;
+        this.authMapper = authMapper;
     }
 
-    public String generateJwt(Object object) {
-        String accessToken = "";
-        if(object.getClass() == User.class) {
-            User user = (User) object;
-            int userId = user.getUserId();
-            String username = user.getUserUsername();
-            Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
-            accessToken = Jwts.builder()
-                    .claim("userId",userId)
+    public String generateJwt(Account account) {
+            int accountId = account.getAccountId();
+            String username = account.getUsername();
+            Collection<? extends GrantedAuthority> authorities = account.getAuthorities();
+            String accessToken = Jwts.builder()
+                    .claim("accountId",accountId)
                     .claim("username",username)
                     .claim("authorities",authorities)
                     .setExpiration(expireDate)
                     .signWith(key, SignatureAlgorithm.HS256)
                     .compact();
-
-        } else if (object.getClass() == Trainer.class) {
-            Trainer trainer = (Trainer) object;
-            int trainerId = trainer.getTrainerId();
-            String trainerUsername = trainer.getTrainerUserName();
-            Collection<? extends GrantedAuthority> authorities = trainer.getAuthorities();
-            accessToken = Jwts.builder()
-                    .claim("trainerId",trainerId)
-                    .claim("trainerUsername",trainerUsername)
-                    .claim("authorities",authorities)
-                    .setExpiration(expireDate)
-                    .signWith(key, SignatureAlgorithm.HS256)
-                    .compact();
-        }
-
         return accessToken;
     }
 
@@ -79,18 +56,14 @@ public class JwtProvider {
     }
 
     public Authentication getAuthentication(Claims claims) {
-        String username = claims.get("username").toString() == null ? claims.get("trainerUsername").toString() : claims.get("username").toString();
+        String username = claims.get("username").toString();
+        Account account = authMapper.findAccountByUsername(username);
 
-        User user = userMapper.findUserByUsername(username);
-        Trainer trainer = trainerMapper.findTrainerByTrainerUsername(username);
-
-        if(trainer == null && user == null) {
+        if (account == null) {
             return null;
-        } else if (user == null) {
-            return new UsernamePasswordAuthenticationToken(trainer.toPrincipal(),null,trainer.getAuthorities());
         }
 
-        return new UsernamePasswordAuthenticationToken(user.toPrincipal(),null,user.toPrincipal().getAuthorities());
+        return new UsernamePasswordAuthenticationToken(account.toPrincipal(),null, account.toPrincipal().getAuthorities());
     }
 
 }

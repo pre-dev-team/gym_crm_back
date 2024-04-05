@@ -1,8 +1,8 @@
 package com.predev.gymcrm.aop;
 
-import com.predev.gymcrm.dto.req.UserSignupReqDto;
+import com.predev.gymcrm.dto.req.AccountSignupReqDto;
 import com.predev.gymcrm.exception.ValidException;
-import com.predev.gymcrm.repository.UserMapper;
+import com.predev.gymcrm.repository.AuthMapper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class ValidAop {
 
     @Autowired
-    private UserMapper userMapper;
+    private AuthMapper authMapper;
 
     @Pointcut("@annotation(com.predev.gymcrm.aop.annotation.ValidAspect)")
     private void pointCut() {
@@ -44,20 +44,20 @@ public class ValidAop {
         }
 
         if(methodName.equals("userSignup")) {
-            UserSignupReqDto userSignupReqDto = null;
+            AccountSignupReqDto reqDto = null;
 
             for (Object arg : args) {
-                if (arg.getClass() == UserSignupReqDto.class) {
-                    userSignupReqDto = (UserSignupReqDto) arg;
+                if (arg.getClass() == AccountSignupReqDto.class) {
+                    reqDto = (AccountSignupReqDto) arg;
                 }
             }
 
-            if(userMapper.findUserByUsername(userSignupReqDto.getUserUsername()) != null){
+            if(authMapper.findAccountByUsername(reqDto.getUsername()) != null){
                 ObjectError objectError = new FieldError("userUsername", "userUsername", "이미 존재하는 사용자이름입니다.");
                 bindingResult.addError(objectError);
             }
 
-            if(userMapper.findUserByPhone(userSignupReqDto.getUserPhone()) != null) {
+            if(authMapper.findAccountByPhone(reqDto.getPhone()) != null) {
                 ObjectError objectError = new FieldError("userPhone", "userPhone", "이미 사용중인 전화번호입니다.");
                 bindingResult.addError(objectError);
             }

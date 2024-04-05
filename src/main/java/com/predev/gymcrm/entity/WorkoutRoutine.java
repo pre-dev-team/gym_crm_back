@@ -22,6 +22,5 @@ public class WorkoutRoutine {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    private Reservation reservation;
     private Workout workout;
 }

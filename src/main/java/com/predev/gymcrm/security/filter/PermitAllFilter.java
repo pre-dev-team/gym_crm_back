@@ -17,7 +17,8 @@ public class PermitAllFilter extends OncePerRequestFilter {
         String uri = request.getRequestURI();
         List<String> antMatchers = List.of(
                 "/auth",
-                "/admin"
+                "/common",
+                "/reservation"
         );
 
         boolean isPermitAll = antMatchers.stream().anyMatch(uri::startsWith);

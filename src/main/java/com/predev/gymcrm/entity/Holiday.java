@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -14,11 +15,10 @@ import java.time.LocalDateTime;
 public class Holiday {
     private int holidayId;
     private int trainerId;
-    private int reservationDateId;
+    private String holidayDate;
     private int timeId;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    private ReservationDate reservationDate;
-    private Time time;
+    private List<Time> times;
 }
