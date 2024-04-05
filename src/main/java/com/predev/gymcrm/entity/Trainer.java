@@ -26,9 +26,9 @@ public class Trainer {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    private List<RoleUserRegister> roleRegisters;
+    private List<RoleTrainerRegister> roleTrainerRegisters;
     public List<SimpleGrantedAuthority> getAuthorities() {
-        return roleRegisters.stream()
+        return roleTrainerRegisters.stream()
                 .map(register -> new SimpleGrantedAuthority(register.getRole().getRoleName()))
                 .collect(Collectors.toList());
     }
