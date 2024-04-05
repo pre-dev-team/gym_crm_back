@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,12 +28,8 @@ public class Trainer {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    private List<RoleUserRegister> roleRegisters;
-    public List<SimpleGrantedAuthority> getAuthorities() {
-        return roleRegisters.stream()
-                .map(register -> new SimpleGrantedAuthority(register.getRole().getRoleName()))
-                .collect(Collectors.toList());
     }
+
     public Principal toPrincipal() {
         return Principal.builder()
                 .userId(trainerId)

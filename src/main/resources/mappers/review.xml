@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.predev.gymcrm.repository.ReviewMapper">
+
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
+        <id property="userId" column="user_id" />
+        <result property="userUsername" column="user_username" />
+        <result property="userName" column="user_name" />
+        <result property="userPhone" column="user_phone" />
+        <result property="userEmail" column="user_email" />
+    </resultMap>
+
+    <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
+        <id property="trainerId" column="trainer_id" />
+        <result property="trainerUserName" column="trainer_username" />
+        <result property="trainerName" column="trainer_name" />
+        <result property="trainerPassword" column="trainer_password" />
+        <result property="trainerEmail" column="trainer_email" />
+        <result property="trainerPhone" column="trainer_phone" />
+        <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
+    </resultMap>
+
+    <resultMap id="TrainerReviewResultMap" type="com.predev.gymcrm.entity.TrainerReview">
+        <id property="trainerReviewId" column="trainer_review_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="trainerReviewText" column="trainer_review_text" />
+        <result property="trainerReviewScore" column="trainer_review_score" />
+        <association property="user" resultMap="UserResultMap" />
+        <association property="trainer" resultMap="TrainerResultMap" />
+    </resultMap>
+
+    <select
+            id="findAllTrainerReviews"
+            resultMap="TrainerReviewResultMap"
+    >
+        SELECT
+            trt.trainer_review_id,
+            trt.trainer_id,
+            trt.user_id,
+            trt.trainer_review_text,
+            trt.trainer_review_score,
+            trt.create_date,
+            trt.update_date,
+            ut.user_username,
+            tt.trainer_name,
+            tt.trainer_profile_img_url
+        FROM
+        trainer_review_tb trt
+            LEFT OUTER JOIN user_tb ut ON (trt.user_id = ut.user_id)
+            LEFT OUTER JOIN trainer_tb tt ON (trt.trainer_id = tt.trainer_id)
+    </select>
+
+</mapper>
