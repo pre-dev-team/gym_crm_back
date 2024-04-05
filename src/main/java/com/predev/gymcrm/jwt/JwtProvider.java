@@ -90,7 +90,7 @@ public class JwtProvider {
             return new UsernamePasswordAuthenticationToken(trainer.toPrincipal(),null,trainer.getAuthorities());
         }
 
-        return new UsernamePasswordAuthenticationToken(user.toPrincipal(),null,user.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(user.toPrincipal(),null,user.toPrincipal().getAuthorities());
     }
 
 }
