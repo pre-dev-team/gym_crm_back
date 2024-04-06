@@ -9,6 +9,8 @@ import com.predev.gymcrm.dto.req.AccountSignupReqDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -17,10 +19,10 @@ public class AuthController {
 
     @ValidAspect
     @PostMapping("/user/signup")
-    public ResponseEntity<?> userSignup(@RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
+    public ResponseEntity<?> userSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
         System.out.println(reqDto);
         authService.userSignup(reqDto);
-        return ResponseEntity.created(null).body(true);
+        return ResponseEntity.created(null).body(reqDto);
     }
 
     @PostMapping("/user/signin")

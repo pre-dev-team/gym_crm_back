@@ -32,7 +32,7 @@ public class AuthService {
     @Transactional(rollbackFor = Exception.class)
     public void userSignup(AccountSignupReqDto reqDto) {
         int successCount = 0;
-
+        System.out.println(reqDto);
         Account account = reqDto.toEntity(passwordEncoder);
 
         successCount += authMapper.saveAccount(1,account);
