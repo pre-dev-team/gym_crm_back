@@ -34,6 +34,10 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
+    public void insertReservation() {
+
+    }
+
 //    public SearchReservationRespDto findReservationByUserId(int userId) {
 //        Reservation reservation = reservationMapper.findReservationByUserId(userId);
 //
