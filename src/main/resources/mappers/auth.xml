@@ -22,7 +22,7 @@
         <result property="name" column="name" />
         <result property="phone" column="phone" />
         <result property="email" column="email" />
-
+        <association property="role" resultMap="RoleResultMap" />
     </resultMap>
 
     <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
@@ -46,21 +46,20 @@
 
     <insert
             id="saveAccount"
-            parameterType="com.predev.gymcrm.entity.Account"
-            keyProperty="accountId"
+            keyProperty="account.accountId"
             useGeneratedKeys="true"
     >
         insert into
             account_tb
         values
-            (0, #{roleId}, #{username}, #{password}, #{name}, #{phone}, #{email}, now(), now())
+            (0, #{roleId}, #{account.username}, #{account.password}, #{account.name}, #{account.phone}, #{account.email}, now(), now())
     </insert>
 
     <insert id="saveUser">
         insert into
             user_tb
         values
-            (0, #{accountId}, now(), now())
+            (0, #{accountId}, null, now(), now())
     </insert>
 
     <!--###################       SELECT       ###################    -->
@@ -72,6 +71,7 @@
     >
         select
             at.account_id,
+            at.role_id,
             at.username,
             at.password,
             at.name,
@@ -79,7 +79,6 @@
             at.email,
             at.create_date,
             at.update_date,
-            at.role_id,
             rt.role_name,
             rt.role_name_kor
         from

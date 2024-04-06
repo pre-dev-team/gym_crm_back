@@ -20,7 +20,6 @@ public class AuthController {
     @ValidAspect
     @PostMapping("/user/signup")
     public ResponseEntity<?> userSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
-        System.out.println(reqDto);
         authService.userSignup(reqDto);
         return ResponseEntity.created(null).body(reqDto);
     }
@@ -28,7 +27,6 @@ public class AuthController {
     @PostMapping("/user/signin")
     public ResponseEntity<?> userSignin(@RequestBody AccountSigninReqDto reqDto) {
         authService.userSignin(reqDto);
-        System.out.println(authService.userSignin(reqDto));
         return ResponseEntity.ok(authService.userSignin(reqDto));
     }
 

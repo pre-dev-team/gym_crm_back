@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 public interface
 AuthMapper {
 
-    public int saveAccount(@Param("roleId")int roleId, Account account);
+    public int saveAccount(@Param("roleId")int roleId, @Param("account")Account account);
     public int saveUser(@Param("accountId") int accountId);
     public Account findAccountByUsername(String username);
     public Account findAccountByPhone(String phone);
