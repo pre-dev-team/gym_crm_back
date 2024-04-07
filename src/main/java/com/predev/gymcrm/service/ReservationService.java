@@ -1,14 +1,21 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.dto.req.MakeReservationReqDto;
+import com.predev.gymcrm.dto.req.SearchDayReservationReqDto;
+import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
+import com.predev.gymcrm.dto.resp.SearchUnreservedTrainerRespDto;
 import com.predev.gymcrm.entity.Reservation;
 
+import com.predev.gymcrm.entity.Time;
+import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.repository.AuthMapper;
 import com.predev.gymcrm.repository.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +27,10 @@ public class ReservationService {
 
     @Autowired
     private AuthMapper authMapper;
+
+    public String trimDateString(String date) {
+        return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    }
 
     public List<SearchReservationRespDto> findAll() {
         return reservationMapper.getAllReservation().stream()
@@ -33,6 +44,29 @@ public class ReservationService {
                 })
                 .collect(Collectors.toList());
     }
+
+    public void insertReservation(MakeReservationReqDto reqDto) {
+        String date = reqDto.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        reservationMapper.saveReservation(reqDto.toReservationEntity(date));
+    }
+
+    public List<Time> SearchDayReservation(SearchDayReservationReqDto reqDto) {
+        List<Reservation> reservations = reservationMapper.findReservationByDate(reqDto.getUserId(), reqDto.getTrainerId(), trimDateString(reqDto.getDate()));
+        return reservations.stream().map(Reservation::getTime).collect(Collectors.toList());
+    }
+
+    public List<SearchUnreservedTrainerRespDto> SearchUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
+        List<Trainer> trainers = reservationMapper.findTrainerByDay(trimDateString(reqDto.getDate()), reqDto.getTimeId());
+        List<SearchUnreservedTrainerRespDto> respDtos = trainers.stream().map(trainer ->
+            SearchUnreservedTrainerRespDto.builder()
+                    .trinerId(trainer.getTrainerId())
+                    .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())
+                    .name(trainer.getAccount().getName())
+                    .build()
+        ).collect(Collectors.toList());
+        return respDtos;
+    }
+
 
 //    public SearchReservationRespDto findReservationByUserId(int userId) {
 //        Reservation reservation = reservationMapper.findReservationByUserId(userId);

@@ -1,6 +1,8 @@
 package com.predev.gymcrm.controller.advice;
 
+import com.predev.gymcrm.exception.JwtException;
 import com.predev.gymcrm.exception.ValidException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,5 +27,10 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<?> UsernameNotFoundException(UsernameNotFoundException e) {
         return ResponseEntity.badRequest().body(Map.of("error","사용자가 존재하지 않습니다"));
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<?> JwtException(JwtException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
     }
 }

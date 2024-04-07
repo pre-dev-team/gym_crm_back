@@ -27,8 +27,8 @@
     </resultMap>
 
     <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
-        <id property="trainer_id" column="user_id" />
-        <result property="account_id" column="account_id" />
+        <id property="trainerId" column="trainer_id" />
+        <result property="accountId" column="account_id" />
         <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
@@ -50,6 +50,17 @@
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
     </resultMap>
+
+
+    <insert id="saveReservation"
+            parameterType="com.predev.gymcrm.entity.Reservation"
+    >
+        insert into
+            reservation_tb
+        values
+            (0, #{userId}, #{trainerId}, #{timeId}, #{reservationDate}, now(), now());
+    </insert>
+
 
     <select id="getAllReservation"
             resultType="com.predev.gymcrm.entity.Reservation"
@@ -92,6 +103,44 @@
             left outer join reservation_date_tb rdt on (rdt.reservation_date_id = rvt.reservation_date_id)
         where
             rvt.user_id = #{userId}
+    </select>
+
+    <select id="findReservationByDate" resultMap="ReservationResultMap">
+        select
+            reservation_id,
+            user_id,
+            trainer_id,
+            time_id,
+            reservation_date,
+            create_date,
+            update_date
+        from
+            reservation_tb
+        where
+            reservation_date = #{reservationDate}
+            <if test="trainerId != 0">
+                and trainer_id = #{trainerId}
+            </if>
+            <if test="userId != 0">
+                and user_id = #{userId}
+            </if>
+    </select>
+    <select id="findTrainerByDay" resultMap="TrainerResultMap">
+        select
+            tt.trainer_id,
+            tt.trainer_profile_img_url,
+            tt.account_id,
+            at.name,
+            rt.reservation_date,
+            rt.time_id
+        from
+            trainer_tb tt
+            left outer join account_tb at on(tt.account_id = at.account_id)
+            left outer join reservation_tb rt on(tt.trainer_id = rt.trainer_id)
+            and reservation_date = #{reservationDate}
+            and time_id = #{timeId}
+        where
+            time_id is null
     </select>
 
 </mapper>

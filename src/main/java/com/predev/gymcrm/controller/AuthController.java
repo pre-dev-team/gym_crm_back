@@ -9,6 +9,8 @@ import com.predev.gymcrm.dto.req.AccountSignupReqDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -17,17 +19,22 @@ public class AuthController {
 
     @ValidAspect
     @PostMapping("/user/signup")
-    public ResponseEntity<?> userSignup(@RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
-        System.out.println(reqDto);
+    public ResponseEntity<?> userSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
         authService.userSignup(reqDto);
-        return ResponseEntity.created(null).body(true);
+        return ResponseEntity.created(null).body(reqDto);
     }
 
-    @PostMapping("/user/signin")
+    @ValidAspect
+    @PostMapping("/trainer/signup")
+    public ResponseEntity<?> trainerSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
+        authService.trainerSignup(reqDto);
+        return ResponseEntity.created(null).body(reqDto);
+    }
+
+    @PostMapping("/account/signin")
     public ResponseEntity<?> userSignin(@RequestBody AccountSigninReqDto reqDto) {
-        authService.userSignin(reqDto);
-        System.out.println(authService.userSignin(reqDto));
-        return ResponseEntity.ok(authService.userSignin(reqDto));
+        authService.Signin(reqDto);
+        return ResponseEntity.ok(authService.Signin(reqDto));
     }
 
 

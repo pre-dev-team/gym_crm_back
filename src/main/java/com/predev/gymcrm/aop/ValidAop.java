@@ -43,7 +43,7 @@ public class ValidAop {
             }
         }
 
-        if(methodName.equals("userSignup")) {
+        if(methodName.equals("userSignup") || methodName.equals("trainerSignup")) {
             AccountSignupReqDto reqDto = null;
 
             for (Object arg : args) {
@@ -53,12 +53,12 @@ public class ValidAop {
             }
 
             if(authMapper.findAccountByUsername(reqDto.getUsername()) != null){
-                ObjectError objectError = new FieldError("userUsername", "userUsername", "이미 존재하는 사용자이름입니다.");
+                ObjectError objectError = new FieldError("username", "username", "이미 존재하는 사용자이름입니다.");
                 bindingResult.addError(objectError);
             }
 
             if(authMapper.findAccountByPhone(reqDto.getPhone()) != null) {
-                ObjectError objectError = new FieldError("userPhone", "userPhone", "이미 사용중인 전화번호입니다.");
+                ObjectError objectError = new FieldError("phone", "phone", "이미 사용중인 전화번호입니다.");
                 bindingResult.addError(objectError);
             }
 

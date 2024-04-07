@@ -13,8 +13,8 @@ import java.util.List;
 @Builder
 @Data
 public class Trainer {
-    private int trainer_id;
-    private int account_id;
+    private int trainerId;
+    private int accountId;
     private String trainerProfileImgUrl;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
