@@ -43,8 +43,21 @@ public class AuthService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void trainerSignup(AccountSignupReqDto reqDto) {
+        int successCount = 0;
+        System.out.println(reqDto);
+        Account account = reqDto.toEntity(passwordEncoder);
 
-    public String userSignin(AccountSigninReqDto reqDto) {
+        successCount += authMapper.saveAccount(98,account);
+        successCount += authMapper.saveTrainer(account.getAccountId());
+
+        if(successCount < 2) {
+            throw new SaveException();
+        }
+    }
+
+    public String Signin(AccountSigninReqDto reqDto) {
         Account account = authMapper.findAccountByUsername(reqDto.getUsername());
 
         if(account == null ) {
@@ -55,7 +68,6 @@ public class AuthService {
         }
         return jwtProvider.generateJwt(account);
     }
-
 
 
 }

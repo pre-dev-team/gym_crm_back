@@ -7,6 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface ReservationMapper {
+    public int saveReservation(Reservation reservation);
     public List<Reservation> getAllReservation();
     public Reservation findReservationByUserId(int userId);
+    public Reservation findReservationByDate(String Date);
 }

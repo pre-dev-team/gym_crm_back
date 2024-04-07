@@ -1,5 +1,7 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.dto.req.MakeReservationReqDto;
+import com.predev.gymcrm.dto.req.SearchDayReservationReqDto;
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
 import com.predev.gymcrm.entity.Reservation;
 
@@ -8,6 +10,8 @@ import com.predev.gymcrm.repository.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,8 +38,14 @@ public class ReservationService {
                 .collect(Collectors.toList());
     }
 
-    public void insertReservation() {
+    public void insertReservation(MakeReservationReqDto reqDto) {
+        String date = reqDto.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        reservationMapper.saveReservation(reqDto.toReservationEntity(date));
+    }
 
+    public Reservation SearchDayReservation(SearchDayReservationReqDto reqDto) {
+        String Date = LocalDateTime.parse(reqDto.getDate(), DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return Reservation.builder().build();
     }
 
 //    public SearchReservationRespDto findReservationByUserId(int userId) {

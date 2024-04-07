@@ -24,10 +24,17 @@ public class AuthController {
         return ResponseEntity.created(null).body(reqDto);
     }
 
-    @PostMapping("/user/signin")
+    @ValidAspect
+    @PostMapping("/trainer/signup")
+    public ResponseEntity<?> trainerSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
+        authService.trainerSignup(reqDto);
+        return ResponseEntity.created(null).body(reqDto);
+    }
+
+    @PostMapping("/account/signin")
     public ResponseEntity<?> userSignin(@RequestBody AccountSigninReqDto reqDto) {
-        authService.userSignin(reqDto);
-        return ResponseEntity.ok(authService.userSignin(reqDto));
+        authService.Signin(reqDto);
+        return ResponseEntity.ok(authService.Signin(reqDto));
     }
 
 

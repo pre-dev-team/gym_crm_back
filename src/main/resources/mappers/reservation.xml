@@ -51,6 +51,17 @@
         <result property="updateDate" column="update_date" />
     </resultMap>
 
+
+    <insert id="saveReservation"
+            parameterType="com.predev.gymcrm.entity.Reservation"
+    >
+        insert into
+            reservation_tb
+        values
+            (0, #{userId}, #{trainerId}, #{timeId}, #{reservationDate}, now(), now());
+    </insert>
+
+
     <select id="getAllReservation"
             resultType="com.predev.gymcrm.entity.Reservation"
             resultMap="ReservationResultMap"
@@ -92,6 +103,11 @@
             left outer join reservation_date_tb rdt on (rdt.reservation_date_id = rvt.reservation_date_id)
         where
             rvt.user_id = #{userId}
+    </select>
+    <select id="findReservationByDate" resultType="com.predev.gymcrm.entity.Reservation">
+
+
+
     </select>
 
 </mapper>

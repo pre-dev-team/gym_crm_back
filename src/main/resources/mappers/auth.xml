@@ -61,6 +61,12 @@
         values
             (0, #{accountId}, null, now(), now())
     </insert>
+    <insert id="saveTrainer">
+        insert into
+            trainer_tb
+        values
+            (0, #{accountId}, null, now(), now())
+    </insert>
 
     <!--###################       SELECT       ###################    -->
 

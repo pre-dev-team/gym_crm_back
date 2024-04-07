@@ -10,13 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    ReservationService reservationService;
 
-    @GetMapping("/reservation")
-    public ResponseEntity<?> makeReservation(@RequestBody MakeReservationReqDto reqDto) {
-        System.out.println(reqDto);
-        return ResponseEntity.ok("test");
-    }
 
 }

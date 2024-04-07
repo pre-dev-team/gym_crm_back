@@ -1,5 +1,6 @@
 package com.predev.gymcrm.controller;
 
+import com.predev.gymcrm.dto.req.MakeReservationReqDto;
 import com.predev.gymcrm.dto.req.SearchDayReservationReqDto;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,13 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
+    @PostMapping("/user/make")
+    public ResponseEntity<?> makeReservation(@RequestBody MakeReservationReqDto reqDto) {
+        reservationService.insertReservation(reqDto);
+        return ResponseEntity.ok(null);
+    }
+
+
     @GetMapping("/all")
     public ResponseEntity<?> getAllReservation() {
         return ResponseEntity.ok(reservationService.findAll());
@@ -25,8 +33,7 @@ public class ReservationController {
 
     @GetMapping("/day")
     public ResponseEntity<?> getDayReservations(SearchDayReservationReqDto reqDto) {
-        String a = LocalDateTime.parse(reqDto.getDate(), DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        System.out.println(a);
+        reservationService.SearchDayReservation(reqDto);
         return ResponseEntity.ok(null);
     }
 
