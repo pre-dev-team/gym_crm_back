@@ -27,8 +27,8 @@
     </resultMap>
 
     <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
-        <id property="trainer_id" column="user_id" />
-        <result property="account_id" column="account_id" />
+        <id property="trainerId" column="trainer_id" />
+        <result property="accountId" column="account_id" />
         <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
@@ -124,6 +124,23 @@
             <if test="userId != 0">
                 and user_id = #{userId}
             </if>
+    </select>
+    <select id="findTrainerByDay" resultMap="TrainerResultMap">
+        select
+            tt.trainer_id,
+            tt.trainer_profile_img_url,
+            tt.account_id,
+            at.name,
+            rt.reservation_date,
+            rt.time_id
+        from
+            trainer_tb tt
+            left outer join account_tb at on(tt.account_id = at.account_id)
+            left outer join reservation_tb rt on(tt.trainer_id = rt.trainer_id)
+            and reservation_date = #{reservationDate}
+            and time_id = #{timeId}
+        where
+            time_id is null
     </select>
 
 </mapper>

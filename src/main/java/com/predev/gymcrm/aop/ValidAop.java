@@ -43,7 +43,7 @@ public class ValidAop {
             }
         }
 
-        if(methodName.equals("userSignup")) {
+        if(methodName.equals("userSignup") || methodName.equals("trainerSignup")) {
             AccountSignupReqDto reqDto = null;
 
             for (Object arg : args) {

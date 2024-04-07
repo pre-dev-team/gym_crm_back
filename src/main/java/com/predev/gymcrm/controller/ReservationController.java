@@ -2,6 +2,7 @@ package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.MakeReservationReqDto;
 import com.predev.gymcrm.dto.req.SearchDayReservationReqDto;
+import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,5 +36,8 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.findAll());
     }
 
-
+    @GetMapping("/trainer/day")
+    public ResponseEntity<?> getUnreservedTriners(SearchUnreservedTrainerReqDto reqDto) {
+        return ResponseEntity.ok(reservationService.SearchUnreservedTrainers(reqDto));
+    }
 }

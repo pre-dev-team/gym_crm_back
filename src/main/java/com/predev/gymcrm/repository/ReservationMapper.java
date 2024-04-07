@@ -1,6 +1,7 @@
 package com.predev.gymcrm.repository;
 
 import com.predev.gymcrm.entity.Reservation;
+import com.predev.gymcrm.entity.Trainer;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,5 +16,9 @@ public interface ReservationMapper {
             @Param("userId") int userId,
             @Param("trainerId") int trainerId,
             @Param("reservationDate") String reservationDate
+    );
+    public List<Trainer> findTrainerByDay(
+            @Param("reservationDate") String reservationDate,
+            @Param("timeId") int timeId
     );
 }
