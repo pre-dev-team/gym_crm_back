@@ -1,5 +1,6 @@
 package com.predev.gymcrm.security.filter;
 
+import com.predev.gymcrm.exception.JwtException;
 import com.predev.gymcrm.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         boolean isPermitAll = (boolean) request.getAttribute("isPermitAll");
 
         if(!isPermitAll) {
-            Claims claims = Optional.ofNullable(request.getHeader(AUTHORIZATION_NAME_IN_HEADER))
+            try {
+                Claims claims = Optional.ofNullable(request.getHeader(AUTHORIZATION_NAME_IN_HEADER))
                         .map(wrappedToken -> wrappedToken.substring(PREFIX_OF_TOKEN.length()))
                         .map(jwtProvider::getClaims)
-                        .orElseThrow(() -> new IllegalStateException());
-            Authentication authentication = Optional.ofNullable(jwtProvider.getAuthentication(claims))
-                        .orElseThrow(() -> new IllegalStateException());
+                        .orElseThrow(() -> new JwtException());
+                Authentication authentication = Optional.ofNullable(jwtProvider.getAuthentication(claims))
+                        .orElseThrow(() -> new JwtException());
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } catch (Exception e) {
+                response.sendError(HttpStatus.UNAUTHORIZED.value());
+                return;
+            }
         }
 
         filterChain.doFilter(request,response);

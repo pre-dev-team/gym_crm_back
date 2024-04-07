@@ -1,6 +1,7 @@
 package com.predev.gymcrm.jwt;
 
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.exception.JwtException;
 import com.predev.gymcrm.repository.AuthMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -48,11 +49,17 @@ public class JwtProvider {
     }
 
     public Claims getClaims(String encodedToken) {
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(encodedToken)
-                .getBody();
+        Claims claims = null;
+        try {
+            claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(encodedToken)
+                    .getBody();
+        } catch (Exception e) {
+            throw new JwtException();
+        }
+        return claims;
     }
 
     public Authentication getAuthentication(Claims claims) {
