@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class SearchDayReservationReqDto {
+    private int userId;
+    private int trainerId;
     private String date;
-    private String useId;
-    private String trainerId;
 }

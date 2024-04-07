@@ -25,21 +25,15 @@ public class ReservationController {
         return ResponseEntity.ok(null);
     }
 
+    @GetMapping("/day")
+    public ResponseEntity<?> getDayReservations(SearchDayReservationReqDto reqDto) {
+        return ResponseEntity.ok(reservationService.SearchDayReservation(reqDto));
+    }
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllReservation() {
         return ResponseEntity.ok(reservationService.findAll());
     }
 
-    @GetMapping("/day")
-    public ResponseEntity<?> getDayReservations(SearchDayReservationReqDto reqDto) {
-        reservationService.SearchDayReservation(reqDto);
-        return ResponseEntity.ok(null);
-    }
 
-
-//    @GetMapping("{userId}")
-//    public ResponseEntity<?> getUserId(@PathVariable int userId) {
-//        return ResponseEntity.ok(reservationService.findReservationByUserId(userId));
-//    }
 }

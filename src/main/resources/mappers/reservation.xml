@@ -104,10 +104,26 @@
         where
             rvt.user_id = #{userId}
     </select>
-    <select id="findReservationByDate" resultType="com.predev.gymcrm.entity.Reservation">
 
-
-
+    <select id="findReservationByDate" resultMap="ReservationResultMap">
+        select
+            reservation_id,
+            user_id,
+            trainer_id,
+            time_id,
+            reservation_date,
+            create_date,
+            update_date
+        from
+            reservation_tb
+        where
+            reservation_date = #{reservationDate}
+            <if test="trainerId != 0">
+                and trainer_id = #{trainerId}
+            </if>
+            <if test="userId != 0">
+                and user_id = #{userId}
+            </if>
     </select>
 
 </mapper>
