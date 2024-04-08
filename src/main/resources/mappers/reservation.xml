@@ -51,6 +51,16 @@
         <result property="updateDate" column="update_date" />
     </resultMap>
 
+    <resultMap id="ScheduleResultMap" type="com.predev.gymcrm.entity.Reservation">
+        <id property="reservationId" column="reservation_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="trainerId" column="trainer_id"/>
+        <result property="timeId" column="time_id"/>
+        <result property="reservationDate" column="reservation_date"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
 
     <insert id="saveReservation"
             parameterType="com.predev.gymcrm.entity.Reservation"
@@ -141,6 +151,24 @@
             and time_id = #{timeId}
         where
             time_id is null
+    </select>
+
+    <select
+            id="getTodayReservation"
+            resultMap="ReservationResultMap"
+    >
+        SELECT
+        rst.reservation_id,
+        ut.user_id,
+        rst.time_id,
+        ttb.time_duration
+        FROM
+        reservation_tb rst
+        LEFT OUTER JOIN user_tb ut ON (ut.user_id = rst.user_id)
+        LEFT OUTER JOIN time_tb ttb ON (rst.time_id = ttb.time_id)
+        WHERE
+        rst.trainer_id = #{trainerId}
+        AND rst.reservation_date = #{today}
     </select>
 
 </mapper>

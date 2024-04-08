@@ -1,10 +1,13 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.MakeReservationReqDto;
+import com.predev.gymcrm.dto.req.MyTodayScheduleReqDto;
 import com.predev.gymcrm.dto.req.SearchDayReservationReqDto;
 import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
+import com.predev.gymcrm.dto.resp.MyTodayScheduleRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
 import com.predev.gymcrm.dto.resp.SearchUnreservedTrainerRespDto;
+import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.Reservation;
 
 import com.predev.gymcrm.entity.Time;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -78,6 +82,29 @@ public class ReservationService {
         return respDtos;
     }
 
+    @Autowired
+    public ReservationService(ReservationMapper reservationMapper) {
+        this.reservationMapper = reservationMapper;
+    }
+
+    public List<MyTodayScheduleRespDto> getTodayReservation(MyTodayScheduleReqDto reqDto) {
+        // 예약 정보를 가져오는 비지니스 로직 작성
+        // 예시로 비지니스 로직을 호출하여 예약 정보를 가져오는 코드 작성
+        List<Reservation> reservations = reservationMapper.getTodayReservation(reqDto.getTrainerId(), reqDto.getToday());
+        List<MyTodayScheduleRespDto> respDtoList = null;
+        respDtoList = reservations.stream().map(reservation -> {
+            int userId = reservation.getUserId();
+            Account userAccount = authMapper.findAccountByUserId(userId);
+            return MyTodayScheduleRespDto.builder()
+                    .reservationId(reservation.getReservationId())
+                    .timeId(reservation.getTimeId())
+                    .timeDuration(reservation.getTime().getTimeDuration())
+                    .phone(userAccount.getPhone())
+                    .name(userAccount.getName())
+                    .build();
+        }).collect(Collectors.toList());
+        return respDtoList;
+    }
 
 //    public SearchReservationRespDto findReservationByUserId(int userId) {
 //        Reservation reservation = reservationMapper.findReservationByUserId(userId);
