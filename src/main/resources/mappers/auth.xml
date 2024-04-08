@@ -34,8 +34,8 @@
     </resultMap>
 
     <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
-        <id property="trainer_id" column="user_id" />
-        <result property="account_id" column="account_id" />
+        <id property="trainerId" column="user_id" />
+        <result property="accountId" column="account_id" />
         <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
@@ -150,6 +150,7 @@
         where
             user_id = #{userId}
     </select>
+
     <select id="findAccountByTrainerId" resultType="com.predev.gymcrm.entity.Account">
         select
             tt.trainer_id,
