@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.predev.gymcrm.repository.CommonMapper">
+    <resultMap id="TimeResultMap" type="com.predev.gymcrm.entity.Time">
+        <id property="timeId" column="time_id"/>
+        <result property="timeDuration" column="time_duration"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
+        <id property="trainerId" column="trainer_id" />
+        <result property="accountId" column="account_id" />
+        <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="account" resultMap="AccountResultMap"/>
+    </resultMap>
+
+    <resultMap id="AccountResultMap" type="com.predev.gymcrm.entity.Account">
+        <id property="accountId" column="account_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
+
+    <select id="getTimes" resultMap="TimeResultMap">
+        select
+            time_id,
+            time_duration,
+            create_date,
+            update_date
+        from
+            time_tb
+    </select>
+    <select id="getTrainers" resultMap="TrainerResultMap">
+        select
+            tt.trainer_id,
+            tt.account_id,
+            tt.trainer_profile_img_url,
+            at.name,
+            at.email,
+            at.phone
+        from
+            trainer_tb tt
+            left outer join account_tb at on (at.account_id = tt.account_id)
+    </select>
+
+
+</mapper>

@@ -32,6 +32,10 @@ public class ReservationService {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
+    public int findUserIdByAccountId(int accountId) {
+        return authMapper.findUserIdByAccountId(accountId);
+    }
+
     public List<SearchReservationRespDto> findAll() {
         return reservationMapper.getAllReservation().stream()
                 .map(Reservation::toSearchReservationRespDto)
@@ -46,12 +50,19 @@ public class ReservationService {
     }
 
     public void insertReservation(MakeReservationReqDto reqDto) {
+        int userId = findUserIdByAccountId(reqDto.getAccountId());
         String date = reqDto.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        reservationMapper.saveReservation(reqDto.toReservationEntity(date));
+        reservationMapper.saveReservation(reqDto.toReservationEntity(date, userId));
     }
 
     public List<Time> SearchDayReservation(SearchDayReservationReqDto reqDto) {
-        List<Reservation> reservations = reservationMapper.findReservationByDate(reqDto.getUserId(), reqDto.getTrainerId(), trimDateString(reqDto.getDate()));
+        int userId = 0;
+        try{
+            userId = findUserIdByAccountId(reqDto.getAccountId());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        List<Reservation> reservations = reservationMapper.findReservationByDate(userId, reqDto.getTrainerId(), trimDateString(reqDto.getDate()));
         return reservations.stream().map(Reservation::getTime).collect(Collectors.toList());
     }
 
@@ -59,7 +70,7 @@ public class ReservationService {
         List<Trainer> trainers = reservationMapper.findTrainerByDay(trimDateString(reqDto.getDate()), reqDto.getTimeId());
         List<SearchUnreservedTrainerRespDto> respDtos = trainers.stream().map(trainer ->
             SearchUnreservedTrainerRespDto.builder()
-                    .trinerId(trainer.getTrainerId())
+                    .trainerId(trainer.getTrainerId())
                     .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())
                     .name(trainer.getAccount().getName())
                     .build()

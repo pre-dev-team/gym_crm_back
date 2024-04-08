@@ -8,12 +8,12 @@ import java.time.LocalDateTime;
 @Data
 public class MakeReservationReqDto {
 
-    private int userId;
+    private int accountId;
     private int trainerId;
     private int timeId;
     private LocalDateTime date;
 
-    public Reservation toReservationEntity(String date) {
+    public Reservation toReservationEntity(String date, int userId) {
         return Reservation.builder()
                 .userId(userId)
                 .trainerId(trainerId)

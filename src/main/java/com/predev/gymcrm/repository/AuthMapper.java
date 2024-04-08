@@ -16,6 +16,7 @@ AuthMapper {
     public Account findAccountByPhone(String phone);
     public Account findAccountByAccountId(String accountId);
     public Account findAccountByUserId(int userId);
+    public Integer findUserIdByAccountId(int accountId);
     public Account findAccountByTrainerId(int trainerId);
 
 
