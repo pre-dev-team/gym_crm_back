@@ -21,4 +21,6 @@ public interface ReservationMapper {
             @Param("reservationDate") String reservationDate,
             @Param("timeId") int timeId
     );
+
+    List<Reservation> getTodayReservation(@Param("trainerId") int trainerId, @Param("today") String today);
 }
