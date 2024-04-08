@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.predev.gymcrm.repository.TrainerMapper">
+
+    <resultMap id="ReservationResultMap" type="com.predev.gymcrm.entity.Reservation">
+        <id property="reservationId" column="reservation_id" />
+        <result property="userId" column="user_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="timeId" column="time_id" />
+        <result property="reservationDate" column="reservation_date" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="trainer" resultMap="TrainerResultMap" />
+    </resultMap>
+
+    <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
+        <id property="trainerId" column="trainer_id" />
+        <result property="accountId" column="account_id" />
+        <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+    </resultMap>
+
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
+        <id property="userId" column="user_id" />
+        <result property="accountId" column="account_id" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="account" resultMap="AccountResultMap"/>
+    </resultMap>
+
+    <resultMap id="AccountResultMap" type="com.predev.gymcrm.entity.Account">
+        <id property="accountId" column="account_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+        <association property="trainer" resultMap="AccountResultMap"/>
+        <collection property="reservations" resultMap="ReservationResultMap" />
+    </resultMap>
+
+    <select id="findReservedUserIdsByTrainerAccountId" resultType="integer">
+        select
+            rt.user_id
+        from
+            account_tb at
+            left outer join trainer_tb tt on(tt.account_id = at.account_id)
+            left outer join reservation_tb rt on(tt.trainer_id = rt.trainer_id)
+            left outer join user_tb ut on(ut.user_id = rt.user_id)
+        where
+            at.account_id = #{accountId}
+        group by
+            rt.user_id
+    </select>
+
+</mapper>
