@@ -37,7 +37,7 @@ public class ReservationController {
     }
 
     @GetMapping("/trainer/day")
-    public ResponseEntity<?> getUnreservedTriners(SearchUnreservedTrainerReqDto reqDto) {
+    public ResponseEntity<?> getUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
         return ResponseEntity.ok(reservationService.SearchUnreservedTrainers(reqDto));
     }
 }

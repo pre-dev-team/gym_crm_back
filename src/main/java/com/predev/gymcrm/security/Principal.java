@@ -10,7 +10,7 @@ import java.util.List;
 @Data
 @Builder
 public class Principal implements UserDetails {
-    private int userId;
+    private int accountId;
     private String username;
     private String name;
     private String email;

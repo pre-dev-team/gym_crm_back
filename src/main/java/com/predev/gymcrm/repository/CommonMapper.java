@@ -1,5 +1,6 @@
 package com.predev.gymcrm.repository;
 import com.predev.gymcrm.entity.Time;
+import com.predev.gymcrm.entity.Trainer;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -9,4 +10,5 @@ import java.util.List;
 public interface CommonMapper {
     // 시간대 정보를 가져오는 쿼리
     List<Time> getTimes();
+    List<Trainer> getTrainers();
 }

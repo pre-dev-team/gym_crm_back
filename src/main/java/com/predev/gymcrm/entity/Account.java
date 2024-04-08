@@ -37,7 +37,7 @@ public class Account {
 
     public Principal toPrincipal() {
         return Principal.builder()
-                .userId(accountId)
+                .accountId(accountId)
                 .username(username)
                 .email(email)
                 .authorities(this.getAuthorities())
