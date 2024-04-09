@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.predev.gymcrm.repository.TrainerMapper">
+
+    <resultMap id="TrainerInfoResultMap" type="com.predev.gymcrm.entity.Trainer">
+        <id property="trainerId" column="trainer_id" />
+        <result property="accountId" column="account_id"/>
+        <result property="trainerProfileImgUrl" column="trainer_profile_img_url"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <association property="account" resultMap="TrainerInfoAccountResultMap" />
+    </resultMap>
+
+    <resultMap id="TrainerInfoAccountResultMap" type="com.predev.gymcrm.entity.Account">
+        <id property="accountId" column="account_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
+
+    <select id="getAllTrainerInfo" resultMap="TrainerInfoResultMap">
+        select
+            tt.trainer_id,
+            at.name,
+            at.username,
+            at.phone,
+            at.email,
+            tt.trainer_profile_img_url
+        from
+            trainer_tb tt
+            left outer join account_tb at on(tt.account_id=at.account_id)
+        where
+            tt.trainer_id=#{trainerId};
+    </select>
+
+</mapper>
