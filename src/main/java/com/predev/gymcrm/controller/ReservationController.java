@@ -27,6 +27,11 @@ public class ReservationController {
         return ResponseEntity.ok(null);
     }
 
+    @GetMapping("user/find")
+    public ResponseEntity<?> getUserAllReservation(@RequestParam(value = "accountId") int accountId) {
+        return ResponseEntity.ok(reservationService.searchReservationsByUserId(accountId));
+    }
+
     @GetMapping("/day")
     public ResponseEntity<?> getDayReservations(SearchDayReservationReqDto reqDto) {
         return ResponseEntity.ok(reservationService.SearchDayReservation(reqDto));

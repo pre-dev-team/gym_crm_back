@@ -118,7 +118,7 @@
             at.phone = #{phone}
     </select>
     <select id="findAccountByAccountId"
-            resultType="com.predev.gymcrm.entity.Account">
+            resultMap="AccountResultMap">
         select
             account_id,
             role_id,
@@ -131,6 +131,8 @@
             update_date
         from
             account_tb
+        where
+            account_id = #{accountId}
     </select>
     <select id="findAccountByUserId" resultType="com.predev.gymcrm.entity.Account">
         select
