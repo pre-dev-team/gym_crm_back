@@ -158,17 +158,18 @@
             resultMap="ReservationResultMap"
     >
         SELECT
-        rst.reservation_id,
-        ut.user_id,
-        rst.time_id,
-        ttb.time_duration
+            rst.reservation_id,
+            trainer_id,
+            ut.user_id,
+            rst.time_id,
+            ttb.time_duration
         FROM
-        reservation_tb rst
-        LEFT OUTER JOIN user_tb ut ON (ut.user_id = rst.user_id)
-        LEFT OUTER JOIN time_tb ttb ON (rst.time_id = ttb.time_id)
+            reservation_tb rst
+            LEFT OUTER JOIN user_tb ut ON (ut.user_id = rst.user_id)
+            LEFT OUTER JOIN time_tb ttb ON (rst.time_id = ttb.time_id)
         WHERE
-        rst.trainer_id = #{trainerId}
-        AND rst.reservation_date = #{today}
+            rst.trainer_id = #{trainerId}
+            AND rst.reservation_date = #{today}
     </select>
 
 </mapper>

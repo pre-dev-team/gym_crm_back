@@ -7,11 +7,10 @@ import lombok.Data;
 @Data
 public class MyTodayScheduleRespDto {
     private int reservationId;
+    private int trainerId;
     private int userId;
     private String name;
     private String phone;
     private int timeId;
     private String timeDuration;
-
-
 }

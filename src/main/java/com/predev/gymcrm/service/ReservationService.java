@@ -1,12 +1,7 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.MakeReservationReqDto;
-import com.predev.gymcrm.dto.req.MyTodayScheduleReqDto;
-import com.predev.gymcrm.dto.req.SearchDayReservationReqDto;
-import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
-import com.predev.gymcrm.dto.resp.MyTodayScheduleRespDto;
-import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
-import com.predev.gymcrm.dto.resp.SearchUnreservedTrainerRespDto;
+import com.predev.gymcrm.dto.req.*;
+import com.predev.gymcrm.dto.resp.*;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.Reservation;
 
@@ -19,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +25,11 @@ public class ReservationService {
 
     @Autowired
     private AuthMapper authMapper;
+
+    @Autowired
+    public ReservationService(ReservationMapper reservationMapper) {
+        this.reservationMapper = reservationMapper;
+    }
 
     public String trimDateString(String date) {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -82,21 +81,18 @@ public class ReservationService {
         return respDtos;
     }
 
-    @Autowired
-    public ReservationService(ReservationMapper reservationMapper) {
-        this.reservationMapper = reservationMapper;
-    }
-
     public List<MyTodayScheduleRespDto> getTodayReservation(MyTodayScheduleReqDto reqDto) {
+        String today = trimDateString(reqDto.getToday());
         // 예약 정보를 가져오는 비지니스 로직 작성
         // 예시로 비지니스 로직을 호출하여 예약 정보를 가져오는 코드 작성
-        List<Reservation> reservations = reservationMapper.getTodayReservation(reqDto.getTrainerId(), reqDto.getToday());
+        List<Reservation> reservations = reservationMapper.getTodayReservation(reqDto.getTrainerId(), today);
         List<MyTodayScheduleRespDto> respDtoList = null;
         respDtoList = reservations.stream().map(reservation -> {
             int userId = reservation.getUserId();
             Account userAccount = authMapper.findAccountByUserId(userId);
             return MyTodayScheduleRespDto.builder()
                     .reservationId(reservation.getReservationId())
+                    .trainerId(reservation.getTrainerId())
                     .timeId(reservation.getTimeId())
                     .timeDuration(reservation.getTime().getTimeDuration())
                     .phone(userAccount.getPhone())
@@ -104,6 +100,12 @@ public class ReservationService {
                     .build();
         }).collect(Collectors.toList());
         return respDtoList;
+    }
+
+    public int getTrainerId(int accountId) {
+        int trainerId = authMapper.findTrainerIdByAccountId(accountId);
+
+        return trainerId;
     }
 
 //    public SearchReservationRespDto findReservationByUserId(int userId) {
