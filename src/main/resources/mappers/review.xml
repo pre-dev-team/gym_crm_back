@@ -13,4 +13,72 @@
         <result property="userEmail" column="user_email" />
     </resultMap>
 
+    <resultMap id="AccountResultMap" type="com.predev.gymcrm.entity.Account">
+        <id property="accountId" column="account_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
+
+    <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
+        <id property="trainerId" column="trainer_id" />
+        <result property="accountId" column="account_id" />
+        <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="account" resultMap="AccountResultMap"/>
+    </resultMap>
+
+    <resultMap id="ReviewResultMap" type="com.predev.gymcrm.entity.TrainerReview">
+        <id property="trainerReviewId" column="trainer_review_id"/>
+        <result property="trainerId" column="trainer_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="trainerReviewText" column="trainer_review_text"/>
+        <result property="trainerReviewScore" column="trainer_review_score"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+
+    </resultMap>
+
+    <!-- 트레이너 리뷰 삽입 쿼리 -->
+    <insert id="insertTrainerReview" parameterType="com.predev.gymcrm.entity.TrainerReview">
+        INSERT INTO trainer_review_tb
+        VALUES (0, #{trainerId}, #{userId}, #{trainerReviewText}, #{trainerReviewScore}, #{createDate}, #{updateDate})
+    </insert>
+
+    <!-- 모든 트레이너 리뷰 조회 쿼리 -->
+    <select
+            id="findAllTrainerReviews"
+            resultType="com.predev.gymcrm.entity.TrainerReview"
+            resultMap="ReviewResultMap"
+    >
+        SELECT
+            *
+        FROM
+            trainer_review_tb
+    </select>
+
+    <!-- 특정 트레이너의 리뷰를 조회하는 쿼리 -->
+    <select
+            id="findReviewsByTrainerId"
+            parameterType="int"
+            resultMap="ReviewResultMap">
+        SELECT
+            trt.trainer_review_id,
+            trt.trainer_id,
+            trt.user_id,
+            trt.trainer_review_text,
+            trt.trainer_review_score,
+            at.username,
+            trt.create_date,
+            trt.update_date
+        FROM
+            trainer_review_tb trt
+            left outer join user_tb ut on(ut.user_id = trt.user_id)
+            left outer join account_tb at on(at.account_id = ut.account_id)
+        WHERE trainer_id = #{trainerId}
+    </select>
+
 </mapper>
