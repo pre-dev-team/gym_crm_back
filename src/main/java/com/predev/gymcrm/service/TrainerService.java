@@ -1,7 +1,9 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
+import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.repository.AuthMapper;
 import com.predev.gymcrm.repository.ReservationMapper;
 import com.predev.gymcrm.repository.TrainerMapper;
@@ -31,5 +33,20 @@ public class TrainerService {
                 .email(account.getEmail())
                 .build()
         ).collect(Collectors.toList());
+    }
+    public TrainerInfoRespDto getAllTrainerInfo(int trainerId) {
+        Trainer trainer = trainerMapper.getAllTrainerInfo(trainerId);
+        if(trainer != null) {
+            return TrainerInfoRespDto.builder()
+                    .trainerId(trainer.getTrainerId())
+                    .name(trainer.getAccount().getName())
+                    .username(trainer.getAccount().getUsername())
+                    .phone(trainer.getAccount().getPhone())
+                    .email(trainer.getAccount().getEmail())
+                    .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())
+                    .build();
+        }
+
+        return null;
     }
 }
