@@ -2,6 +2,7 @@ package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.resp.TimeRespDto;
 import com.predev.gymcrm.dto.resp.TrainerForReservationRespDto;
+import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.Time;
 import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.repository.CommonMapper;

@@ -11,7 +11,7 @@ import java.util.List;
 public interface ReservationMapper {
     public int saveReservation(Reservation reservation);
     public List<Reservation> getAllReservation();
-    public Reservation findReservationByUserId(int userId);
+    public List<Reservation> findReservationsByUserId(int userId);
     public List<Reservation> findReservationByDate(
             @Param("userId") int userId,
             @Param("trainerId") int trainerId,

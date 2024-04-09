@@ -92,27 +92,23 @@
             left outer join trainer_tb tit on (tit.trainer_id = rvt.trainer_id)
     </select>
 
-    <select id="findReservationByUserId" parameterType="integer" resultMap="ReservationResultMap">
+    <select id="findReservationsByUserId" parameterType="integer" resultMap="ReservationResultMap">
         select
-            rvt.reservation_id,
-            ut.user_id,
-            ut.user_username,
-            tit.trainer_id,
-            tit.trainer_username,
-            tt.time_id,
-            tt.time_period,
-            rdt.reservation_date_id,
-            rdt.reservation_date_name,
-            rvt.create_date,
-            rvt.update_date
+            rt.reservation_id,
+            rt.reservation_date,
+            rt.user_id,
+            rt.trainer_id,
+            tt1.time_id,
+            tt1.time_duration,
+            tt2.account_id,
+            at.name
         from
-            reservation_tb rvt
-            left outer join user_tb ut on (ut.user_id = rvt.user_id)
-            left outer join trainer_tb tit on (tit.trainer_id = rvt.trainer_id)
-            left outer join time_tb tt on (tt.time_id = rvt.time_id)
-            left outer join reservation_date_tb rdt on (rdt.reservation_date_id = rvt.reservation_date_id)
+            reservation_tb rt
+            left outer join time_tb tt1 on(tt1.time_id = rt.time_id)
+            left outer join trainer_tb tt2 on(tt2.trainer_id = rt.trainer_id)
+            left outer join account_tb at on(tt2.account_id = at.account_id)
         where
-            rvt.user_id = #{userId}
+            user_id = #{userId}
     </select>
 
     <select id="findReservationByDate" resultMap="ReservationResultMap">
