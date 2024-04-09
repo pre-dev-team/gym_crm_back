@@ -1,6 +1,7 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.AccountSigninReqDto;
+import com.predev.gymcrm.dto.resp.SearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
@@ -68,6 +69,23 @@ public class AuthService {
         }
         return jwtProvider.generateJwt(account);
     }
-
+    public int findUserIdByAccountId(int accountId) {
+        return authMapper.findUserIdByAccountId(accountId);
+    }
+    public SearchAccountInfoRespDto getAccountInfoByAccountId(int accountId) {
+        Account account = authMapper.findAccountByAccountId(accountId);
+        System.out.println(account);
+        if(account == null) {
+            System.out.println("account가 null입니다");
+            return null;
+        }
+        return SearchAccountInfoRespDto.builder()
+                .accountId(account.getAccountId())
+                .username(account.getUsername())
+                .name(account.getName())
+                .phone(account.getPhone())
+                .email(account.getEmail())
+                .build();
+    }
 
 }

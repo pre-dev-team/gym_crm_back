@@ -37,5 +37,9 @@ public class AuthController {
         return ResponseEntity.ok(authService.Signin(reqDto));
     }
 
+    @GetMapping("account/myinfo")
+    public ResponseEntity<?> getMyInfo(@RequestParam(value = "accountId") int accountId) {
+        return ResponseEntity.ok(authService.getAccountInfoByAccountId(accountId));
+    }
 
 }

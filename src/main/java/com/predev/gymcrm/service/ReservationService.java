@@ -36,33 +36,44 @@ public class ReservationService {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public int findUserIdByAccountId(int accountId) {
-        return authMapper.findUserIdByAccountId(accountId);
-    }
-
     public List<SearchReservationRespDto> findAll() {
         return reservationMapper.getAllReservation().stream()
                 .map(Reservation::toSearchReservationRespDto)
                 .map(respDto -> {
-                    respDto.setUsername(authMapper.findAccountByUserId(respDto.getUserId()).getUsername());
-                    respDto.setName(authMapper.findAccountByUserId(respDto.getUserId()).getName());
-                    respDto.setTrainerUsername(authMapper.findAccountByTrainerId(respDto.getTrainerId()).getUsername());
-                    respDto.setTrainerName(authMapper.findAccountByTrainerId(respDto.getTrainerId()).getName());
+                    Account userAccount = authMapper.findAccountByUserId(respDto.getUserId());
+                    Account trainerAccount = authMapper.findAccountByTrainerId(respDto.getTrainerId());
+                    respDto.setUsername(userAccount.getUsername());
+                    respDto.setName(userAccount.getName());
+                    respDto.setTrainerUsername(trainerAccount.getUsername());
+                    respDto.setTrainerName(trainerAccount.getName());
                     return respDto;
                 })
                 .collect(Collectors.toList());
     }
 
     public void insertReservation(MakeReservationReqDto reqDto) {
-        int userId = findUserIdByAccountId(reqDto.getAccountId());
+        int userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
         String date = reqDto.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         reservationMapper.saveReservation(reqDto.toReservationEntity(date, userId));
+    }
+
+    public List<SearchReservationRespDto> searchReservationsByUserId(int accountId) {
+        int userId = authMapper.findUserIdByAccountId(accountId);
+        List<Reservation> reservations =reservationMapper.findReservationsByUserId(userId);
+
+        return reservations.stream().map(reservation -> {
+            return SearchReservationRespDto.builder()
+                    .reservationDate(reservation.getReservationDate())
+                    .trainerId(reservation.getTrainerId())
+                    .name(reservation.getTrainer().getAccount().getName())
+                    .build();
+        }).collect(Collectors.toList());
     }
 
     public List<Time> SearchDayReservation(SearchDayReservationReqDto reqDto) {
         int userId = 0;
         try{
-            userId = findUserIdByAccountId(reqDto.getAccountId());
+            userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -80,11 +91,6 @@ public class ReservationService {
                     .build()
         ).collect(Collectors.toList());
         return respDtos;
-    }
-
-    @Autowired
-    public ReservationService(ReservationMapper reservationMapper) {
-        this.reservationMapper = reservationMapper;
     }
 
     public List<MyTodayScheduleRespDto> getTodayReservation(MyTodayScheduleReqDto reqDto) {
