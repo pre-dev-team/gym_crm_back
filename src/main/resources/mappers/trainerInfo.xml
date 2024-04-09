@@ -34,7 +34,7 @@
             trainer_tb tt
             left outer join account_tb at on(tt.account_id=at.account_id)
         where
-            tt.trainer_id=#{trainerId};
+            at.account_id=#{accountId};
     </select>
 
 </mapper>

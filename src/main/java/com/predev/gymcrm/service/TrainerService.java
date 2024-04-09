@@ -35,8 +35,8 @@ public class TrainerService {
         ).collect(Collectors.toList());
     }
 
-    public TrainerInfoRespDto getAllTrainerInfo(int trainerId) {
-        Trainer trainer = trainerMapper.getAllTrainerInfo(trainerId);
+    public TrainerInfoRespDto getAllTrainerInfo(int accountId) {
+        Trainer trainer = trainerMapper.getAllTrainerInfo(accountId);
         if(trainer != null) {
             return TrainerInfoRespDto.builder()
                     .trainerId(trainer.getTrainerId())

@@ -10,5 +10,5 @@ import java.util.List;
 public interface TrainerMapper {
     public List<Integer> findReservedUserIdsByTrainerAccountId(int trainerAccountId);
 
-    public Trainer getAllTrainerInfo(int trainerId);
+    public Trainer getAllTrainerInfo(int accountId);
 }

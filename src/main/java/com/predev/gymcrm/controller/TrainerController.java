@@ -20,8 +20,8 @@ public class TrainerController {
         return ResponseEntity.ok(trainerService.selectMyMembers(trainerAccountId));
     }
     @GetMapping("/trainerInfo")
-    public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "trainerId") int trainerId) {
-        TrainerInfoRespDto trainerInfo = trainerService.getAllTrainerInfo(trainerId);
+    public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "accountId") int accountId) {
+        TrainerInfoRespDto trainerInfo = trainerService.getAllTrainerInfo(accountId);
         if (trainerInfo != null) {
             return ResponseEntity.ok(trainerInfo);
         } else {
