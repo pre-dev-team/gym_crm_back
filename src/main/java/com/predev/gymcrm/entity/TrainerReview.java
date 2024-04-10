@@ -1,5 +1,6 @@
 package com.predev.gymcrm.entity;
 
+import com.predev.gymcrm.dto.resp.ReviewRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,9 +17,20 @@ public class TrainerReview {
     private int trainerId;
     private int userId;
     private String trainerReviewText;
-    private double trainerReviewScore;
+    private int trainerReviewScore;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    private Account account; // userId
+//    private Account account; // userId
+
+    public ReviewRespDto toReviewRespDto() {
+        return ReviewRespDto.builder()
+                .trainerReviewId(this.trainerReviewId)
+                .trainerId(this.trainerId)
+                .userId(this.userId)
+                .reviewText(this.trainerReviewText)
+                .reviewScore(this.trainerReviewScore)
+                .createDate(this.createDate)
+                .build();
+    }
 }
