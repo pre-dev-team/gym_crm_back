@@ -13,5 +13,6 @@ public class ReviewRespDto {
     private String reviewText;
     private int reviewScore;
     private String username;
+    private String trainerName;
     private LocalDateTime createDate;
 }

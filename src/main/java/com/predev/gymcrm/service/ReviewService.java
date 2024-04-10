@@ -52,15 +52,6 @@ public class ReviewService {
                 .collect(Collectors.toList());
     }
 
-
-    // 특정 트레이너의 리뷰를 조회하는 메서드
-    // findReviewsByTrainerId 메서드 수정
-//    public List<ReviewRespDto> findReviewsByTrainerId(int trainerId) {
-//        List<TrainerReview> trainerReviews = reviewMapper.findReviewsByTrainerId(trainerId);
-//        return trainerReviews.stream()
-//                .map(TrainerReview::toReviewRespDto)
-//                .collect(Collectors.toList());
-
     public List<ReviewRespDto> findReviewsByTrainerId(int trainerId) {
 
         List<TrainerReview> trainerReviews = reviewMapper.findReviewsByTrainerId(trainerId);
@@ -68,9 +59,11 @@ public class ReviewService {
         respDtoList = trainerReviews.stream().map(trainerReview -> {
             int userId = trainerReview.getUserId();
             Account userAccount = authMapper.findAccountByUserId(userId);
+            Account trainerAccount = authMapper.findAccountByTrainerId(trainerId);
             return ReviewRespDto.builder()
                     .trainerReviewId(trainerReview.getTrainerReviewId())
                     .trainerId(trainerReview.getTrainerId())
+                    .trainerName(trainerAccount.getName())
                     .userId(trainerReview.getUserId())
                     .reviewText(trainerReview.getTrainerReviewText())
                     .reviewScore(trainerReview.getTrainerReviewScore())
