@@ -17,7 +17,7 @@ public class AdminController {
 
     @GetMapping("/users")
     public ResponseEntity<?> getUsersByName(@RequestParam(value = "name") String name) {
-
+        return ResponseEntity.ok(name);
     }
 
 
