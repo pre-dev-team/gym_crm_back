@@ -69,9 +69,11 @@ public class AuthService {
         }
         return jwtProvider.generateJwt(account);
     }
+
     public int findUserIdByAccountId(int accountId) {
         return authMapper.findUserIdByAccountId(accountId);
     }
+
     public SearchAccountInfoRespDto getAccountInfoByAccountId(int accountId) {
         Account account = authMapper.findAccountByAccountId(accountId);
         System.out.println(account);

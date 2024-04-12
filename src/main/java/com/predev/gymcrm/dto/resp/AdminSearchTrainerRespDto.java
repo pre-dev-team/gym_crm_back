@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class AdminSearchTrainerRespDto {
     private int trainerId;
     private String name;
-    private int memberCount;
-    private float avgScore;
+    private Integer memberCount;
+    private Double avgScore;
 }

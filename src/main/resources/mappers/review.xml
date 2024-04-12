@@ -94,5 +94,14 @@
         where
             user_id = #{userId}
     </select>
+    <select id="findAvgReviewScoreByTrainerId" resultType="java.lang.Double">
+        select
+            avg(trainer_review_score)
+        from
+            trainer_review_tb
+        where
+            trainer_id = #{trainerId}
+    </select>
+
 
 </mapper>

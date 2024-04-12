@@ -26,5 +26,13 @@ public interface ReservationMapper {
             @Param("today") String today
     );
 
+    List<Reservation> findReservationByNameAndPeriod(
+            @Param("searchType") int searchType,
+            @Param("name") String name,
+            @Param("startDate") String startDate,
+            @Param("endDate") String endDate
+    );
+
     int findReservationCountByUserId(int userId);
+    int findMemberCountOfTrainerByTrainerId(int trainerId);
 }

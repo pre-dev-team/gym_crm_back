@@ -9,18 +9,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/trainer/mypage")
+@RequestMapping("/trainer")
 public class TrainerController {
 
     @Autowired
     private TrainerService trainerService;
 
-    @GetMapping("/members")
+    @GetMapping("/mypage/members")
     public ResponseEntity<?> getMyMembers(@RequestParam(value = "accountId") int trainerAccountId) {
         return ResponseEntity.ok(trainerService.selectMyMembers(trainerAccountId));
     }
 
-    @GetMapping("/trainerInfo")
+    @GetMapping("/mypage/trainerInfo")
     public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "accountId") int accountId) {
         TrainerInfoRespDto trainerInfo = trainerService.getAllTrainerInfo(accountId);
         if (trainerInfo != null) {

@@ -1,6 +1,7 @@
 package com.predev.gymcrm.repository;
 
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,10 +19,10 @@ AuthMapper {
     public Account findAccountByUsername(String username);
     public Account findAccountByPhone(String phone);
     public Account findAccountByAccountId(int accountId);
+    public Account findAccountByTrainerId(int trainerId);
     public Account findAccountByUserId(int userId);
     public Integer findUserIdByAccountId(int accountId);
     public Integer findTrainerIdByAccountId(int accountId);
-    public Account findAccountByTrainerId(int trainerId);
     public List<User> findUsersByName(String name);
 
 }

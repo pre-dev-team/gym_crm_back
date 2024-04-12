@@ -131,6 +131,7 @@
                 and user_id = #{userId}
             </if>
     </select>
+
     <select id="findTrainerByDay" resultMap="TrainerResultMap">
         select
             tt.trainer_id,
@@ -149,8 +150,7 @@
             time_id is null
     </select>
 
-    <select
-            id="getTodayReservation"
+    <select id="getTodayReservation"
             resultMap="ReservationResultMap"
     >
         SELECT
@@ -168,15 +168,85 @@
             AND rst.reservation_date = #{today}
     </select>
 
-    <select
-            id="findReservationCountByUserId"
+    <select id="findReservationCountByUserId"
             resultType="int"
     >
         select
-        count(user_id)
+            count(user_id)
         from
-        reservation_tb
+            reservation_tb
         where
-        user_id = #{userId}
+            user_id = #{userId}
     </select>
+    <select id="findMemberCountOfTrainerByTrainerId"
+            resultType="int"
+    >
+        select
+            count(*) member_count
+        from
+            (
+                select
+                    *
+                from
+                    reservation_tb
+                where
+                    trainer_id = #{trainerId}
+                group by
+                    user_id
+            ) as reservation_member_count
+
+    </select>
+    <select id="findReservationByNameAndPeriod"
+            resultMap="ReservationResultMap">
+        <choose>
+            <when test="searchType == 1">
+                select
+                    rt.reservation_id,
+                    rt.trainer_id,
+                    rt.user_id,
+                    ut.account_id,
+                    at.username,
+                    at.name,
+                    rt.time_id,
+                    tit.time_duration,
+                    rt.reservation_date
+                from
+                    reservation_tb rt
+                left outer join
+                    time_tb tit	on (rt.time_id = tit.time_id)
+                left outer join
+                    user_tb ut on (rt.user_id = ut.user_id)
+                left outer join
+                    account_tb at on (ut.account_id = at.account_id)
+                where
+                    reservation_date between #{startDate} and #{endDate}
+                    and at.name like concat('%', #{name}, '%')
+            </when>
+            <when test="searchType == 2">
+                select
+                    rt.reservation_id,
+                    rt.trainer_id,
+                    rt.user_id,
+                    tt.account_id,
+                    at.username,
+                    at.name,
+                    rt.time_id,
+                    tit.time_duration,
+                    rt.reservation_date
+                from
+                    reservation_tb rt
+                left outer join
+                    time_tb tit	on (rt.time_id = tit.time_id)
+                left outer join
+                    trainer_tb tt on (tt.trainer_id = rt.trainer_id)
+                left outer join
+                    account_tb at on (at.account_id = tt.account_id)
+                where
+                    reservation_date between #{startDate} and #{endDate}
+                    and name like concat('%', #{name}, '%')
+            </when>
+        </choose>
+    </select>
+
+
 </mapper>
