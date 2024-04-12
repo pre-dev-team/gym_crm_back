@@ -11,12 +11,12 @@ public interface ReviewMapper {
     List<TrainerReview> findAllTrainerReviews();
 
     // 특정 트레이너의 리뷰 조회 쿼리
-    public List<TrainerReview> findReviewsByTrainerId(int trainerId);
-  
-    List<TrainerReview> findReviewsByUserId(int userId);
 
+    List<TrainerReview> findReviewsByTrainerId(int trainerId);
+    List<TrainerReview> findReviewsByUserId(int userId);
     void insertTrainerReview(TrainerReview trainerReview);
 
+    Double findAvgReviewScoreByTrainerId(int trainerId);
     // 상위 3명의 트레이너 ID를 조회하는 메서드
     List<Integer> findTopRatedTrainers();
 
@@ -27,4 +27,5 @@ public interface ReviewMapper {
     List<TrainerReview> findTopReviewAmongTopTrainers(int trainerId);
 
     TrainerReview findTopReviewByTrainerId(int trainerId);
+
 }

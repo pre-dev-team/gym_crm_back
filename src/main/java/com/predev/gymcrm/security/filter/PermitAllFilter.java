@@ -20,6 +20,7 @@ public class PermitAllFilter extends OncePerRequestFilter {
                 "/common",
                 "/reservation",
                 "/trainer",
+                "/admin",
                 "/options"
         );
 

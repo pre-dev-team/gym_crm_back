@@ -5,12 +5,9 @@
 
 <mapper namespace="com.predev.gymcrm.repository.ReviewMapper">
 
-    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.Account">
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
         <id property="userId" column="user_id" />
-        <result property="userUsername" column="user_username" />
-        <result property="userName" column="user_name" />
-        <result property="userPhone" column="user_phone" />
-        <result property="userEmail" column="user_email" />
+        <result property="accountId" column="account_id" />
     </resultMap>
 
     <resultMap id="AccountResultMap" type="com.predev.gymcrm.entity.Account">
@@ -83,6 +80,7 @@
         WHERE
             trainer_id = #{trainerId}
     </select>
+
     <select id="findReviewsByUserId"
             resultType="com.predev.gymcrm.entity.TrainerReview"
             resultMap="ReviewResultMap">
@@ -97,6 +95,15 @@
         where
             user_id = #{userId}
     </select>
+    <select id="findAvgReviewScoreByTrainerId" resultType="java.lang.Double">
+        select
+            avg(trainer_review_score)
+        from
+            trainer_review_tb
+        where
+            trainer_id = #{trainerId}
+    </select>
+
 
     <select
             id="findAllTrainers"

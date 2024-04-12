@@ -21,9 +21,6 @@ public class CommonController {
         return ResponseEntity.ok(timePeriods);
     }
 
-    @GetMapping("/trainers")
-    public ResponseEntity<?> getTrainers() {
-        return ResponseEntity.ok(commonService.getTrainersForReservation());
-    }
+
 
 }

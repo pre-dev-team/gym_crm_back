@@ -38,18 +38,8 @@
         from
             time_tb
     </select>
-    <select id="getTrainers" resultMap="TrainerResultMap">
-        select
-            tt.trainer_id,
-            tt.account_id,
-            tt.trainer_profile_img_url,
-            at.name,
-            at.email,
-            at.phone
-        from
-            trainer_tb tt
-            left outer join account_tb at on (at.account_id = tt.account_id)
-    </select>
+
+
 
     <select id="getTrainerProfileImgUrl" resultType="String">
         SELECT

@@ -22,6 +22,7 @@
         <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
+        <association property="account" resultMap="AccountResultMap" />
     </resultMap>
 
     <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
@@ -39,7 +40,7 @@
         <result property="name" column="name" />
         <result property="phone" column="phone" />
         <result property="email" column="email" />
-        <association property="trainer" resultMap="AccountResultMap"/>
+        <association property="trainer" resultMap="TrainerResultMap"/>
         <collection property="reservations" resultMap="ReservationResultMap" />
     </resultMap>
 
@@ -55,6 +56,19 @@
             at.account_id = #{accountId}
         group by
             rt.user_id
+    </select>
+
+    <select id="getTrainers" resultMap="TrainerResultMap">
+        select
+            tt.trainer_id,
+            tt.account_id,
+            tt.trainer_profile_img_url,
+            at.name,
+            at.email,
+            at.phone
+        from
+            trainer_tb tt
+            left outer join account_tb at on (at.account_id = tt.account_id)
     </select>
 
 </mapper>

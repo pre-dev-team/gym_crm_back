@@ -36,5 +36,4 @@
         where
             at.account_id=#{accountId};
     </select>
-
 </mapper>

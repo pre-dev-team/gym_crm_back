@@ -1,6 +1,7 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
+import com.predev.gymcrm.dto.resp.TrainerForReservationRespDto;
 import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.Trainer;
@@ -49,6 +50,16 @@ public class TrainerService {
         }
 
         return null;
+    }
+
+    public List<TrainerForReservationRespDto> getTrainersForReservation() {
+        List<Trainer> trainers = trainerMapper.getTrainers();
+        System.out.println(trainers);
+        return trainers.stream().map(trainer -> TrainerForReservationRespDto.builder()
+                .trainerId(trainer.getTrainerId())
+                .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())
+                .name(trainer.getAccount().getName())
+                .build()).collect(Collectors.toList());
     }
 
 }

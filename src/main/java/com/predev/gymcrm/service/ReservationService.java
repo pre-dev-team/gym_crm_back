@@ -23,6 +23,7 @@ public class ReservationService {
     @Autowired
     private AuthMapper authMapper;
 
+
     public String trimDateString(String date) {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
@@ -68,12 +69,12 @@ public class ReservationService {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        List<Reservation> reservations = reservationMapper.findReservationByDate(userId, reqDto.getTrainerId(), trimDateString(reqDto.getDate()));
+        List<Reservation> reservations = reservationMapper.findReservationByDate(userId, reqDto.getTrainerId(), CommonService.trimDateString(reqDto.getDate()));
         return reservations.stream().map(Reservation::getTime).collect(Collectors.toList());
     }
 
     public List<SearchUnreservedTrainerRespDto> SearchUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
-        List<Trainer> trainers = reservationMapper.findTrainerByDay(trimDateString(reqDto.getDate()), reqDto.getTimeId());
+        List<Trainer> trainers = reservationMapper.findTrainerByDay(CommonService.trimDateString(reqDto.getDate()), reqDto.getTimeId());
         List<SearchUnreservedTrainerRespDto> respDtos = trainers.stream().map(trainer ->
             SearchUnreservedTrainerRespDto.builder()
                     .trainerId(trainer.getTrainerId())
@@ -85,7 +86,7 @@ public class ReservationService {
     }
 
     public List<MyTodayScheduleRespDto> getTodayReservation(MyTodayScheduleReqDto reqDto) {
-        String today = trimDateString(reqDto.getToday());
+        String today = CommonService.trimDateString(reqDto.getToday());
         // 예약 정보를 가져오는 비지니스 로직 작성
         // 예시로 비지니스 로직을 호출하여 예약 정보를 가져오는 코드 작성
         List<Reservation> reservations = reservationMapper.getTodayReservation(reqDto.getTrainerId(), today);

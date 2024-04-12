@@ -9,6 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface ReservationMapper {
+
     public int saveReservation(Reservation reservation);
     public List<Reservation> getAllReservation();
     public List<Reservation> findReservationsByUserId(int userId);
@@ -18,10 +19,22 @@ public interface ReservationMapper {
             @Param("trainerId") int trainerId,
             @Param("reservationDate") String reservationDate
     );
-    public List<Trainer> findTrainerByDay(
+    List<Trainer> findTrainerByDay(
             @Param("reservationDate") String reservationDate,
             @Param("timeId") int timeId
     );
+    List<Reservation> getTodayReservation(
+            @Param("trainerId") int trainerId,
+            @Param("today") String today
+    );
 
-    List<Reservation> getTodayReservation(@Param("trainerId") int trainerId, @Param("today") String today);
+    List<Reservation> findReservationByNameAndPeriod(
+            @Param("searchType") int searchType,
+            @Param("name") String name,
+            @Param("startDate") String startDate,
+            @Param("endDate") String endDate
+    );
+
+    int findReservationCountByUserId(int userId);
+    int findMemberCountOfTrainerByTrainerId(int trainerId);
 }
