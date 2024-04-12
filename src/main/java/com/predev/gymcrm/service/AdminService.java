@@ -1,5 +1,6 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.repository.ReservationMapper;
 import com.predev.gymcrm.repository.ReviewMapper;
 import com.predev.gymcrm.repository.AuthMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,5 +13,7 @@ public class AdminService {
     private AuthMapper authMapper;
     @Autowired
     private ReviewMapper reviewMapper;
+    @Autowired
+    private ReservationMapper reservationMapper;
 
 }
