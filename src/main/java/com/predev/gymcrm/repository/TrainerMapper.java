@@ -11,4 +11,5 @@ public interface TrainerMapper {
     public List<Integer> findReservedUserIdsByTrainerAccountId(int trainerAccountId);
 
     public Trainer getAllTrainerInfo(int accountId);
+
 }
