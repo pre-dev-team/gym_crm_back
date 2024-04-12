@@ -8,5 +8,4 @@ import java.util.List;
 @Mapper
 public interface TrainerMapper {
     public List<Integer> findReservedUserIdsByTrainerAccountId(int trainerAccountId);
-
 }
