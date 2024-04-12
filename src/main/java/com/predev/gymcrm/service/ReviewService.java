@@ -31,26 +31,12 @@ public class ReviewService {
     private CommonMapper commonMapper;
 
     // 리뷰 작성 기능을 수행하는 메서드
-    public ReviewRespDto writeReview(ReviewReqDto reqDto) {
-
-        int trainerId = reqDto.getTrainerId();
-        int userId = reqDto.getUserId();
-        String reviewText = reqDto.getReviewText();
-        int reviewScore = reqDto.getReviewScore();
-
-        // TrainerReview 객체 생성
-        TrainerReview trainerReview = TrainerReview.builder()
-                .trainerId(trainerId)
-                .userId(userId)
-                .trainerReviewText(reviewText)
-                .trainerReviewScore(reviewScore)
-                .build();
-
-        // 리뷰를 데이터베이스에 저장
+    public void writeReview(ReviewReqDto reqDto) {
+        int userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
+        TrainerReview trainerReview = reqDto.toEntity();
+        trainerReview.setUserId(userId);
         reviewMapper.insertTrainerReview(trainerReview);
-
         // 생성된 리뷰 정보를 ReviewRespDto로 변환하여 반환
-        return trainerReview.toReviewRespDto();
     }
 
     // 모든 리뷰를 조회하는 메서드
@@ -90,6 +76,19 @@ public class ReviewService {
                 .collect(Collectors.toList());
 
         return respDtoList;
+    }
+
+    public List<ReviewRespDto> searchAllUserReviews(int accountId) {
+        int userId = authMapper.findUserIdByAccountId(accountId);
+        return reviewMapper.findReviewsByUserId(userId).stream().map(review ->
+             ReviewRespDto.builder()
+                     .trainerReviewId(review.getTrainerReviewId())
+                     .reviewText(review.getTrainerReviewText())
+                     .reviewScore(review.getTrainerReviewScore())
+                     .trainerId(review.getTrainerId())
+                     .createDate(review.getCreateDate())
+                     .build()
+        ).collect(Collectors.toList());
     }
 
     public List<ReviewRespDto> findReviewsByTrainerId(int trainerId) {
