@@ -5,6 +5,7 @@ import com.predev.gymcrm.dto.req.MyTodayScheduleReqDto;
 import com.predev.gymcrm.dto.req.SearchDayReservationReqDto;
 import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
 import com.predev.gymcrm.dto.resp.MyTodayScheduleRespDto;
+import com.predev.gymcrm.dto.resp.SearchReservationUserRespDto;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -58,5 +59,10 @@ public class ReservationController {
         System.out.println(reservations);
 
         return ResponseEntity.ok(reservations);
+    }
+
+    @GetMapping("/trainer/searchall")
+    public ResponseEntity<?> getSearchAllUser(@RequestParam(value = "accountId") int accountId) {
+        return ResponseEntity.ok(reservationService.searchReservationsUser(accountId));
     }
 }

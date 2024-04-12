@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 @Builder
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class SearchMyMembersRespDto {
     private int accountId;
     private String name;
