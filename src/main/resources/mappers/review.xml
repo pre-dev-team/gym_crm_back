@@ -77,7 +77,8 @@
             trainer_review_tb trt
             left outer join user_tb ut on(ut.user_id = trt.user_id)
             left outer join account_tb at on(at.account_id = ut.account_id)
-        WHERE trainer_id = #{trainerId}
+        WHERE
+            trainer_id = #{trainerId}
     </select>
 
     <select id="findReviewsByUserId"
@@ -102,6 +103,102 @@
         where
             trainer_id = #{trainerId}
     </select>
+
+
+    <select
+            id="findAllTrainers"
+            resultType="com.predev.gymcrm.entity.Trainer"
+            resultMap="TrainerResultMap">
+        SELECT
+            *
+        FROM
+            trainer_tb
+    </select>
+
+    <select id="findTopRatedTrainers" resultType="int">
+        SELECT
+            trainer_id
+        FROM (
+            SELECT
+                trainer_id,
+                COUNT(*) AS review_count
+            FROM
+                trainer_review_tb
+            GROUP BY
+                trainer_id
+            ORDER BY
+                review_count DESC
+            LIMIT 3
+        ) AS top_rated_trainers
+    </select>
+
+    <!-- 각 트레이너들의 평균 점수를 계산하는 쿼리 -->
+    <select id="findAverageRatingByTrainer" resultType="Double">
+        SELECT
+            trainer_id,
+            AVG(trainer_review_score) AS average_rating
+        FROM
+            trainer_review_tb
+        GROUP BY
+            trainer_id
+    </select>
+
+    <!-- 리뷰 갯수가 많은 3명의 트레이너들 중에서 각 트레이너마다 평점이 높은 리뷰 하나를 선정하는 쿼리 -->
+    <select id="findTopReviewAmongTopTrainers" resultMap="ReviewResultMap">
+        SELECT
+        trt.*
+        FROM
+        trainer_review_tb trt
+        INNER JOIN (
+        SELECT
+        trainer_id,
+        MAX(trainer_review_score) AS max_score
+        FROM
+        trainer_review_tb
+        WHERE
+        trainer_id IN (
+        SELECT
+        trainer_id
+        FROM (
+        SELECT
+        trainer_id,
+        COUNT(*) AS review_count
+        FROM
+        trainer_review_tb
+        GROUP BY
+        trainer_id
+        ORDER BY
+        review_count DESC
+        LIMIT 3
+        ) AS top_rated_trainers
+        )
+        GROUP BY
+        trainer_id
+        ) AS max_scores ON trt.trainer_id = max_scores.trainer_id AND trt.trainer_review_score = max_scores.max_score
+    </select>
+
+    <select id="findTopReviewByTrainerId" resultMap="ReviewResultMap">
+        SELECT
+        trt.*
+        FROM
+        trainer_review_tb trt
+        INNER JOIN (
+        SELECT
+        trainer_id,
+        MAX(trainer_review_score) AS max_score,
+        MAX(create_date) AS max_create_date
+        FROM
+        trainer_review_tb
+        WHERE
+        trainer_id = #{trainerId}
+        GROUP BY
+        trainer_id
+        ) AS max_scores ON trt.trainer_id = max_scores.trainer_id
+        AND trt.trainer_review_score = max_scores.max_score
+        AND trt.create_date = max_scores.max_create_date
+    </select>
+
+
 
 
 </mapper>

@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         //auth로 받는 모든 요청제외하고 jwt인가받겠습니다
         http.authorizeRequests()
-                .antMatchers("/auth/**","/admin/**","/common/**","/reservation/**","/trainer/**", "/review/**")
+                .antMatchers("/auth/**","/admin/**","/common/**","/reservation/**","/trainer/**", "/review/**", "/options/**")
                 .permitAll()
                 .antMatchers("/user/**")
                 .hasRole("USER")

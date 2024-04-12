@@ -23,15 +23,13 @@ public class TrainerController {
     @GetMapping("/mypage/trainerInfo")
     public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "accountId") int accountId) {
         TrainerInfoRespDto trainerInfo = trainerService.getAllTrainerInfo(accountId);
-        if (trainerInfo != null) {
-            return ResponseEntity.ok(trainerInfo);
-        } else {
-            return ResponseEntity.notFound().build(); // 트레이너가 존재하지 않을 경우 404 응답
-        }
+
+        return ResponseEntity.ok(trainerInfo);
     }
 
     @GetMapping("/trainers")
     public ResponseEntity<?> getTrainers() {
         return ResponseEntity.ok(trainerService.getTrainersForReservation());
     }
+
 }

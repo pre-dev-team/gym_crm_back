@@ -2,11 +2,8 @@ package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.*;
 import com.predev.gymcrm.dto.resp.*;
-import com.predev.gymcrm.entity.Account;
-import com.predev.gymcrm.entity.Reservation;
+import com.predev.gymcrm.entity.*;
 
-import com.predev.gymcrm.entity.Time;
-import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.repository.AuthMapper;
 import com.predev.gymcrm.repository.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +23,9 @@ public class ReservationService {
     @Autowired
     private AuthMapper authMapper;
 
-    @Autowired
-    public ReservationService(ReservationMapper reservationMapper) {
-        this.reservationMapper = reservationMapper;
+
+    public String trimDateString(String date) {
+        return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
     public List<SearchReservationRespDto> findAll() {
@@ -113,6 +110,19 @@ public class ReservationService {
         int trainerId = authMapper.findTrainerIdByAccountId(accountId);
 
         return trainerId;
+    }
+
+    public List<SearchReservationUserRespDto> searchReservationsUser (int accountId) {
+        List<Reservation> reservations = reservationMapper.findReservationByAccountId(accountId);
+        Account account = authMapper.findAccountByAccountId(accountId);
+        List<SearchReservationUserRespDto> respDtos = reservations.stream().map(reservation ->
+                SearchReservationUserRespDto.builder()
+                        .UserId(reservation.getUserId())
+                        .name(account.getName())
+                        .timeDuration(reservation.getTime().getTimeDuration())
+                        .build()
+        ).collect(Collectors.toList());
+        return respDtos;
     }
 
 //    public SearchReservationRespDto findReservationByUserId(int userId) {

@@ -1,6 +1,7 @@
 package com.predev.gymcrm.entity;
 
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
+import com.predev.gymcrm.dto.resp.SearchReservationUserRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -36,4 +37,5 @@ public class Reservation {
                 .timeDuration(time.getTimeDuration())
                 .build();
     }
+
 }

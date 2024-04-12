@@ -11,4 +11,10 @@ public interface CommonMapper {
     // 시간대 정보를 가져오는 쿼리
     List<Time> getTimes();
 
+    List<Trainer> getTrainers();
+
+    Trainer findTrainerByTrainerId(int trainerId);
+
+    String getTrainerProfileImgUrl(int trainerId);
+
 }
