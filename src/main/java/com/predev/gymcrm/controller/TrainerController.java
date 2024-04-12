@@ -29,4 +29,9 @@ public class TrainerController {
             return ResponseEntity.notFound().build(); // 트레이너가 존재하지 않을 경우 404 응답
         }
     }
+
+    @GetMapping("/trainers")
+    public ResponseEntity<?> getTrainers() {
+        return ResponseEntity.ok(trainerService.getTrainersForReservation());
+    }
 }

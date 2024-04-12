@@ -24,14 +24,6 @@ public class CommonService {
                 .collect(Collectors.toList());
     }
 
-    public List<TrainerForReservationRespDto> getTrainersForReservation() {
-        List<Trainer> trainers = commonMapper.getTrainers();
-        System.out.println(trainers);
-        return trainers.stream().map(trainer -> TrainerForReservationRespDto.builder()
-                .trainerId(trainer.getTrainerId())
-                .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())
-                .name(trainer.getAccount().getName())
-                .build()).collect(Collectors.toList());
-    }
+
 
 }

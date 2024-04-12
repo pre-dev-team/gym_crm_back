@@ -168,4 +168,15 @@
             AND rst.reservation_date = #{today}
     </select>
 
+    <select
+            id="findReservationCountByUserId"
+            resultType="int"
+    >
+        select
+        count(user_id)
+        from
+        reservation_tb
+        where
+        user_id = #{userId}
+    </select>
 </mapper>

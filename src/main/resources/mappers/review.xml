@@ -5,12 +5,9 @@
 
 <mapper namespace="com.predev.gymcrm.repository.ReviewMapper">
 
-    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.Account">
+    <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
         <id property="userId" column="user_id" />
-        <result property="userUsername" column="user_username" />
-        <result property="userName" column="user_name" />
-        <result property="userPhone" column="user_phone" />
-        <result property="userEmail" column="user_email" />
+        <result property="accountId" column="account_id" />
     </resultMap>
 
     <resultMap id="AccountResultMap" type="com.predev.gymcrm.entity.Account">
@@ -82,6 +79,7 @@
             left outer join account_tb at on(at.account_id = ut.account_id)
         WHERE trainer_id = #{trainerId}
     </select>
+
     <select id="findReviewsByUserId"
             resultType="com.predev.gymcrm.entity.TrainerReview"
             resultMap="ReviewResultMap">

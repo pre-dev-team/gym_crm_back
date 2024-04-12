@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface TrainerMapper {
-    public List<Integer> findReservedUserIdsByTrainerAccountId(int trainerAccountId);
-
-    public Trainer getAllTrainerInfo(int accountId);
+    List<Trainer> getTrainers();
+    List<Integer> findReservedUserIdsByTrainerAccountId(int trainerAccountId);
+    Trainer getAllTrainerInfo(int accountId);
 }

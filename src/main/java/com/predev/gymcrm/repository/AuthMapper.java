@@ -1,8 +1,11 @@
 package com.predev.gymcrm.repository;
 
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface
@@ -19,13 +22,6 @@ AuthMapper {
     public Integer findUserIdByAccountId(int accountId);
     public Integer findTrainerIdByAccountId(int accountId);
     public Account findAccountByTrainerId(int trainerId);
-
-
-//    public List<User> findUsers(
-//            @Param("startIndex") int startIndex,
-//            @Param("count") int count,
-//            @Param("userUserId") int userUserId);
-
-
+    public List<User> findUsersByName(String name);
 
 }

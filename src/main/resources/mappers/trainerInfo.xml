@@ -24,17 +24,16 @@
 
     <select id="getAllTrainerInfo" resultMap="TrainerInfoResultMap">
         select
-        tt.trainer_id,
-        at.name,
-        at.username,
-        at.phone,
-        at.email,
-        tt.trainer_profile_img_url
+            tt.trainer_id,
+            at.name,
+            at.username,
+            at.phone,
+            at.email,
+            tt.trainer_profile_img_url
         from
-        trainer_tb tt
-        left outer join account_tb at on(tt.account_id=at.account_id)
+            trainer_tb tt
+            left outer join account_tb at on(tt.account_id=at.account_id)
         where
-        at.account_id=#{accountId};
+            at.account_id=#{accountId};
     </select>
-
 </mapper>
