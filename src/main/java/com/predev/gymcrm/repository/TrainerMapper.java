@@ -12,9 +12,4 @@ public interface TrainerMapper {
     List<Trainer> getTrainers();
     List<Integer> findReservedUserIdsByTrainerAccountId(int trainerAccountId);
     Trainer getAllTrainerInfo(int accountId);
-
-    public List<Integer> findReservedUserIdsByTrainerAccountId(int trainerAccountId);
-
-    public Trainer getAllTrainerInfo(int accountId);
-
 }

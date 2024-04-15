@@ -9,5 +9,6 @@ import lombok.Data;
 public class SearchReservationUserRespDto {
     private int UserId;
     private String name;
+    private String reservationDate;
     private String timeDuration;
 }
