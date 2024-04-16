@@ -23,7 +23,6 @@ public class ReservationService {
     @Autowired
     private AuthMapper authMapper;
 
-
     public String trimDateString(String date) {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
@@ -55,9 +54,12 @@ public class ReservationService {
 
         return reservations.stream().map(reservation -> {
             return SearchReservationRespDto.builder()
+                    .reservationId(reservation.getReservationId())
                     .reservationDate(reservation.getReservationDate())
                     .trainerId(reservation.getTrainerId())
                     .name(reservation.getTrainer().getAccount().getName())
+                    .timeId(reservation.getTimeId())
+                    .timeDuration(reservation.getTime().getTimeDuration())
                     .build();
         }).collect(Collectors.toList());
     }
@@ -114,7 +116,6 @@ public class ReservationService {
 
     public List<SearchReservationUserRespDto> searchReservationsUser (int accountId) {
         List<Reservation> reservations = reservationMapper.getAllReservationUser(accountId);
-        System.out.println(reservations);
 
         List<SearchReservationUserRespDto> respDtos = reservations.stream().map(reservation -> {
                 Account userAccount = authMapper.findAccountByUserId(reservation.getUserId());
