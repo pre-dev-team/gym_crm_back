@@ -26,4 +26,5 @@ public class Inbody {
                 .fatMass(this.fatMass)
                 .build();
     }
+    //주석 추가로 에러 커렉션
 }

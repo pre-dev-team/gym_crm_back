@@ -273,29 +273,5 @@
         </choose>
     </select>
 
-    <select id="findReservationByAccountIdAndPeriod"
-            resultMap="ReservationResultMap">
-        select
-            rvt.reservation_id,
-            rvt.user_id,
-            rvt.trainer_id,
-            rvt.time_id,
-            rvt.reservation_date,
-            rvt.create_date,
-            rvt.update_date,
-            tt.time_duration
-        from
-            reservation_tb rvt
-            left outer join time_tb tt on (tt.time_id = rvt.time_id)
-            left outer join user_tb ut on (ut.user_id = rvt.user_id)
-            left outer join trainer_tb tit on (tit.trainer_id = rvt.trainer_id)
-            left outer join account_tb at on(at.account_id = tit.account_id)
-        where
-            at.account_id = #{accountId}
-            and rvt.reservation_date between #{startDate} and #{endDate}
-        order by
-            rvt.reservation_date
-    </select>
-
 
 </mapper>
