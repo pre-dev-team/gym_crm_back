@@ -108,28 +108,8 @@
         from
             reservation_tb rvt
             left outer join time_tb tt on (tt.time_id = rvt.time_id)
-    </select>
-
-    <select id="getAllReservationUser"
-            resultType="com.predev.gymcrm.entity.Reservation"
-            resultMap="ReservationResultMap"
-    >
-        select
-            rt.reservation_id,
-            tt1.trainer_id,
-            rt.user_id,
-            rt.time_id,
-            rt.reservation_date,
-            tt2.time_duration
-        from
-            account_tb at
-            left outer join trainer_tb tt1 on(tt1.account_id = at.account_id)
-            left outer join reservation_tb rt on(rt.trainer_id = tt1.trainer_id)
-            left outer join user_tb ut on(ut.user_id = rt.user_id)
-            left outer join time_tb tt2 on(tt2.time_id = rt.time_id)
-
-        where
-            at.account_id = #{accountId};
+            left outer join user_tb ut on (ut.user_id = rvt.user_id)
+            left outer join trainer_tb tit on (tit.trainer_id = rvt.trainer_id)
     </select>
 
     <select id="findReservationByAccountId"

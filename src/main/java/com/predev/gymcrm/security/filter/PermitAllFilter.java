@@ -21,7 +21,8 @@ public class PermitAllFilter extends OncePerRequestFilter {
                 "/reservation",
                 "/trainer",
                 "/admin",
-                "/options"
+                "/options",
+                "/review"
         );
 
         boolean isPermitAll = antMatchers.stream().anyMatch(uri::startsWith);

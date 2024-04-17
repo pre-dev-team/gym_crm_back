@@ -13,7 +13,6 @@ public interface ReservationMapper {
 
     public int saveReservation(Reservation reservation);
     public List<Reservation> getAllReservation();
-    public List<Reservation> getAllReservationUser(int accountId);
     public List<Reservation> findReservationsByUserId(int userId);
     public List<Reservation> findReservationByAccountId(int accountId);
     public List<Reservation> findReservationByDate(
