@@ -23,7 +23,6 @@ public class ReservationService {
     @Autowired
     private AuthMapper authMapper;
 
-
     public String trimDateString(String date) {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
@@ -55,9 +54,12 @@ public class ReservationService {
 
         return reservations.stream().map(reservation -> {
             return SearchReservationRespDto.builder()
+                    .reservationId(reservation.getReservationId())
                     .reservationDate(reservation.getReservationDate())
                     .trainerId(reservation.getTrainerId())
                     .name(reservation.getTrainer().getAccount().getName())
+                    .timeId(reservation.getTimeId())
+                    .timeDuration(reservation.getTime().getTimeDuration())
                     .build();
         }).collect(Collectors.toList());
     }
@@ -113,6 +115,7 @@ public class ReservationService {
     }
 
     public List<SearchReservationUserRespDto> searchReservationsUser (int accountId) {
+
         List<Reservation> reservations = reservationMapper.findReservationByAccountId(accountId);
         Account account = authMapper.findAccountByAccountId(accountId);
         List<SearchReservationUserRespDto> respDtos = reservations.stream().map(reservation ->
@@ -123,6 +126,16 @@ public class ReservationService {
                         .build()
         ).collect(Collectors.toList());
         return respDtos;
+    }
+
+    public int cancelReservationByReservationId(int reservationId) {
+        return reservationMapper.deleteReservationByReservationId(reservationId);
+    }
+
+    public void updateReservation(EditReservationReqDto reqDto) {
+        String date = trimDateString(reqDto.getDate());
+        int userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
+        reservationMapper.updateReservationByReservationId(reqDto.getPrevReservationId(), reqDto.toReservationEntity(date,userId));
     }
 
 //    public SearchReservationRespDto findReservationByUserId(int userId) {
@@ -143,4 +156,4 @@ public class ReservationService {
 //        return searchReservationRespDto;
 //    }
 
-}
+    }

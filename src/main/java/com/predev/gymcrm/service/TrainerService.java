@@ -54,7 +54,6 @@ public class TrainerService {
 
     public List<TrainerForReservationRespDto> getTrainersForReservation() {
         List<Trainer> trainers = trainerMapper.getTrainers();
-        System.out.println(trainers);
         return trainers.stream().map(trainer -> TrainerForReservationRespDto.builder()
                 .trainerId(trainer.getTrainerId())
                 .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())

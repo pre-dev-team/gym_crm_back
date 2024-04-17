@@ -70,6 +70,26 @@
         values
             (0, #{userId}, #{trainerId}, #{timeId}, #{reservationDate}, now(), now());
     </insert>
+    <update id="updateReservationByReservationId">
+        update
+            reservation_tb
+        set
+            trainer_id = #{reservation.trainerId},
+            time_id = #{reservation.timeId},
+            reservation_date = #{reservation.reservationDate},
+            update_date = now()
+        where
+            reservation_id = #{prevReservationId}
+    </update>
+
+    <delete id="deleteReservationByReservationId">
+        delete
+            reservation_tb
+        from
+            reservation_tb
+        where
+            rt.reservation_id = #{reservation_id};
+    </delete>
 
 
     <select id="getAllReservation"
@@ -238,11 +258,11 @@
                 from
                     reservation_tb rt
                 left outer join
-                    time_tb tit	on (rt.time_id = tit.time_id)
+                    time_tb tit	on (tit.time_id = rt.time_id)
                 left outer join
-                    user_tb ut on (rt.user_id = ut.user_id)
+                    user_tb ut on (ut.user_id = rt.user_id)
                 left outer join
-                    account_tb at on (ut.account_id = at.account_id)
+                    account_tb at on (at.account_id = ut.account_id)
                 where
                     reservation_date between #{startDate} and #{endDate}
                     and at.name like concat('%', #{name}, '%')
