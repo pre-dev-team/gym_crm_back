@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.predev.gymcrm.repository.InbodyMapper">
+
+    <resultMap id="InbodyResultMap" type="com.predev.gymcrm.entity.Inbody">
+        <id property="inbodyId" column="inbody_id" />
+        <result property="inbodyUrl" column="inbody_url" />
+        <result property="weight" column="weight" />
+        <result property="muscleMass" column="muscle_mass" />
+        <result property="fatMass" column="fat_mass" />
+    </resultMap>
+
+    <insert
+            id="insertInbody"
+            parameterType="com.predev.gymcrm.entity.Inbody">
+        INSERT INTO inbody_tb (inbody_url, weight, muscle_mass, fat_mass)
+        VALUES (#{inbodyUrl}, #{weight}, #{muscleMass}, #{fatMass})
+    </insert>
+
+    <!-- 추가된 부분 -->
+    <select id="toInbodyRespDto" resultMap="InbodyResultMap">
+        SELECT * FROM inbody_tb WHERE inbody_id = #{inbodyId}
+    </select>
+
+    <select id="findInbodyByAccountId" resultMap="InbodyResultMap" parameterType="int">
+        SELECT
+        it.inbody_id,
+        it.inbody_url,
+        it.weight,
+        it.muscle_mass,
+        it.fat_mass,
+        ut.user_id,
+        at.account_id,
+        at.role_id,
+        at.username,
+        at.name,
+        at.phone,
+        at.email
+        FROM
+        inbody_tb it
+        left outer JOIN user_tb ut ON it.inbody_id = ut.inbody_id
+        left outer JOIN account_tb at ON ut.account_id = at.account_id
+        WHERE
+        at.account_id = #{accountId}
+    </select>
+
+</mapper>
