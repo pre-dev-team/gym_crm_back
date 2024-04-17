@@ -134,6 +134,12 @@ public class ReservationService {
         return reservationMapper.deleteReservationByReservationId(reservationId);
     }
 
+    public void updateReservation(EditReservationReqDto reqDto) {
+        String date = trimDateString(reqDto.getDate());
+        int userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
+        reservationMapper.updateReservationByReservationId(reqDto.getPrevReservationId(), reqDto.toReservationEntity(date,userId));
+    }
+
 //    public SearchReservationRespDto findReservationByUserId(int userId) {
 //        Reservation reservation = reservationMapper.findReservationByUserId(userId);
 //
@@ -152,4 +158,4 @@ public class ReservationService {
 //        return searchReservationRespDto;
 //    }
 
-}
+    }

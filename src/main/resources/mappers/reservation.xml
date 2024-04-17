@@ -70,15 +70,23 @@
         values
             (0, #{userId}, #{trainerId}, #{timeId}, #{reservationDate}, now(), now());
     </insert>
+    <update id="updateReservationByReservationId">
+        update
+            reservation_tb
+        set
+            trainer_id = #{reservation.trainerId},
+            time_id = #{reservation.timeId},
+            reservation_date = #{reservation.reservationDate},
+            update_date = now()
+        where
+            reservation_id = #{prevReservationId}
+    </update>
 
     <delete id="deleteReservationByReservationId">
         delete
-            rt,
-            wt
+            reservation_tb
         from
-            reservation_tb rt
-            left outer join workout_routine_tb wt
-                on(wt.reservation_id = rt.reservation_id)
+            reservation_tb
         where
             rt.reservation_id = #{reservation_id};
     </delete>
