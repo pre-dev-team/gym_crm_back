@@ -65,4 +65,9 @@ public class ReservationController {
     public ResponseEntity<?> getSearchAllUser(@RequestParam(value = "accountId") int accountId) {
         return ResponseEntity.ok(reservationService.searchReservationsUser(accountId));
     }
+
+    @DeleteMapping("user")
+    public ResponseEntity<?> DeleteReservation(@RequestParam(value = "reservationId") int reservationId) {
+        return ResponseEntity.ok(reservationService.cancelReservationByReservationId(reservationId));
+    }
 }

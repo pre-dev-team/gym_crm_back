@@ -130,6 +130,10 @@ public class ReservationService {
         return respDtos;
     }
 
+    public int cancelReservationByReservationId(int reservationId) {
+        return reservationMapper.deleteReservationByReservationId(reservationId);
+    }
+
 //    public SearchReservationRespDto findReservationByUserId(int userId) {
 //        Reservation reservation = reservationMapper.findReservationByUserId(userId);
 //

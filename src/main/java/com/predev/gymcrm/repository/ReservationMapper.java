@@ -38,4 +38,6 @@ public interface ReservationMapper {
 
     int findReservationCountByUserId(int userId);
     int findMemberCountOfTrainerByTrainerId(int trainerId);
+
+    int deleteReservationByReservationId(int reservationId);
 }
