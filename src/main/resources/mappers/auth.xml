@@ -180,18 +180,15 @@
             account_id = #{accountId}
     </select>
 
-<!--    <select id="findTrainerByAccountId" resultType="com.predev.gymcrm.entity.Trainer">-->
-<!--        select-->
-<!--            trainer_id,-->
-<!--            account_id,-->
-<!--            trainer_profile_img_url-->
-<!--        from-->
-<!--            trainer_tb-->
-<!--        where-->
-<!--            trainer_id = #{trainer_id}-->
+    <select id="findTrainerIdByAccountId" resultType="java.lang.Integer">
+        select
+            trainer_id
+        from
+            trainer_tb
+        where
+            account_id = #{accountId}
 
-
-<!--    </select>-->
+    </select>
 
     <select id="findUsersByName" resultMap="UserResultMap">
         select

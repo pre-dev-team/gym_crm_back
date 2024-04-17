@@ -1,5 +1,6 @@
 package com.predev.gymcrm.controller;
 
+import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import com.predev.gymcrm.service.TrainerService;

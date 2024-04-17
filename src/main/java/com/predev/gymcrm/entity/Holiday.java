@@ -17,8 +17,10 @@ public class Holiday {
     private int trainerId;
     private String holidayDate;
     private int timeId;
+    private int confirm;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
     private List<Time> times;
+    private Trainer trainer;
 }
