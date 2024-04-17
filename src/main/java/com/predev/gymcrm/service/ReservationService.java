@@ -112,10 +112,10 @@ public class ReservationService {
         return trainerId;
     }
 
-    public List<SearchReservationUserRespDto> searchReservationsUser (int accountId) {
-        List<Reservation> reservations = reservationMapper.getAllReservationUser(accountId);
-        System.out.println(reservations);
-
+    public List<SearchReservationUserRespDto> searchReservationsUser (SearchReservationUserReqDto reqDto) {
+        String startDate = CommonService.trimDateString(reqDto.getStartDate());
+        String endDate = CommonService.trimDateString(reqDto.getEndDate());
+        List<Reservation> reservations = reservationMapper.findReservationByAccountIdAndPeriod(reqDto.getAccountId(), startDate, endDate);
         List<SearchReservationUserRespDto> respDtos = reservations.stream().map(reservation -> {
                 Account userAccount = authMapper.findAccountByUserId(reservation.getUserId());
                 return SearchReservationUserRespDto.builder()

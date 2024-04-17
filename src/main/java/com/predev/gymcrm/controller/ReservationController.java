@@ -1,9 +1,6 @@
 package com.predev.gymcrm.controller;
 
-import com.predev.gymcrm.dto.req.MakeReservationReqDto;
-import com.predev.gymcrm.dto.req.MyTodayScheduleReqDto;
-import com.predev.gymcrm.dto.req.SearchDayReservationReqDto;
-import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
+import com.predev.gymcrm.dto.req.*;
 import com.predev.gymcrm.dto.resp.MyTodayScheduleRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationUserRespDto;
 import com.predev.gymcrm.service.ReservationService;
@@ -62,7 +59,7 @@ public class ReservationController {
     }
 
     @GetMapping("/trainer/searchall")
-    public ResponseEntity<?> getSearchAllUser(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(reservationService.searchReservationsUser(accountId));
+    public ResponseEntity<?> getSearchAllUser(SearchReservationUserReqDto reqDto) {
+        return ResponseEntity.ok(reservationService.searchReservationsUser(reqDto));
     }
 }
