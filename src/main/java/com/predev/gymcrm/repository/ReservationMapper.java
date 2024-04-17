@@ -35,12 +35,6 @@ public interface ReservationMapper {
             @Param("endDate") String endDate
     );
 
-    List<Reservation> findReservationByAccountIdAndPeriod(
-            @Param("accountId") int accountId,
-            @Param("startDate") String startDate,
-            @Param("endDate") String endDate
-    );
-
     int findReservationCountByUserId(int userId);
     int findMemberCountOfTrainerByTrainerId(int trainerId);
 }
