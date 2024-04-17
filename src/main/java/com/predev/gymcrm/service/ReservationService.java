@@ -113,14 +113,18 @@ public class ReservationService {
     }
 
     public List<SearchReservationUserRespDto> searchReservationsUser (int accountId) {
-        List<Reservation> reservations = reservationMapper.findReservationByAccountId(accountId);
-        Account account = authMapper.findAccountByAccountId(accountId);
-        List<SearchReservationUserRespDto> respDtos = reservations.stream().map(reservation ->
-                SearchReservationUserRespDto.builder()
+        List<Reservation> reservations = reservationMapper.getAllReservationUser(accountId);
+        System.out.println(reservations);
+
+        List<SearchReservationUserRespDto> respDtos = reservations.stream().map(reservation -> {
+                Account userAccount = authMapper.findAccountByUserId(reservation.getUserId());
+                return SearchReservationUserRespDto.builder()
                         .UserId(reservation.getUserId())
-                        .name(account.getName())
+                        .name(userAccount.getName())
+                        .reservationDate(reservation.getReservationDate())
                         .timeDuration(reservation.getTime().getTimeDuration())
-                        .build()
+                        .build();
+                }
         ).collect(Collectors.toList());
         return respDtos;
     }
