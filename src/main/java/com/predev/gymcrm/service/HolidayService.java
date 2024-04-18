@@ -1,6 +1,7 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.entity.Holiday;
 import com.predev.gymcrm.repository.AuthMapper;
 import com.predev.gymcrm.repository.HolidayMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,10 @@ public class HolidayService {
             timeIds.add(i);
         }
         holidayMapper.saveHoliday(timeIds, reqDto.toTrainerHolidayEntity(date, trainerId));
+    }
+
+    public void deleteHoliday(Holiday holiday) {
+
+        holidayMapper.deleteHoliday(holiday);
     }
 }
