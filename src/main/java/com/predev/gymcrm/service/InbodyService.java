@@ -47,4 +47,12 @@ public class InbodyService {
                 .map(Inbody::toInbodyRespDto) // 수정된 부분
                 .collect(Collectors.toList());
     }
+
+    public List<InbodyRespDto> getInbodyByUserId(int accountId) {
+        List<Inbody> inbodyList = inbodyMapper.findInbodyByAccountId(accountId);
+
+        return inbodyList.stream()
+                .map(Inbody::toInbodyRespDto)
+                .collect(Collectors.toList());
+    }
 }

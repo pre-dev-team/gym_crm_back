@@ -13,8 +13,8 @@ import java.util.UUID;
 @RequestMapping("/trainer")
 public class ImageUploadController {
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
+//    @Value("${file.upload-dir}")
+    private String uploadDir = null;
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile image) {

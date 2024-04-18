@@ -18,33 +18,39 @@
             parameterType="com.predev.gymcrm.entity.Inbody">
         INSERT INTO inbody_tb (inbody_url, weight, muscle_mass, fat_mass)
         VALUES (#{inbodyUrl}, #{weight}, #{muscleMass}, #{fatMass})
+        WHERE inbody_id = {inbody_id}
     </insert>
 
     <!-- 추가된 부분 -->
     <select id="toInbodyRespDto" resultMap="InbodyResultMap">
-        SELECT * FROM inbody_tb WHERE inbody_id = #{inbodyId}
+        SELECT
+            *
+        FROM
+            inbody_tb
+        WHERE
+            inbody_id = #{inbodyId}
     </select>
 
     <select id="findInbodyByAccountId" resultMap="InbodyResultMap" parameterType="int">
         SELECT
-        it.inbody_id,
-        it.inbody_url,
-        it.weight,
-        it.muscle_mass,
-        it.fat_mass,
-        ut.user_id,
-        at.account_id,
-        at.role_id,
-        at.username,
-        at.name,
-        at.phone,
-        at.email
+            it.inbody_id,
+            it.inbody_url,
+            it.weight,
+            it.muscle_mass,
+            it.fat_mass,
+            ut.user_id,
+            at.account_id,
+            at.role_id,
+            at.username,
+            at.name,
+            at.phone,
+            at.email
         FROM
-        inbody_tb it
-        left outer JOIN user_tb ut ON it.inbody_id = ut.inbody_id
-        left outer JOIN account_tb at ON ut.account_id = at.account_id
+            inbody_tb it
+            left outer JOIN user_tb ut ON it.inbody_id = ut.inbody_id
+            left outer JOIN account_tb at ON ut.account_id = at.account_id
         WHERE
-        at.account_id = #{accountId}
+            at.account_id = #{accountId}
     </select>
 
 </mapper>
