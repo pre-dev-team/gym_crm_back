@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Data
@@ -19,7 +20,6 @@ public class TrainerHolidayReqDto {
         return Holiday.builder()
                 .trainerId(trainerId)
                 .holidayDate(date)
-                .timeId(endTimeId)
                 .confirm(confirm)
                 .build();
     }
