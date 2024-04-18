@@ -16,6 +16,7 @@ public class ImageUploadController {
 //    @Value("${file.upload-dir}")
     private String uploadDir ="";
 
+
     @PostMapping("/upload")
     public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile image) {
         if (image.isEmpty()) {

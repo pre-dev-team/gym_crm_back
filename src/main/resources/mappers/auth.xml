@@ -67,6 +67,15 @@
         values
             (0, #{accountId}, null, now(), now())
     </insert>
+    <update id="modifyAccountPassword" parameterType="com.predev.gymcrm.entity.Account">
+        update
+            account_tb
+        set
+            password = #{password},
+            update_date = now()
+        where
+            account_id = #{accountId}
+    </update>
 
     <!--###################       SELECT       ###################    -->
 
