@@ -10,10 +10,8 @@
         insert into
             holiday_tb
         values
-            <foreach collection="list" item="item" separator=",">
+            <foreach collection="timeIds" item="item" separator=",">
                 (0, #{holiday.trainerId}, #{holiday.holidayDate}, #{item}, 0, now(), now())
-
-
             </foreach>
 
 

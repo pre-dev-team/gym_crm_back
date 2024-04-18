@@ -24,6 +24,7 @@ public class CommonService {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
+
     public List<TimeRespDto> getTimes() {
         List<Time> times = commonMapper.getTimes();
         return times.stream()

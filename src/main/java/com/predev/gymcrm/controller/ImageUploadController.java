@@ -14,7 +14,8 @@ import java.util.UUID;
 public class ImageUploadController {
 
 //    @Value("${file.upload-dir}")
-    private String uploadDir = null;
+    private String uploadDir ="";
+
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile image) {
