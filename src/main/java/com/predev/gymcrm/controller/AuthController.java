@@ -2,6 +2,7 @@ package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.AccountSigninReqDto;
+import com.predev.gymcrm.dto.req.EditPasswordReqDto;
 import com.predev.gymcrm.service.AuthService;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,10 @@ public class AuthController {
         return ResponseEntity.ok(reservationService.getTrainerId(accountId));
     }
 
-    @GetMapping("account/myinfo")
+    @GetMapping("/account/myinfo")
     public ResponseEntity<?> getMyInfo(@RequestParam(value = "accountId") int accountId) {
         return ResponseEntity.ok(authService.getAccountInfoByAccountId(accountId));
     }
+
 
 }
