@@ -28,6 +28,9 @@ public class ReviewService {
     private AuthMapper authMapper;
 
     @Autowired
+    private TrainerMapper trainerMapper;
+
+    @Autowired
     private CommonMapper commonMapper;
 
     // 리뷰 작성 기능을 수행하는 메서드
@@ -49,7 +52,7 @@ public class ReviewService {
                 .collect(Collectors.toSet());
 
         // 각 트레이너 ID에 해당하는 이미지 URL을 가져옵니다.
-        Map<Integer, String> trainerProfileImgUrls = commonMapper.getTrainers().stream()
+        Map<Integer, String> trainerProfileImgUrls = trainerMapper.getTrainers().stream()
                 .filter(trainer -> trainerIds.contains(trainer.getTrainerId()))
                 .collect(Collectors.toMap(Trainer::getTrainerId, Trainer::getTrainerProfileImgUrl));
 
@@ -98,7 +101,7 @@ public class ReviewService {
             int userId = trainerReview.getUserId();
             Account userAccount = authMapper.findAccountByUserId(userId);
             Account trainerAccount = authMapper.findAccountByTrainerId(trainerId);
-            Map<Integer, String> trainerProfileImgUrls = commonMapper.getTrainers().stream()
+            Map<Integer, String> trainerProfileImgUrls = trainerMapper.getTrainers().stream()
                     .collect(Collectors.toMap(Trainer::getTrainerId, Trainer::getTrainerProfileImgUrl));
 
             String trainerProfileImgUrl = trainerProfileImgUrls.get(trainerId);
