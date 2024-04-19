@@ -13,4 +13,6 @@ public interface HolidayMapper {
             @Param("timeIds") List<Integer> timeIds,
             @Param("holiday") Holiday holiday
     );
+
+    int deleteHoliday(Holiday holiday);
 }

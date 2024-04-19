@@ -51,18 +51,7 @@
         <result property="updateDate" column="update_date" />
     </resultMap>
 
-    <resultMap id="HolidayResultMap" type="com.predev.gymcrm.entity.Holiday">
-        <id property="holidayId" column="holiday_id" />
-        <result property="trainerId" column="trainer_id" />
-        <result property="holidayDate" column="holiday_date" />
-        <result property="timeId" column="time_id" />
-        <result property="confirm" column="confirm" />
-        <result property="createDate" column="create_date" />
-        <result property="updateDate" column="update_date" />
-        <association property="times" resultMap="TimeResultMap"/>
-        <association property="trainer" resultMap="TrainerResultMap"/>
 
-    </resultMap>
 
 
 
