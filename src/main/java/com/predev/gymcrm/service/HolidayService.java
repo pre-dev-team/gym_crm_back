@@ -1,6 +1,9 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.dto.req.CancelHolidayReqDto;
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.resp.SelectHolidayRespDto;
+import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.Holiday;
 import com.predev.gymcrm.repository.AuthMapper;
 import com.predev.gymcrm.repository.HolidayMapper;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HolidayService {
@@ -29,8 +33,23 @@ public class HolidayService {
         holidayMapper.saveHoliday(timeIds, reqDto.toTrainerHolidayEntity(date, trainerId));
     }
 
-    public void deleteHoliday(Holiday holiday) {
+    public void deleteHoliday(CancelHolidayReqDto reqDto) {
+        int trainerId = authMapper.findTrainerIdByAccountId(reqDto.getAccountId());
+        String date = CommonService.trimDateString(reqDto.getHolidayDate());
+        holidayMapper.deleteHoliday(reqDto.toDeleteHolidayEntity(date, trainerId));
+    }
 
-        holidayMapper.deleteHoliday(holiday);
+    public List<SelectHolidayRespDto> selectHoliday(int accountId) {
+        List<Holiday> holidays = holidayMapper.selectHolidayByAccountId(accountId);
+        Account account = authMapper.findAccountByAccountId(accountId);
+        List<SelectHolidayRespDto> respDtos = holidays.stream().map(holiday ->
+                SelectHolidayRespDto.builder()
+                        .holidayId(holiday.getHolidayId())
+                        .holidayDate(holiday.getHolidayDate())
+                        .TimeId(holiday.getTimeId())
+                        .name(account.getName())
+                        .build()
+        ).collect(Collectors.toList());
+        return respDtos;
     }
 }
