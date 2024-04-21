@@ -15,4 +15,6 @@ public interface HolidayMapper {
     );
 
     int deleteHoliday(Holiday holiday);
+
+    List<Holiday> selectHolidayByAccountId(int accountId);
 }

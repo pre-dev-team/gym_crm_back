@@ -52,4 +52,18 @@
             trainer_id = #{trainerId}
             and holiday_date = #{holidayDate};
     </delete>
+
+    <select id="selectHolidayByAccountId" resultMap="HolidayResultMap">
+        select
+            ht.holiday_id,
+            ht.holiday_date,
+            ht.time_id,
+            at.name
+        from
+            holiday_tb ht
+            left outer join trainer_tb tt1 on(tt1.trainer_id = ht.trainer_id)
+            left outer join account_tb at on(at.account_id = tt1.account_id)
+        where
+            at.account_id = #{accountId};
+    </select>
 </mapper>

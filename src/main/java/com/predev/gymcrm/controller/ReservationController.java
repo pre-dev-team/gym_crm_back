@@ -47,20 +47,13 @@ public class ReservationController {
 
     @GetMapping("/trainer/schedulefor2days")
     public ResponseEntity<?> getTodayReservation(MyTodayScheduleReqDto reqDto) {
-        // 특정 트레이너의 예약 정보를 가져오는 요청
-        System.out.println(reqDto.getTrainerId());
-        System.out.println(reqDto.getToday());
-
         List<MyTodayScheduleRespDto> reservations = reservationService.getTodayReservation(reqDto);
-
-        System.out.println(reservations);
-
         return ResponseEntity.ok(reservations);
     }
 
     @GetMapping("/trainer/searchall")
-    public ResponseEntity<?> getSearchAllUser(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(reservationService.searchReservationsUser(accountId));
+    public ResponseEntity<?> getSearchAllUser(SearchReservationUserReqDto searchReservationUserReqDto) {
+        return ResponseEntity.ok(reservationService.searchReservationsUser(searchReservationUserReqDto));
     }
 
     @DeleteMapping("/user")
