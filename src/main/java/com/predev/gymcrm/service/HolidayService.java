@@ -35,8 +35,8 @@ public class HolidayService {
 
     public void deleteHoliday(CancelHolidayReqDto reqDto) {
         int trainerId = authMapper.findTrainerIdByAccountId(reqDto.getAccountId());
-        String date = CommonService.trimDateString(reqDto.getHolidayDate());
-        holidayMapper.deleteHoliday(reqDto.toDeleteHolidayEntity(date, trainerId));
+
+        holidayMapper.deleteHoliday(reqDto.toDeleteHolidayEntity(trainerId));
     }
 
     public List<SelectHolidayRespDto> selectHoliday(int accountId) {
