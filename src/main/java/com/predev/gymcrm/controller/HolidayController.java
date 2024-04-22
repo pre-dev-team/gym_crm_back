@@ -22,10 +22,10 @@ public class HolidayController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteHoliday(@RequestBody CancelHolidayReqDto cancleHolidayReqDto) {
-        holidayService.deleteHoliday(cancleHolidayReqDto);
-        System.out.println(cancleHolidayReqDto);
-        return ResponseEntity.ok(null);
+    public ResponseEntity<?> deleteHoliday(@RequestBody CancelHolidayReqDto cancelHolidayReqDto) {
+        System.out.println(cancelHolidayReqDto);
+        holidayService.deleteHoliday(cancelHolidayReqDto);
+        return ResponseEntity.ok(cancelHolidayReqDto);
     }
 
     @GetMapping("/select")

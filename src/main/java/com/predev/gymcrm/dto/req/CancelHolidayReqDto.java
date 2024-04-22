@@ -10,10 +10,10 @@ public class CancelHolidayReqDto {
     private int accountId;
     private String holidayDate;
 
-    public Holiday toDeleteHolidayEntity(String date, int trainerId) {
+    public Holiday toDeleteHolidayEntity(int trainerId) {
         return Holiday.builder()
                 .trainerId(trainerId)
-                .holidayDate(date)
+                .holidayDate(holidayDate)
                 .build();
     }
 }
