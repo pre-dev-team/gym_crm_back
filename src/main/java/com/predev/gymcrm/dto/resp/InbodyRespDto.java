@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Data
 @AllArgsConstructor
@@ -13,4 +15,5 @@ public class InbodyRespDto {
     private int weight;
     private int muscleMass;
     private int fatMass;
+    private String createDate;
 }

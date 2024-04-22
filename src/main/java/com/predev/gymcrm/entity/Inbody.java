@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,9 +16,12 @@ import lombok.NoArgsConstructor;
 public class Inbody {
     private int inbodyId;
     private String inbodyUrl;
+    private int userId;
     private int weight;
     private int muscleMass;
     private int fatMass;
+    private LocalDateTime createDate;
+    private LocalDateTime updateDate;
 
     public InbodyRespDto toInbodyRespDto() {
         return InbodyRespDto.builder()
@@ -24,6 +30,7 @@ public class Inbody {
                 .weight(this.weight)
                 .muscleMass(this.muscleMass)
                 .fatMass(this.fatMass)
+                .createDate(createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .build();
     }
 }

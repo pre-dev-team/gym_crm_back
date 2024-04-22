@@ -11,14 +11,16 @@
         <result property="weight" column="weight" />
         <result property="muscleMass" column="muscle_mass" />
         <result property="fatMass" column="fat_mass" />
+        <result property="createDate" column="create_date" />
     </resultMap>
 
     <insert
             id="insertInbody"
             parameterType="com.predev.gymcrm.entity.Inbody">
-        INSERT INTO inbody_tb (inbody_url, weight, muscle_mass, fat_mass)
-        VALUES (#{inbodyUrl}, #{weight}, #{muscleMass}, #{fatMass})
-        WHERE inbody_id = {inbody_id}
+        INSERT INTO
+            inbody_tb
+        VALUES
+            (0, #{inbodyUrl}, #{userId}, #{weight}, #{muscleMass}, #{fatMass}, now(), now())
     </insert>
 
     <!-- 추가된 부분 -->
@@ -38,6 +40,7 @@
             it.weight,
             it.muscle_mass,
             it.fat_mass,
+            it.create_date,
             ut.user_id,
             at.account_id,
             at.role_id,
@@ -47,7 +50,7 @@
             at.email
         FROM
             inbody_tb it
-            left outer JOIN user_tb ut ON it.inbody_id = ut.inbody_id
+            left outer JOIN user_tb ut ON ut.user_id = it.user_id
             left outer JOIN account_tb at ON ut.account_id = at.account_id
         WHERE
             at.account_id = #{accountId}
