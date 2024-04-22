@@ -88,7 +88,7 @@
         from
             reservation_tb
         where
-            rt.reservation_id = #{reservation_id};
+            reservation_id = #{reservation_id};
     </delete>
 
 

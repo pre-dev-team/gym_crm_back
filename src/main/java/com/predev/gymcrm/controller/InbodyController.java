@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/trainer")
+@RequestMapping("/inbody")
 public class InbodyController {
 
     private final InbodyService inbodyService;
@@ -38,7 +38,7 @@ public class InbodyController {
     }
 
     // 각 회원의 userId를 기반으로 Inbody 정보를 가져오는 엔드포인트 추가
-    @GetMapping("/inbody/{userId}")
+    @GetMapping("/account")
     public ResponseEntity<?> getInbodyByAccountId(int accountId) {
         System.out.println("Received userId: " + accountId); // userId 로깅 추가
         List<InbodyRespDto> inbodyRespDtoList = inbodyService.getInbodyByUserId(accountId);
