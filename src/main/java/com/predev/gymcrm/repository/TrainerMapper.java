@@ -1,9 +1,6 @@
 package com.predev.gymcrm.repository;
 
-import com.predev.gymcrm.entity.Account;
-import com.predev.gymcrm.entity.Holiday;
-import com.predev.gymcrm.entity.Reservation;
-import com.predev.gymcrm.entity.Trainer;
+import com.predev.gymcrm.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,5 +13,6 @@ public interface TrainerMapper {
     List<Integer> findReservedUserIdsByTrainerAccountId(int trainerAccountId);
     Trainer getAllTrainerInfo(int accountId);
     int updateTrainerProfileImgUrl(Trainer trainer);
+    int saveRoutines(List<WorkoutRoutine> workoutRoutines);
 
 }

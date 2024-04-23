@@ -32,4 +32,5 @@ public class HolidayController {
     public ResponseEntity<?> selectHolidays(@RequestParam(value = "accountId") int accountId) {
         return ResponseEntity.ok(holidayService.selectHoliday(accountId));
     }
+
 }

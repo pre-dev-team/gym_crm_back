@@ -21,7 +21,7 @@ public class TrainerReview {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-//    private Account account; // userId
+    private Trainer trainer;
 
     public ReviewRespDto toReviewRespDto() {
         return ReviewRespDto.builder()

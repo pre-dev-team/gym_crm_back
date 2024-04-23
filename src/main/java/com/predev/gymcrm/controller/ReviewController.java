@@ -1,6 +1,7 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.ReviewReqDto;
+import com.predev.gymcrm.dto.req.SearchUserReviewReqDto;
 import com.predev.gymcrm.dto.resp.ReviewRespDto;
 import com.predev.gymcrm.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,8 @@ public class ReviewController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<?> findUserReviews(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(reviewService.searchAllUserReviews(accountId));
+    public ResponseEntity<?> findUserReviews(SearchUserReviewReqDto reqDto) {
+        return ResponseEntity.ok(reviewService.searchAllUserReviews(reqDto));
     }
 
     // 특정 트레이너의 리뷰 조회 API

@@ -36,7 +36,7 @@
         <result property="trainerReviewScore" column="trainer_review_score"/>
         <result property="createDate" column="create_date"/>
         <result property="updateDate" column="update_date"/>
-
+        <association property="trainer" resultMap="TrainerResultMap" />
     </resultMap>
 
     <!-- 트레이너 리뷰 삽입 쿼리 -->
@@ -85,16 +85,23 @@
             resultType="com.predev.gymcrm.entity.TrainerReview"
             resultMap="ReviewResultMap">
         select
-            trainer_review_id,
-            trainer_id,
-            user_id,
-            trainer_review_text,
-            trainer_review_score
+            trt.trainer_review_id,
+            trt.trainer_id,
+            trt.user_id,
+            trt.trainer_review_text,
+            trt.trainer_review_score,
+            at.name,
+            trt.create_date
         from
-            trainer_review_tb
+            trainer_review_tb trt
+            left outer join trainer_tb tt
+                on(trt.trainer_id = tt.trainer_id)
+            left outer join account_tb at
+                on(tt.account_id = at.account_id)
         where
             user_id = #{userId}
     </select>
+
     <select id="findAvgReviewScoreByTrainerId" resultType="java.lang.Double">
         select
             avg(trainer_review_score)

@@ -91,6 +91,13 @@
             account_id = #{accountId}
     </update>
 
-
+    <insert id="saveRoutines" parameterType="list">
+        insert into
+        workout_routine_tb
+        values
+        <foreach collection="list" item="workoutRoutine" separator=",">
+            (#{workoutRoutine.workoutRoutineId}, #{workoutRoutine.reservationId}, #{workoutRoutine.workoutId}, #{workoutRoutine.workoutRoutineCount}, #{workoutRoutine.workoutRoutineSet}, #{workoutRoutine.workoutRoutineWeight}, #{workoutRoutine.workoutRoutineOrder}, now(), now())
+        </foreach>
+    </insert>
 
 </mapper>
