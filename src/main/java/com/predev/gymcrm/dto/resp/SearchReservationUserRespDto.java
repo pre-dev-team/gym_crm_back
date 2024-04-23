@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 @Data
 public class SearchReservationUserRespDto {
+    private int reservationId;
     private int UserId;
     private String name;
     private String timeDuration;

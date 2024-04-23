@@ -121,6 +121,7 @@ public class ReservationService {
         List<SearchReservationUserRespDto> respDtos = reservations.stream().map(reservation -> {
                 Account userAccount = authMapper.findAccountByUserId(reservation.getUserId());
                 return SearchReservationUserRespDto.builder()
+                        .reservationId(reservation.getReservationId())
                         .UserId(reservation.getUserId())
                         .name(userAccount.getName())
                         .timeDuration(reservation.getTime().getTimeDuration())

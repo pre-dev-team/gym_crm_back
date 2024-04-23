@@ -1,11 +1,14 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.resp.RoutineMakeRespDto;
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.dto.resp.TrainerForReservationRespDto;
 import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.Trainer;
+import com.predev.gymcrm.entity.WorkoutRoutine;
 import com.predev.gymcrm.repository.AuthMapper;
 import com.predev.gymcrm.repository.CommonMapper;
 import com.predev.gymcrm.repository.ReservationMapper;
@@ -26,6 +29,8 @@ public class TrainerService {
 
     @Autowired
     private AuthMapper authMapper;
+
+
 
     public List<SearchMyMembersRespDto> selectMyMembers(int trainerAccountId) {
         List<Integer> userIds = trainerMapper.findReservedUserIdsByTrainerAccountId(trainerAccountId);
@@ -62,6 +67,14 @@ public class TrainerService {
                 .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())
                 .name(trainer.getAccount().getName())
                 .build()).collect(Collectors.toList());
+    }
+
+    public void makeRoutine(List<RoutineMakeReqDto> routineMakeReqDtos) {
+        List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(dto -> dto.toEntity()).collect(Collectors.toList());
+        int successCount = trainerMapper.saveRoutines(workoutRoutines);
+        System.out.println(successCount);
+
+
     }
 
 }
