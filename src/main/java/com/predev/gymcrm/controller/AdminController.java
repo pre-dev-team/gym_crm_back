@@ -32,5 +32,10 @@ public class AdminController {
         return ResponseEntity.ok(adminService.SearchReservations(reqDto));
     }
 
+    @GetMapping("/holidays")
+    public ResponseEntity<?> getHolidayApplies() {
+        return ResponseEntity.ok(null);
+    }
+
 
 }
