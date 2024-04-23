@@ -1,6 +1,7 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.dto.resp.TrainerForReservationRespDto;
 import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
@@ -62,6 +63,10 @@ public class TrainerService {
                 .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())
                 .name(trainer.getAccount().getName())
                 .build()).collect(Collectors.toList());
+    }
+
+    public void updateTrainerProfileImg(UpdateTrainerProfileImgReqDto reqDto) {
+        trainerMapper.updateTrainerProfileImgUrl(reqDto.toEntity());
     }
 
 }

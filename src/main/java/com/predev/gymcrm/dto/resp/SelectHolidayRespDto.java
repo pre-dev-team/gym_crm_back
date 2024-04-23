@@ -14,4 +14,5 @@ public class SelectHolidayRespDto {
     private String holidayDate;
     private int TimeId;
     private String name;
+    private int confirm;
 }

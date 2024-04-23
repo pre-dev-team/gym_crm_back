@@ -1,6 +1,7 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import com.predev.gymcrm.service.TrainerService;
@@ -31,6 +32,12 @@ public class TrainerController {
     @GetMapping("/trainers")
     public ResponseEntity<?> getTrainers() {
         return ResponseEntity.ok(trainerService.getTrainersForReservation());
+    }
+
+    @PutMapping("/mypage/trainerimg")
+    public ResponseEntity<?> updateTrainerImg(@RequestBody UpdateTrainerProfileImgReqDto reqDto) {
+        trainerService.updateTrainerProfileImg(reqDto);
+        return ResponseEntity.ok(true);
     }
 
 }
