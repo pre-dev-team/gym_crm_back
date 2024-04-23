@@ -32,7 +32,6 @@
         <result property="name" column="name" />
         <result property="phone" column="phone" />
         <result property="email" column="email" />
-        <association property="trainer" resultMap="TrainerResultMap"/>
     </resultMap>
 
 
@@ -44,6 +43,22 @@
                 (0, #{holiday.trainerId}, #{holiday.holidayDate}, #{item}, 0, now(), now())
             </foreach>
     </insert>
+    <update id="determineHolidayConfirm">
+        update
+            holiday_tb
+        set
+        <choose>
+            <when test="status == true">
+                confirm = 1
+            </when>
+            <when test="status == false">
+                confirm = 2
+            </when>
+        </choose>
+        where
+            trainer_id = #{trainerId}
+            and holiday_date = #{holidayDate}
+    </update>
 
     <delete id="deleteHoliday" parameterType="com.predev.gymcrm.entity.Holiday">
         delete from
@@ -65,5 +80,21 @@
             left outer join account_tb at on(at.account_id = tt1.account_id)
         where
             at.account_id = #{accountId};
+    </select>
+    <select id="getAllHolidays" resultMap="HolidayResultMap">
+        select
+            ht.holiday_id,
+            ht.create_date,
+            at.name,
+            ht.holiday_date,
+            ht.trainer_id,
+            ht.time_id,
+            ht.confirm
+        from
+            holiday_tb ht
+        left outer join trainer_tb tt1
+            on(tt1.trainer_id = ht.trainer_id)
+        left outer join account_tb at
+            on(at.account_id = tt1.account_id)
     </select>
 </mapper>
