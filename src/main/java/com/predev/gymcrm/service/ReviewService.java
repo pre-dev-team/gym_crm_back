@@ -1,6 +1,7 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.ReviewReqDto;
+import com.predev.gymcrm.dto.req.SearchUserReviewReqDto;
 import com.predev.gymcrm.dto.resp.ReviewRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.Trainer;
@@ -81,8 +82,13 @@ public class ReviewService {
         return respDtoList;
     }
 
-    public List<ReviewRespDto> searchAllUserReviews(int accountId) {
-        int userId = authMapper.findUserIdByAccountId(accountId);
+    public List<ReviewRespDto> searchAllUserReviews(SearchUserReviewReqDto reqDto) {
+        int userId = 0;
+        if(reqDto.getUserId() == 0) {
+            userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
+            reqDto.setUserId(userId);
+        }
+        userId = reqDto.getUserId();
         return reviewMapper.findReviewsByUserId(userId).stream().map(review ->
              ReviewRespDto.builder()
                      .trainerReviewId(review.getTrainerReviewId())
@@ -90,6 +96,7 @@ public class ReviewService {
                      .reviewScore(review.getTrainerReviewScore())
                      .trainerId(review.getTrainerId())
                      .createDate(review.getCreateDate())
+                     .trainerName(review.getTrainer().getAccount().getName())
                      .build()
         ).collect(Collectors.toList());
     }

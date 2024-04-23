@@ -15,6 +15,14 @@ public interface HolidayMapper {
     );
 
     int deleteHoliday(Holiday holiday);
-
+    int determineHolidayConfirm(
+            @Param("trainerId") int trainerId,
+            @Param("holidayDate") String holidayDate,
+            @Param("status") boolean status
+    );
+    List<Holiday> getAllHolidays();
     List<Holiday> selectHolidayByAccountId(int accountId);
+
+
+
 }
