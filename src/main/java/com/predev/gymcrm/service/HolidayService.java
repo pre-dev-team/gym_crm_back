@@ -49,6 +49,7 @@ public class HolidayService {
                         .holidayDate(holiday.getHolidayDate())
                         .TimeId(holiday.getTimeId())
                         .name(account.getName())
+                        .confirm(holiday.getConfirm())
                         .build()
         ).collect(Collectors.toList());
         return respDtos;

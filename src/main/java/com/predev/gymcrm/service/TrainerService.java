@@ -2,6 +2,7 @@ package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
 import com.predev.gymcrm.dto.resp.RoutineMakeRespDto;
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.dto.resp.TrainerForReservationRespDto;
@@ -69,11 +70,13 @@ public class TrainerService {
                 .build()).collect(Collectors.toList());
     }
 
+    public void updateTrainerProfileImg(UpdateTrainerProfileImgReqDto reqDto) {
+        trainerMapper.updateTrainerProfileImgUrl(reqDto.toEntity());
+      
     public void makeRoutine(List<RoutineMakeReqDto> routineMakeReqDtos) {
         List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(dto -> dto.toEntity()).collect(Collectors.toList());
         int successCount = trainerMapper.saveRoutines(workoutRoutines);
         System.out.println(successCount);
-
 
     }
 

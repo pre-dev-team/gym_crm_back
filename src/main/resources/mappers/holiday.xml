@@ -73,7 +73,8 @@
             ht.holiday_id,
             ht.holiday_date,
             ht.time_id,
-            at.name
+            at.name,
+            ht.confirm
         from
             holiday_tb ht
             left outer join trainer_tb tt1 on(tt1.trainer_id = ht.trainer_id)

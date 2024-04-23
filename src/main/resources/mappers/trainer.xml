@@ -82,6 +82,15 @@
             left outer join account_tb at on (at.account_id = tt.account_id)
     </select>
 
+    <update id="updateTrainerProfileImgUrl" parameterType="com.predev.gymcrm.entity.Trainer">
+        update
+            trainer_tb
+        set
+            trainer_profile_img_url = #{trainerProfileImgUrl}
+        where
+            account_id = #{accountId}
+    </update>
+
     <insert id="saveRoutines" parameterType="list">
         insert into
         workout_routine_tb
@@ -90,6 +99,5 @@
             (#{workoutRoutine.workoutRoutineId}, #{workoutRoutine.reservationId}, #{workoutRoutine.workoutId}, #{workoutRoutine.workoutRoutineCount}, #{workoutRoutine.workoutRoutineSet}, #{workoutRoutine.workoutRoutineWeight}, #{workoutRoutine.workoutRoutineOrder}, now(), now())
         </foreach>
     </insert>
-
 
 </mapper>
