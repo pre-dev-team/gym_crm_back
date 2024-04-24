@@ -215,6 +215,19 @@
             <if test="name != null and name != ''">
                 and at.name like concat('%', #{name}, '%')
             </if>
-   </select>
+    </select>
+    <select id="findAccountByNameAndEmail" resultMap="AccountResultMap">
+        select
+            account_id,
+            role_id,
+            username,
+            name,
+            email,
+        from
+            account_tb
+        where
+            name = #{name}
+            and email = #{email}
+    </select>
 
 </mapper>
