@@ -37,6 +37,7 @@ public class TrainerService {
         List<Integer> userIds = trainerMapper.findReservedUserIdsByTrainerAccountId(trainerAccountId);
         List<Account> myMembers = userIds.stream().map(id -> authMapper.findAccountByUserId(id)).collect(Collectors.toList());
         return myMembers.stream().map(account -> SearchMyMembersRespDto.builder()
+                .userId(account.getUser().getUserId())
                 .accountId(account.getAccountId())
                 .name(account.getName())
                 .phone(account.getPhone())
