@@ -33,7 +33,6 @@ public class JwtProvider {
         key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
         this.authMapper = authMapper;
     }
-
     public String generateJwt(Account account) {
             int accountId = account.getAccountId();
             String username = account.getUsername();

@@ -47,9 +47,7 @@ public class AccountMailService {
                 mailContent.append("</div>");
 
                 mimeMessage.setText(mailContent.toString(), "UTF-8", "html");
-
                 javaMailSender.send(mimeMessage);
-
                 result = true;
             } catch (Exception exception) {
                 exception.printStackTrace();
