@@ -3,6 +3,7 @@ package com.predev.gymcrm.controller;
 import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.AccountSigninReqDto;
 import com.predev.gymcrm.dto.req.EditPasswordReqDto;
+import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
 import com.predev.gymcrm.service.AuthService;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,12 @@ public class AuthController {
     public ResponseEntity<?> trainerSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
         authService.trainerSignup(reqDto);
         return ResponseEntity.created(null).body(reqDto);
+    }
+    @ValidAspect
+    @PostMapping("/oauth2/signup")
+    public ResponseEntity<?> oAuth2Signup(@Valid @RequestBody OAuth2SignupReqDto oAuth2SignupReqDto, BindingResult bindingResult) {
+        authService.oAuth2Signup(oAuth2SignupReqDto);
+        return ResponseEntity.created(null).body(true);
     }
 
     @PostMapping("/account/signin")

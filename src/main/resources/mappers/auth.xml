@@ -24,6 +24,14 @@
         <result property="email" column="email" />
         <association property="role" resultMap="RoleResultMap" />
     </resultMap>
+    <resultMap id="OAuth2ResultMap" type="com.predev.gymcrm.entity.OAuth2">
+        <id property="oAuth2Id" column="oauth2_id" />
+        <result property="oAuth2Name" column="oauth2_name"/>
+        <result property="accountId" column="account_id" />
+        <result property="oAuth2ProviderName" column="oauth2_provider_name" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+    </resultMap>
 
     <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
         <id property="userId" column="user_id" />
@@ -95,10 +103,14 @@
             at.create_date,
             at.update_date,
             rt.role_name,
-            rt.role_name_kor
+            rt.role_name_kor,
+            oat.oauth2_id,
+            oat.oauth2_name,
+            oat.oauth2_provider_name
         from
             account_tb at
             left outer join role_tb rt on(at.role_id = rt.role_id)
+            left outer join oauth2_tb oat on(oat.account_id=at.account_id)
         where
             at.username = #{username}
     </select>
@@ -216,5 +228,32 @@
                 and at.name like concat('%', #{name}, '%')
             </if>
    </select>
+    <select id="findAccountByOAuth2Name" resultMap="AccountResultMap">
+        select
+            at.account_id,
+            at.username,
+            at.password,
+            at.name,
+            at.phone,
+            at.email,
+            at.create_date,
+            at.update_date,
+            rt.role_id,
+            rt.role_name,
+            rt.role_name_kor,
+            oat.oauth2_id,
+            oat.oauth2_name,
+            oat.oauth2_provider_name
+        from
+            account_tb at
+            left outer join role_tb rt on(rt.role_id = at.role_id)
+            left outer join oauth2_tb oat on(oat.account_id = at.account_id);
+        where
+            oat.oauth2_name = #{oAuth2Name}
+    </select>
+    <insert id="saveOAuth2" parameterType="com.predev.gymcrm.entity.OAuth2">
+        insert into oauth2_tb
+        values(0, #{oauth2Name}, #{accountId}, #{oAuth2ProviderName}, now(), now())
+    </insert>
 
 </mapper>

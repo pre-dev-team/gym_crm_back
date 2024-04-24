@@ -1,6 +1,7 @@
 package com.predev.gymcrm.repository;
 
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.entity.OAuth2;
 import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.User;
 import org.apache.ibatis.annotations.Mapper;
@@ -24,6 +25,7 @@ AuthMapper {
     public Integer findUserIdByAccountId(int accountId);
     public Integer findTrainerIdByAccountId(int accountId);
     public List<User> findUsersByName(String name);
-
+    public Account findAccountByOAuth2Name(String oAuth2Name);
     public void modifyAccountPassword(Account account);
+    public int saveOAuth2(OAuth2 oAuth2);
 }

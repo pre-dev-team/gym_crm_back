@@ -73,6 +73,9 @@ public class ValidAop {
                 throw new ValidException(errorMap);
             }
         }
+        if(methodName.equals("oAuth2Signup")) {
+
+        }
 
         return proceedingJoinPoint.proceed();
     }

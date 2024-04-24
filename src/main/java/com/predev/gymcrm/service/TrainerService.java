@@ -72,6 +72,7 @@ public class TrainerService {
 
     public void updateTrainerProfileImg(UpdateTrainerProfileImgReqDto reqDto) {
         trainerMapper.updateTrainerProfileImgUrl(reqDto.toEntity());
+    }
       
     public void makeRoutine(List<RoutineMakeReqDto> routineMakeReqDtos) {
         List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(dto -> dto.toEntity()).collect(Collectors.toList());

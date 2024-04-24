@@ -1,6 +1,8 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.AccountSigninReqDto;
+import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
 import com.predev.gymcrm.dto.resp.SearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.exception.SaveException;
@@ -44,6 +46,21 @@ public class AuthService {
         }
     }
 
+    @ValidAspect
+    @Transactional(rollbackFor = Exception.class)
+    public void oAuth2Signup(OAuth2SignupReqDto oAuth2SignupReqDto) {
+        int successCount = 0;
+        Account account = oAuth2SignupReqDto.toEntity(passwordEncoder);
+        successCount += authMapper.saveAccount(1, account);
+        successCount += authMapper.saveUser(account.getAccountId());
+        successCount += authMapper.saveOAuth2(oAuth2SignupReqDto.toOAuth2Entity(account.getAccountId()));
+
+
+        if(successCount < 3) {
+            throw new SaveException();
+        }
+    }
+
     @Transactional(rollbackFor = Exception.class)
     public void trainerSignup(AccountSignupReqDto reqDto) {
         int successCount = 0;
@@ -67,7 +84,7 @@ public class AuthService {
         if (!passwordEncoder.matches(reqDto.getPassword(), account.getPassword())) {
             throw new BadCredentialsException("사용자 정보를 확인하세요.");
         }
-        return jwtProvider.generateJwt(account);
+        return jwtProvider.generateToken(account);
     }
 
     public int findUserIdByAccountId(int accountId) {

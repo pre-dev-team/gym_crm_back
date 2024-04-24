@@ -31,6 +31,7 @@ public class Account {
     private Trainer trainer;
     private Role role;
     private List<Reservation> reservations;
+    private List<OAuth2> oAuth2s;
 
     public List<SimpleGrantedAuthority> getAuthorities() {
             return List.of(new SimpleGrantedAuthority(role.getRoleName()));
