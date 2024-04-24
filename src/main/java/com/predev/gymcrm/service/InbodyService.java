@@ -19,23 +19,11 @@ public class InbodyService {
         this.inbodyMapper = inbodyMapper;
     }
 
-    public InbodyRespDto addInbody(InbodyReqDto inbodyReqDto) {
-        // InbodyReqDto를 Inbody로 변환
-        Inbody inbody = Inbody.builder()
-                .inbodyUrl(inbodyReqDto.getInbodyUrl())
-                .weight(inbodyReqDto.getWeight())
-                .muscleMass(inbodyReqDto.getMuscleMass())
-                .fatMass(inbodyReqDto.getFatMass())
-                .build();
+    public int addInbody(InbodyReqDto inbodyReqDto) {
+        int successCount = 0;
+        successCount =inbodyMapper.insertInbody(inbodyReqDto.toInbodyEntity());
 
-        // Inbody를 데이터베이스에 저장
-        inbodyMapper.insertInbody(inbodyReqDto);
-
-        // 저장된 Inbody 정보를 읽어와서 InbodyRespDto로 변환
-        InbodyRespDto inbodyRespDto = inbodyMapper.toInbodyRespDto(inbody);
-
-        // InbodyRespDto 반환
-        return inbodyRespDto;
+        return successCount;
     }
 
     public List<InbodyRespDto> getInbodyByAccountId(int accountId) {

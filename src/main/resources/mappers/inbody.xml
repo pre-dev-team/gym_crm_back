@@ -23,16 +23,6 @@
             (0, #{inbodyUrl}, #{userId}, #{weight}, #{muscleMass}, #{fatMass}, now(), now())
     </insert>
 
-    <!-- 추가된 부분 -->
-    <select id="toInbodyRespDto" resultMap="InbodyResultMap">
-        SELECT
-            *
-        FROM
-            inbody_tb
-        WHERE
-            inbody_id = #{inbodyId}
-    </select>
-
     <select id="findInbodyByAccountId" resultMap="InbodyResultMap" parameterType="int">
         SELECT
             it.inbody_id,

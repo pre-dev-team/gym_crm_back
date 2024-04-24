@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 @Data
 public class InbodyReqDto {
+    private int userId;
     private String inbodyUrl;
     private int weight;
     private int muscleMass;
@@ -14,10 +15,11 @@ public class InbodyReqDto {
 
     public Inbody toInbodyEntity() {
         return Inbody.builder()
-                .inbodyUrl(this.inbodyUrl)
-                .weight(this.weight)
-                .muscleMass(this.muscleMass)
-                .fatMass(this.fatMass)
+                .userId(userId)
+                .inbodyUrl(inbodyUrl)
+                .weight(weight)
+                .muscleMass(muscleMass)
+                .fatMass(fatMass)
                 .build();
     }
 }

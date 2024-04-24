@@ -16,6 +16,18 @@
         <association property="trainer" resultMap="TrainerResultMap" />
     </resultMap>
 
+    <resultMap id="ReservationResultMap2" type="com.predev.gymcrm.entity.Reservation">
+        <id property="reservationId" column="reservation_id" />
+        <result property="userId" column="user_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="timeId" column="time_id" />
+        <result property="reservationDate" column="reservation_date" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="trainerAccountView" resultMap="TrainerAccountViewResultMap" />
+        <association property="userAccountView" resultMap="UserAccountViewResultMap" />
+    </resultMap>
+
     <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
         <id property="trainerId" column="trainer_id" />
         <result property="accountId" column="account_id" />
@@ -23,6 +35,29 @@
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
         <association property="account" resultMap="AccountResultMap" />
+    </resultMap>
+
+    <resultMap id="TrainerAccountViewResultMap" type="com.predev.gymcrm.entity.TrainerAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
+
+    <resultMap id="UserAccountViewResultMap" type="com.predev.gymcrm.entity.UserAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="userId" column="user_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
     </resultMap>
 
     <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
@@ -51,22 +86,25 @@
         <result property="updateDate" column="update_date" />
     </resultMap>
 
-
-
-
-
-    <select id="findReservedUserIdsByTrainerAccountId" resultType="integer">
+    <select id="findMyMembersByTrainerAccountId" resultMap="ReservationResultMap2">
         select
-            rt.user_id
+            rt.reservation_id,
+            rt.trainer_id,
+            rt.user_id,
+            uav.name,
+            uav.account_id,
+            uav.phone,
+            uav.email
         from
-            account_tb at
-            left outer join trainer_tb tt on(tt.account_id = at.account_id)
-            left outer join reservation_tb rt on(tt.trainer_id = rt.trainer_id)
-            left outer join user_tb ut on(ut.user_id = rt.user_id)
+            reservation_tb rt
+            left outer join user_account_view uav
+                on (rt.user_id = uav.user_id)
+            left outer join trainer_account_view tav
+                on (rt.trainer_id = tav.trainer_id)
         where
-            at.account_id = #{accountId}
+            tav.account_id = #{trainerAccountId}
         group by
-            rt.user_id
+            user_id;
     </select>
 
     <select id="getTrainers" resultMap="TrainerResultMap">

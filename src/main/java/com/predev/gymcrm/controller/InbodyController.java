@@ -33,8 +33,7 @@ public class InbodyController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addInbody(@RequestBody InbodyReqDto inbodyReqDto) {
-        InbodyRespDto inbodyRespDto = inbodyService.addInbody(inbodyReqDto);
-        return ResponseEntity.ok(inbodyRespDto);
+        return ResponseEntity.ok(inbodyService.addInbody(inbodyReqDto));
     }
 
     // 각 회원의 userId를 기반으로 Inbody 정보를 가져오는 엔드포인트 추가

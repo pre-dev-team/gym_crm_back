@@ -9,9 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface InbodyMapper {
-    void insertInbody(InbodyReqDto inbodyReqDto);
-
-    InbodyRespDto toInbodyRespDto(Inbody inbody);
+    int insertInbody(Inbody inbody);
 
     List<Inbody> findInbodyByAccountId(int accountId);
 }

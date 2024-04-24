@@ -10,7 +10,7 @@ import java.util.List;
 public interface TrainerMapper {
 
     List<Trainer> getTrainers();
-    List<Integer> findReservedUserIdsByTrainerAccountId(int trainerAccountId);
+    List<Reservation> findMyMembersByTrainerAccountId(int trainerAccountId);
     Trainer getAllTrainerInfo(int accountId);
     int updateTrainerProfileImgUrl(Trainer trainer);
     int saveRoutines(List<WorkoutRoutine> workoutRoutines);

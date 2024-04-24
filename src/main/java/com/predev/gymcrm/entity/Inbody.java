@@ -25,11 +25,11 @@ public class Inbody {
 
     public InbodyRespDto toInbodyRespDto() {
         return InbodyRespDto.builder()
-                .inbodyId(this.inbodyId)
-                .inbodyUrl(this.inbodyUrl)
-                .weight(this.weight)
-                .muscleMass(this.muscleMass)
-                .fatMass(this.fatMass)
+                .inbodyId(inbodyId)
+                .inbodyUrl(inbodyUrl)
+                .weight(weight)
+                .muscleMass(muscleMass)
+                .fatMass(fatMass)
                 .createDate(createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .build();
     }
