@@ -2,6 +2,7 @@ package com.predev.gymcrm.config;
 
 import com.predev.gymcrm.security.exception.AuthEntryPoint;
 import com.predev.gymcrm.security.filter.JwtAuthenticationFilter;
+import com.predev.gymcrm.security.filter.MailSessionFilter;
 import com.predev.gymcrm.security.filter.PermitAllFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Autowired
+    MailSessionFilter mailSessionFilter;
 
     @Autowired
     PermitAllFilter permitAllFilter;
@@ -39,7 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         //auth로 받는 모든 요청제외하고 jwt인가받겠습니다
         http.authorizeRequests()
-                .antMatchers("/auth/**","/admin/**","/common/**","/reservation/**","/trainer/**", "/review/**", "/options/**", "/holiday/**", "/inbody/**", "/routine/**")
+                .antMatchers("/auth/**","/admin/**","/common/**",
+                        "/reservation/**","/trainer/**", "/review/**",
+                        "/options/**", "/holiday/**", "/inbody/**",
+                        "/routine/**","/mail/**")
                 .permitAll()
                 .antMatchers("/user/**")
                 .hasRole("USER")
@@ -48,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(permitAllFilter, LogoutFilter.class)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(mailSessionFilter,UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
                 .authenticationEntryPoint(authEntryPoint);
     }
