@@ -5,7 +5,6 @@ import com.predev.gymcrm.repository.AuthMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +34,7 @@ public class AccountMailService {
         if(account != null) {
             try {
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-                helper.setSubject("PREDEV-GYM 아이디찾기");
+                helper.setSubject("[PREDEV-GYM] 계정 찾기");
                 helper.setFrom(fromMailAddress);
                 helper.setTo(account.getEmail());
 
@@ -43,7 +42,7 @@ public class AccountMailService {
                 mailContent.append("<div>");
                 mailContent.append("<h1>PREDEV GYM</h1>");
                 mailContent.append("<div>");
-                mailContent.append("<h3>귀하의 아이디:" + account.getUsername() + "</h3>");
+                mailContent.append("<h3>귀하의 아이디는 " + account.getUsername() + "입니다</h3>");
                 mailContent.append("</div>");
                 mailContent.append("</div>");
 

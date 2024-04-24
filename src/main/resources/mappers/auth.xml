@@ -222,7 +222,7 @@
             role_id,
             username,
             name,
-            email,
+            email
         from
             account_tb
         where
