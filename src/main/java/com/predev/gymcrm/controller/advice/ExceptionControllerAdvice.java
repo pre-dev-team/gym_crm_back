@@ -1,6 +1,7 @@
 package com.predev.gymcrm.controller.advice;
 
 import com.predev.gymcrm.exception.JwtException;
+import com.predev.gymcrm.exception.RequestInLimitTimeException;
 import com.predev.gymcrm.exception.ValidException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,10 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(JwtException.class)
     public ResponseEntity<?> JwtException(JwtException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+    }
+
+    @ExceptionHandler(RequestInLimitTimeException.class)
+    public ResponseEntity<?> RequestInLimitTimeException(RequestInLimitTimeException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }
