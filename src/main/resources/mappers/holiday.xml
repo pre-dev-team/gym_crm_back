@@ -132,6 +132,7 @@
         where
             ht.trainer_id = #{trainerId}
     </select>
+
     <select id="getAllAdminSearchHolidyByTrainerId" resultType="com.predev.gymcrm.entity.AdminSearchHoliday">
         select
             ht.trainer_id as trainerId,
@@ -147,10 +148,10 @@
         where
             ht.trainer_id = #{trainerId}
         <choose>
-            <when test="status = 1">
+            <when test="status == 1">
                 and ht.confirm = 0
             </when>
-            <when test="status = 2">
+            <when test="status == 2">
                 and ht.confirm != 0
             </when>
         </choose>

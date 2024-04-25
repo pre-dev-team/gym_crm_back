@@ -18,7 +18,7 @@ public class AdminSearchHoliday {
     private String holidayDate;
     private int startTimeId;
     private int endTimeId;
-    private LocalDateTime crateDate;
+    private LocalDateTime createDate;
     private String name;
 
     public AdminSearchHolidayRespDto toAdminSearchHolidayRespDto() {
@@ -27,7 +27,7 @@ public class AdminSearchHoliday {
                 .holidayDate(holidayDate)
                 .startTimeId(startTimeId)
                 .endTimeId(endTimeId)
-                .crateDate(crateDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+                .createDate(createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .name(name)
                 .build();
     }

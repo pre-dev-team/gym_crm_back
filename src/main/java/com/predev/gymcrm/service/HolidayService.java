@@ -65,38 +65,12 @@ public class HolidayService {
         ).collect(Collectors.toList());
         return respDtos;
     }
-    public Map<String, List<Holiday>> sortHolidayByConfirm(List<Holiday> holidays) {
-        List<Holiday> confirmedHolidays =
-                holidays.stream().filter(holiday -> holiday.getConfirm() != 0).collect(Collectors.toList());
-        List<Holiday> unconfirmedHolidays =
-                holidays.stream().filter(holiday -> holiday.getConfirm() == 0).collect(Collectors.toList());
-        return Map.of("confirmed", confirmedHolidays, "unconfirmed", unconfirmedHolidays);
-    }
-
-    public Map<String, List<Holiday>> sortHolidayByHolidayDate(List<Holiday> holidays) {
-        Map<String, List<Holiday>> result = new HashMap<>();
-        Map<String, List<Holiday>> sortedResult = holidays.stream().collect(Collectors.groupingBy(Holiday::getHolidayDate));
-        Set<String> strings = sortedResult.keySet();
-        System.out.println(strings);
-        for(String string : strings) {
-            int min = sortedResult.get(string).stream().map(Holiday::getTimeId).min(Integer::compareTo).orElseGet(() -> 0);
-            int max = sortedResult.get(string).stream().map(Holiday::getTimeId).max(Integer::compareTo).orElseGet(() -> 0);
-            List<Holiday> minAndMaxHolidays = new ArrayList<>();
-            Holiday tempHoliday1 = sortedResult.get(string).get(0);
-            tempHoliday1.setTimeId(min);
-            Holiday tempHoliday2 = sortedResult.get(string).get(1);
-            tempHoliday2.setTimeId(max);
-            minAndMaxHolidays.add(tempHoliday1);
-            minAndMaxHolidays.add(tempHoliday2);
-            result.put(string, minAndMaxHolidays);
-        }
-        return result;
-    }
 
     public List<AdminSearchHolidayRespDto> getUnconfirmedHolidays(int trainerId) {
         List<AdminSearchHoliday> holidays = holidayMapper.getAllAdminSearchHolidyByTrainerId(trainerId, 1);
         return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
     }
+
     public List<AdminSearchHolidayRespDto> getConfirmedHolidays(int trainerId) {
         List<AdminSearchHoliday> holidays = holidayMapper.getAllAdminSearchHolidyByTrainerId(trainerId, 2);
         return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
