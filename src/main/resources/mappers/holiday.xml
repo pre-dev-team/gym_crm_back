@@ -82,6 +82,7 @@
         where
             at.account_id = #{accountId};
     </select>
+
     <select id="getAllHolidays" resultMap="HolidayResultMap">
         select
             ht.holiday_id,
@@ -97,5 +98,21 @@
             on(tt1.trainer_id = ht.trainer_id)
         left outer join account_tb at
             on(at.account_id = tt1.account_id)
+        where
+            ht.holiday_date = #{holidayDate}
     </select>
+
+    <select id="searchHolidayByTrainerIdByHolidayDateByTimeId" resultMap="HolidayResultMap">
+        select
+            trainer_id,
+            holiday_date,
+            time_id
+        from
+            holiday_tb
+        where
+            trainer_id = #{trainerId}
+        and holiday_date = #{holidayDate}
+        and time_id between #{startTimeId} and #{endTimeId}
+    </select>
+
 </mapper>

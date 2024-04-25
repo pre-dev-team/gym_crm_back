@@ -7,6 +7,7 @@ import com.predev.gymcrm.dto.resp.AdminSearchHolidayRespDto;
 import com.predev.gymcrm.dto.resp.SelectHolidayRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.Holiday;
+import com.predev.gymcrm.exception.HolidayException;
 import com.predev.gymcrm.repository.AuthMapper;
 import com.predev.gymcrm.repository.HolidayMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,15 @@ public class HolidayService {
         for(int i = reqDto.getStartTimeId(); i < reqDto.getEndTimeId() + 1; i++) {
             timeIds.add(i);
         }
+
+        List<Holiday> isAlreadyHoliday = holidayMapper.searchHolidayByTrainerIdByHolidayDateByTimeId(
+                trainerId, date, reqDto.getStartTimeId(), reqDto.getEndTimeId()
+        );
+
+        if (!isAlreadyHoliday.isEmpty()) {
+            throw new HolidayException("이미 신청된 연차입니다.");
+        }
+
         holidayMapper.saveHoliday(timeIds, reqDto.toTrainerHolidayEntity(date, trainerId));
     }
 
