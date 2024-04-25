@@ -1,5 +1,6 @@
 package com.predev.gymcrm.repository;
 
+import com.predev.gymcrm.entity.AdminSearchHoliday;
 import com.predev.gymcrm.entity.Holiday;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -22,6 +23,12 @@ public interface HolidayMapper {
             @Param("status") boolean status
     );
     List<Holiday> getAllHolidays();
+
+    List<AdminSearchHoliday> getAllAdminSearchHolidyByTrainerId(
+            @Param("trainerId") int trainerId,
+            @Param("status") int status
+    );
+    List<Holiday> getAllHolidaysByTrainerId(int trainerId);
     List<Holiday> selectHolidayByAccountId(int accountId);
     List<Holiday> searchHolidayByTrainerIdByHolidayDateByTimeId(
             @Param("trainerId") int trainerId,

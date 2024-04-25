@@ -25,15 +25,4 @@ public class Holiday {
     private List<Time> times;
     private Trainer trainer;
 
-    public AdminSearchHolidayRespDto toAdminSearchHolidayRespDto() {
-        return AdminSearchHolidayRespDto.builder()
-                .holidayId(holidayId)
-                .trainerId(trainerId)
-                .timeId(timeId)
-                .confirm(confirm)
-                .createDate(createDate)
-                .holidayDate(holidayDate)
-                .trainerName(trainer.getAccount().getName())
-                .build();
-    }
 }

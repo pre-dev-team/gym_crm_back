@@ -114,5 +114,51 @@
         and holiday_date = #{holidayDate}
         and time_id between #{startTimeId} and #{endTimeId}
     </select>
+    <select id="getAllHolidaysByTrainerId" resultMap="HolidayResultMap">
+        select
+            ht.holiday_id,
+            ht.create_date,
+            at.name,
+            ht.holiday_date,
+            ht.trainer_id,
+            ht.time_id,
+            ht.confirm
+        from
+            holiday_tb ht
+            left outer join trainer_tb tt1
+                on(tt1.trainer_id = ht.trainer_id)
+            left outer join account_tb at
+                on(at.account_id = tt1.account_id)
+        where
+            ht.trainer_id = #{trainerId}
+    </select>
+    <select id="getAllAdminSearchHolidyByTrainerId" resultType="com.predev.gymcrm.entity.AdminSearchHoliday">
+        select
+            ht.trainer_id as trainerId,
+            ht.holiday_date as holidayDate,
+            min(ht.time_id) as startTimeId,
+            max(ht.time_id) as endTimeId,
+            ht.create_date as createDate,
+            tav.name as name
+        from
+            holiday_tb ht
+            left outer join trainer_account_view tav
+                on(ht.trainer_id = tav.trainer_id)
+        where
+            ht.trainer_id = #{trainerId}
+        <choose>
+            <when test="status = 1">
+                and ht.confirm = 0
+            </when>
+            <when test="status = 2">
+                and ht.confirm != 0
+            </when>
+        </choose>
+        group by
+            ht.trainer_id,
+            ht.holiday_date
+        order by
+            ht.holiday_date desc;
+    </select>
 
 </mapper>
