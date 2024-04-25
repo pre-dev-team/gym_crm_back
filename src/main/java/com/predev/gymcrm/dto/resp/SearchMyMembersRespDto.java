@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class SearchMyMembersRespDto {
+    private int userId;
     private int accountId;
     private String name;
     private String phone;

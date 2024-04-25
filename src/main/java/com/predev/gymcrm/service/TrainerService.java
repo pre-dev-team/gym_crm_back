@@ -8,6 +8,7 @@ import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.dto.resp.TrainerForReservationRespDto;
 import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.entity.Reservation;
 import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.WorkoutRoutine;
 import com.predev.gymcrm.repository.AuthMapper;
@@ -34,15 +35,8 @@ public class TrainerService {
 
 
     public List<SearchMyMembersRespDto> selectMyMembers(int trainerAccountId) {
-        List<Integer> userIds = trainerMapper.findReservedUserIdsByTrainerAccountId(trainerAccountId);
-        List<Account> myMembers = userIds.stream().map(id -> authMapper.findAccountByUserId(id)).collect(Collectors.toList());
-        return myMembers.stream().map(account -> SearchMyMembersRespDto.builder()
-                .accountId(account.getAccountId())
-                .name(account.getName())
-                .phone(account.getPhone())
-                .email(account.getEmail())
-                .build()
-        ).collect(Collectors.toList());
+        List<Reservation> reservations = trainerMapper.findMyMembersByTrainerAccountId(trainerAccountId);
+        return reservations.stream().map(Reservation::toSearchMyMembersRespDto).collect(Collectors.toList());
     }
 
     public TrainerInfoRespDto getAllTrainerInfo(int accountId) {
