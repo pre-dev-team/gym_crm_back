@@ -22,7 +22,6 @@ public class RoutineController {
     @PostMapping("/trainer")
     public ResponseEntity<?> makeRoutine (@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
 
-        System.out.println(routineMakeReqDtos);
         trainerService.makeRoutine(routineMakeReqDtos);
 
         return ResponseEntity.ok(routineMakeReqDtos);

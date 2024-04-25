@@ -3,6 +3,7 @@ package com.predev.gymcrm.repository;
 import com.predev.gymcrm.entity.Holiday;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -22,7 +23,11 @@ public interface HolidayMapper {
     );
     List<Holiday> getAllHolidays();
     List<Holiday> selectHolidayByAccountId(int accountId);
-
-
+    List<Holiday> searchHolidayByTrainerIdByHolidayDateByTimeId(
+            @Param("trainerId") int trainerId,
+            @Param("holidayDate") String holidayDate,
+            @Param("startTimeId") int startTimeId,
+            @Param("endTimeId") int endTimeId
+    );
 
 }

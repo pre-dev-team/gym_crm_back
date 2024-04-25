@@ -1,5 +1,6 @@
 package com.predev.gymcrm.controller.advice;
 
+import com.predev.gymcrm.exception.HolidayException;
 import com.predev.gymcrm.exception.JwtException;
 import com.predev.gymcrm.exception.RequestInLimitTimeException;
 import com.predev.gymcrm.exception.ValidException;
@@ -37,6 +38,11 @@ public class ExceptionControllerAdvice {
 
     @ExceptionHandler(RequestInLimitTimeException.class)
     public ResponseEntity<?> RequestInLimitTimeException(RequestInLimitTimeException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
+
+    @ExceptionHandler(HolidayException.class)
+    public ResponseEntity<?> HolidayException(HolidayException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
     }
 }
