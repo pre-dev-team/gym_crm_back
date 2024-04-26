@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SelectMyMembersInformationRespDto {
-    private int accountId;
+public class SearchInbodyRespDto {
+    private int inbodyId;
+    private String inbodyUrl;
     private int userId;
-    private String reservationDate;
-    private String name;
-    private String phone;
-    private String timeDuration;
+    private int weight;
+    private int muscleMass;
+    private int fatMass;
 }

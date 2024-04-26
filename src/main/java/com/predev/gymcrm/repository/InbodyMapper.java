@@ -12,4 +12,5 @@ public interface InbodyMapper {
     int insertInbody(Inbody inbody);
 
     List<Inbody> findInbodyByAccountId(int accountId);
+    Inbody findInbodyByUserId(int userId);
 }

@@ -16,6 +16,30 @@
         <association property="time" resultMap="TimeResultMap" />
         <association property="user" resultMap="UserResultMap" />
         <association property="trainer" resultMap="TrainerResultMap" />
+        <association property="userAccountView" resultMap="UserAccountViewResultMap"/>
+        <association property="trainerAccountView" resultMap="TrainerAccountViewResultMap"/>
+    </resultMap>
+
+    <resultMap id="UserAccountViewResultMap" type="com.predev.gymcrm.entity.UserAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="userId" column="user_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
+
+    <resultMap id="TrainerAccountViewResultMap" type="com.predev.gymcrm.entity.TrainerAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
     </resultMap>
 
     <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
@@ -326,11 +350,13 @@
             rvt.user_id,
             rvt.reservation_date,
             uav.name,
-            uav.phone
+            uav.phone,
+            tt.time_duration
         from
             reservation_tb rvt
             left outer join user_account_view uav on(uav.user_id = rvt.user_id)
             left outer join trainer_account_view tav on(tav.trainer_id = rvt.trainer_id)
+            left outer join time_tb tt on(tt.time_id = rvt.time_id)
         where
             tav.account_id = #{accountId}
             and rvt.user_id = #{userId};
