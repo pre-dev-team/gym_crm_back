@@ -59,6 +59,7 @@ public class Reservation {
                 .reservationDate(reservationDate)
                 .name(userAccountView.getName())
                 .phone(userAccountView.getPhone())
+                .timeDuration(time.getTimeDuration())
                 .build();
     }
 

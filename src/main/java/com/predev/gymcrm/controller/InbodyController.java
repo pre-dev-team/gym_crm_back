@@ -2,6 +2,7 @@ package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.InbodyReqDto;
 import com.predev.gymcrm.dto.resp.InbodyRespDto;
+import com.predev.gymcrm.dto.resp.SearchInbodyRespDto;
 import com.predev.gymcrm.service.InbodyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,11 @@ public class InbodyController {
         System.out.println("Received userId: " + accountId); // userId 로깅 추가
         List<InbodyRespDto> inbodyRespDtoList = inbodyService.getInbodyByUserId(accountId);
         return ResponseEntity.ok(inbodyRespDtoList);
+    }
+
+    @GetMapping("/user/information")
+    public ResponseEntity<?> getInbodyInformation(@RequestParam(value = "userId") int userId) {
+        return ResponseEntity.ok(inbodyService.getInbodyInformation(userId));
     }
 
 }

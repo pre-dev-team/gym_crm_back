@@ -8,6 +8,7 @@
     <resultMap id="InbodyResultMap" type="com.predev.gymcrm.entity.Inbody">
         <id property="inbodyId" column="inbody_id" />
         <result property="inbodyUrl" column="inbody_url" />
+        <result property="userId" column="user_id" />
         <result property="weight" column="weight" />
         <result property="muscleMass" column="muscle_mass" />
         <result property="fatMass" column="fat_mass" />
@@ -44,6 +45,20 @@
             left outer JOIN account_tb at ON ut.account_id = at.account_id
         WHERE
             at.account_id = #{accountId}
+    </select>
+
+    <select id="findInbodyByUserId" resultMap="InbodyResultMap">
+        select
+            inbody_id,
+            inbody_url,
+            user_id,
+            weight,
+            muscle_mass,
+            fat_mass
+        from
+            inbody_tb
+        where
+            user_id = #{userId};
     </select>
 
 </mapper>
