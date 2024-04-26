@@ -58,6 +58,11 @@ public class AuthService {
         }
     }
 
+    public void deleteTrainer(int trainerId) {
+        System.out.println(trainerId);
+        authMapper.deleteTrainer(trainerId);
+    }
+
     public String Signin(AccountSigninReqDto reqDto) {
         Account account = authMapper.findAccountByUsername(reqDto.getUsername());
 
