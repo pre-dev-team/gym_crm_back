@@ -12,11 +12,10 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 public class AdminSearchHolidayRespDto {
-    private int holidayId;
     private int trainerId;
-    private int timeId;
-    private int confirm;
-    private String trainerName;
     private String holidayDate;
-    private LocalDateTime createDate;
+    private int startTimeId;
+    private int endTimeId;
+    private String createDate;
+    private String name;
 }

@@ -25,6 +25,6 @@ AuthMapper {
     public Integer findUserIdByAccountId(int accountId);
     public Integer findTrainerIdByAccountId(int accountId);
     public List<User> findUsersByName(String name);
-
+    public int deleteTrainer(int trainerId);
     public void modifyAccountPassword(Account account);
 }

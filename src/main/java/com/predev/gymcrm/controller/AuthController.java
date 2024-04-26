@@ -37,6 +37,12 @@ public class AuthController {
         return ResponseEntity.created(null).body(reqDto);
     }
 
+    @DeleteMapping("/trainer")
+    public ResponseEntity<?> deleteTrainer(@RequestParam(value = "trainerId")int trainerId) {
+        authService.deleteTrainer(trainerId);
+        return ResponseEntity.ok(trainerId);
+    }
+
     @PostMapping("/account/signin")
     public ResponseEntity<?> userSignin(@RequestBody AccountSigninReqDto reqDto) {
         authService.Signin(reqDto);

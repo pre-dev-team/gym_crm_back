@@ -34,13 +34,13 @@ public class AdminController {
     }
 
     @GetMapping("/holidays/unconfirmed")
-    public ResponseEntity<?> getUnconfirmedHolidayApplies() {
-        return ResponseEntity.ok(holidayService.getUnconfirmedHolidays());
+    public ResponseEntity<?> getUnconfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
+        return ResponseEntity.ok(holidayService.getUnconfirmedHolidays(trainerId));
     }
 
     @GetMapping("/holidays/confirmed")
-    public ResponseEntity<?> getConfirmedHolidayApplies() {
-        return ResponseEntity.ok(holidayService.getConfirmedHolidays());
+    public ResponseEntity<?> getConfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
+        return ResponseEntity.ok(holidayService.getConfirmedHolidays(trainerId));
     }
 
     @PutMapping("/holidays/decide")

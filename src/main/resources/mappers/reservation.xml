@@ -291,6 +291,8 @@
                     and name like concat('%', #{name}, '%')
             </when>
         </choose>
+        order by
+            rt.reservation_date desc
     </select>
 
     <select id="findReservationByAccountIdAndPeriod"

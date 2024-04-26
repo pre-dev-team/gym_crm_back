@@ -79,6 +79,13 @@
             account_id = #{accountId}
     </update>
 
+    <delete id="deleteTrainer" parameterType="integer">
+        delete from
+            trainer_tb
+        where
+            trainer_id = #{trainerId}
+    </delete>
+
     <!--###################       SELECT       ###################    -->
 
     <select
@@ -200,7 +207,6 @@
             trainer_tb
         where
             account_id = #{accountId}
-
     </select>
 
     <select id="findUsersByName" resultMap="UserResultMap">

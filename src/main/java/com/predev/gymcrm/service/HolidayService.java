@@ -6,6 +6,7 @@ import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
 import com.predev.gymcrm.dto.resp.AdminSearchHolidayRespDto;
 import com.predev.gymcrm.dto.resp.SelectHolidayRespDto;
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.entity.AdminSearchHoliday;
 import com.predev.gymcrm.entity.Holiday;
 import com.predev.gymcrm.exception.HolidayException;
 import com.predev.gymcrm.repository.AuthMapper;
@@ -64,60 +65,15 @@ public class HolidayService {
         ).collect(Collectors.toList());
         return respDtos;
     }
-    public Map<String, List<Holiday>> sortHolidayByConfirm(List<Holiday> holidays) {
-        List<Holiday> confirmedHolidays =
-                holidays.stream().filter(holiday -> holiday.getConfirm() != 0).collect(Collectors.toList());
-        List<Holiday> unconfirmedHolidays =
-                holidays.stream().filter(holiday -> holiday.getConfirm() == 0).collect(Collectors.toList());
-        return Map.of("confirmed", confirmedHolidays, "unconfirmed", unconfirmedHolidays);
+
+    public List<AdminSearchHolidayRespDto> getUnconfirmedHolidays(int trainerId) {
+        List<AdminSearchHoliday> holidays = holidayMapper.getAllAdminSearchHolidyByTrainerId(trainerId, 1);
+        return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
     }
 
-    public Map<String, List<Holiday>> sortHolidayByHolidayDate(List<Holiday> holidays) {
-        Map<String, List<Holiday>> result = new HashMap<>();
-        Map<String, List<Holiday>> sortedResult = holidays.stream().collect(Collectors.groupingBy(Holiday::getHolidayDate));
-        Set<String> strings = sortedResult.keySet();
-        for(String string : strings) {
-            int min = sortedResult.get(string).stream().map(Holiday::getTimeId).min(Integer::compareTo).orElseGet(() -> 0);
-            int max = sortedResult.get(string).stream().map(Holiday::getTimeId).max(Integer::compareTo).orElseGet(() -> 0);
-            List<Holiday> minAndMaxHolidays = new ArrayList<>();
-            Holiday tempHoliday1 = sortedResult.get(string).get(0);
-            tempHoliday1.setTimeId(min);
-            Holiday tempHoliday2 = sortedResult.get(string).get(1);
-            tempHoliday2.setTimeId(max);
-            minAndMaxHolidays.add(tempHoliday1);
-            minAndMaxHolidays.add(tempHoliday2);
-            result.put(string, minAndMaxHolidays);
-        }
-        return result;
-    }
-
-    public Map<String, List<AdminSearchHolidayRespDto>> getUnconfirmedHolidays() {
-        List<Holiday> holidays = holidayMapper.getAllHolidays();
-        Map<String, List<Holiday>> sortedHolidaysByConfirm = sortHolidayByConfirm(holidays);
-        List<Holiday> unconfirmedHolidays = sortedHolidaysByConfirm.get("unconfirmed");
-        Map<String, List<Holiday>> temp = sortHolidayByHolidayDate(unconfirmedHolidays);
-        Map<String, List<AdminSearchHolidayRespDto>> result = new HashMap<>();
-        for(String key : temp.keySet()) {
-            List<Holiday> holidayList = temp.get(key);
-            List<AdminSearchHolidayRespDto> adminSearchHolidayRespDtos =
-                    holidayList.stream().map(Holiday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
-            result.put(key, adminSearchHolidayRespDtos);
-        }
-        return result;
-    }
-    public Map<String, List<AdminSearchHolidayRespDto>> getConfirmedHolidays() {
-        List<Holiday> holidays = holidayMapper.getAllHolidays();
-        Map<String, List<Holiday>> sortedHolidaysByConfirm = sortHolidayByConfirm(holidays);
-        List<Holiday> confirmedHolidays = sortedHolidaysByConfirm.get("confirmed");
-        Map<String, List<Holiday>> temp = sortHolidayByHolidayDate(confirmedHolidays);
-        Map<String, List<AdminSearchHolidayRespDto>> result = new HashMap<>();
-        for(String key : temp.keySet()) {
-            List<Holiday> holidayList = temp.get(key);
-            List<AdminSearchHolidayRespDto> adminSearchHolidayRespDtos =
-                    holidayList.stream().map(Holiday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
-            result.put(key, adminSearchHolidayRespDtos);
-        }
-        return result;
+    public List<AdminSearchHolidayRespDto> getConfirmedHolidays(int trainerId) {
+        List<AdminSearchHoliday> holidays = holidayMapper.getAllAdminSearchHolidyByTrainerId(trainerId, 2);
+        return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
     }
 
     public int decideHolidayApplies(AdminDecideHolidayAppliesReqDto reqDto) {
