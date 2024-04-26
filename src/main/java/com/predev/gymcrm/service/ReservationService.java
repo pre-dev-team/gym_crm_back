@@ -141,22 +141,8 @@ public class ReservationService {
         reservationMapper.updateReservationByReservationId(reqDto.getPrevReservationId(), reqDto.toReservationEntity(date,userId));
     }
 
-//    public SearchReservationRespDto findReservationByUserId(int userId) {
-//        Reservation reservation = reservationMapper.findReservationByUserId(userId);
-//
-//        SearchReservationRespDto searchReservationRespDto =
-//                SearchReservationRespDto.builder()
-//                        .reservationId(reservation.getReservationId())
-//                        .userId(reservation.getUserId())
-//                        .username(reservation.getUserUserName())
-//                        .trainerId(reservation.getTrainerId())
-//                        .trainerName(reservation.getTrainerUserName())
-//                        .timeId(reservation.getTimeId())
-//                        .timeName(reservation.getTimePeriod())
-//                        .reservationDateId(reservation.getReservationDateId())
-//                        .reservationDateName(reservation.getReservationDateName())
-//                        .build();
-//        return searchReservationRespDto;
-//    }
-
+    public List<SelectMyMembersInformationRespDto> selectMymembersInformation(SearchMymembersInformationReqDto reqDto) {
+        List<Reservation> reservations = reservationMapper.selectMyMembersInformationByAccountIdByUserId(reqDto.getAccountId(), reqDto.getUserId());
+        return reservations.stream().map(Reservation::toSelectMyMembersInformationRespDto).collect(Collectors.toList());
     }
+}

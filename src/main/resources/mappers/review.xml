@@ -153,35 +153,35 @@
     <!-- 리뷰 갯수가 많은 3명의 트레이너들 중에서 각 트레이너마다 평점이 높은 리뷰 하나를 선정하는 쿼리 -->
     <select id="findTopReviewAmongTopTrainers" resultMap="ReviewResultMap">
         SELECT
-        trt.*
+            trt.*
         FROM
-        trainer_review_tb trt
+            trainer_review_tb trt
         INNER JOIN (
-        SELECT
-        trainer_id,
-        MAX(trainer_review_score) AS max_score
-        FROM
-        trainer_review_tb
-        WHERE
-        trainer_id IN (
-        SELECT
-        trainer_id
-        FROM (
-        SELECT
-        trainer_id,
-        COUNT(*) AS review_count
-        FROM
-        trainer_review_tb
-        GROUP BY
-        trainer_id
-        ORDER BY
-        review_count DESC
-        LIMIT 3
-        ) AS top_rated_trainers
-        )
-        GROUP BY
-        trainer_id
-        ) AS max_scores ON trt.trainer_id = max_scores.trainer_id AND trt.trainer_review_score = max_scores.max_score
+            SELECT
+                trainer_id,
+                MAX(trainer_review_score) AS max_score
+            FROM
+                trainer_review_tb
+            WHERE
+                trainer_id IN (
+                    SELECT
+                        trainer_id
+                    FROM (
+                            SELECT
+                                trainer_id,
+                                COUNT(*) AS review_count
+                            FROM
+                                trainer_review_tb
+                            GROUP BY
+                                trainer_id
+                            ORDER BY
+                                review_count DESC
+                            LIMIT 3
+                                ) AS top_rated_trainers
+                                )
+                            GROUP BY
+                                trainer_id
+                                ) AS max_scores ON trt.trainer_id = max_scores.trainer_id AND trt.trainer_review_score = max_scores.max_score
     </select>
 
     <select id="findTopReviewByTrainerId" resultMap="ReviewResultMap">

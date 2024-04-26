@@ -3,6 +3,7 @@ package com.predev.gymcrm.entity;
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationUserRespDto;
+import com.predev.gymcrm.dto.resp.SelectMyMembersInformationRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -47,6 +48,16 @@ public class Reservation {
                 .accountId(userAccountView.getAccountId())
                 .name(userAccountView.getName())
                 .email(userAccountView.getEmail())
+                .phone(userAccountView.getPhone())
+                .build();
+    }
+
+    public SelectMyMembersInformationRespDto toSelectMyMembersInformationRespDto() {
+        return SelectMyMembersInformationRespDto.builder()
+                .accountId(trainerAccountView.getAccountId())
+                .userId(userId)
+                .reservationDate(reservationDate)
+                .name(userAccountView.getName())
                 .phone(userAccountView.getPhone())
                 .build();
     }

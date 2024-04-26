@@ -70,6 +70,7 @@
         values
             (0, #{userId}, #{trainerId}, #{timeId}, #{reservationDate}, now(), now());
     </insert>
+
     <update id="updateReservationByReservationId">
         update
             reservation_tb
@@ -317,6 +318,22 @@
             and rvt.reservation_date between #{startDate} and #{endDate}
         order by
             rvt.reservation_date
+    </select>
+
+    <select id="selectMyMembersInformationByAccountIdByUserId" resultMap="ReservationResultMap">
+        select
+            tav.account_id,
+            rvt.user_id,
+            rvt.reservation_date,
+            uav.name,
+            uav.phone
+        from
+            reservation_tb rvt
+            left outer join user_account_view uav on(uav.user_id = rvt.user_id)
+            left outer join trainer_account_view tav on(tav.trainer_id = rvt.trainer_id)
+        where
+            tav.account_id = #{accountId}
+            and rvt.user_id = #{userId};
     </select>
 
 
