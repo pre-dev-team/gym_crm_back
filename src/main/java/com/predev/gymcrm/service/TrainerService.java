@@ -68,11 +68,6 @@ public class TrainerService {
         trainerMapper.updateTrainerProfileImgUrl(reqDto.toEntity());
     }
 
-    public void makeRoutine(List<RoutineMakeReqDto> routineMakeReqDtos) {
-        List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(dto -> dto.toEntity()).collect(Collectors.toList());
-        int successCount = trainerMapper.saveRoutines(workoutRoutines);
-        System.out.println(successCount);
 
-    }
 
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.predev.gymcrm.repository.WorkoutRoutineMapper">
+    <resultMap id="WorkoutRoutineResultMap" type="com.predev.gymcrm.entity.WorkoutRoutine">
+        <id property="workoutRoutineId" column="workout_routine_id" />
+        <result property="reservationId" column="reservation_id" />
+        <result property="workoutId" column="workout_id" />
+        <result property="workoutRoutineCount" column="workout_routine_count" />
+        <result property="workoutRoutineSet" column="workout_routine_set" />
+        <result property="workoutRoutineWeight" column="workout_routine_weight" />
+        <result property="workoutRoutineOrder" column="workout_routine_order" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+    </resultMap>
+    <insert id="saveRoutines" parameterType="list">
+        insert into
+            workout_routine_tb
+        values
+            <foreach collection="list" item="workoutRoutine" separator=",">
+                (
+                    #{workoutRoutine.workoutRoutineId},
+                    #{workoutRoutine.reservationId},
+                    #{workoutRoutine.workoutId},
+                    #{workoutRoutine.workoutRoutineCount},
+                    #{workoutRoutine.workoutRoutineSet},
+                    #{workoutRoutine.workoutRoutineWeight},
+                    #{workoutRoutine.workoutRoutineOrder},
+                    now(),
+                    now()
+                )
+            </foreach>
+    </insert>
+    <select id="findWorkoutRoutines" resultMap="WorkoutRoutineResultMap">
+        select
+            workout_routine_id,
+            reservation_id,
+            workout_id,
+            workout_routine_count,
+            workout_routine_set,
+            workout_routine_weight,
+            workout_routine_order
+        from
+            workout_routine_tb
+        where
+            reservation_id = #{reservationId};
+    </select>
+
+</mapper>
