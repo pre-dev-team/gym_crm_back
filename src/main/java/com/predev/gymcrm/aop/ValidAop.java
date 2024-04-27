@@ -1,6 +1,7 @@
 package com.predev.gymcrm.aop;
 
 import com.predev.gymcrm.dto.req.AccountSignupReqDto;
+import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
 import com.predev.gymcrm.exception.ValidException;
 import com.predev.gymcrm.repository.AuthMapper;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -74,7 +75,12 @@ public class ValidAop {
             }
         }
         if(methodName.equals("oAuth2Signup")) {
-
+            OAuth2SignupReqDto oAuth2SignupReqDto = null;
+            for (Object arg : args) {
+                if (arg.getClass() == OAuth2SignupReqDto.class) {
+                    oAuth2SignupReqDto = (OAuth2SignupReqDto) arg;
+                }
+            }
         }
 
         return proceedingJoinPoint.proceed();
