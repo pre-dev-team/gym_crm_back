@@ -5,6 +5,7 @@ import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import com.predev.gymcrm.service.TrainerService;
+import com.predev.gymcrm.service.WorkoutRoutineService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

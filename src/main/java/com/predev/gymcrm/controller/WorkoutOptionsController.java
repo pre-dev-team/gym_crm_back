@@ -26,7 +26,7 @@ public class WorkoutOptionsController {
     @GetMapping("/category/workouts")
     public ResponseEntity<?> getWorkouts(@RequestParam(value = "workoutCategoryId")int workoutCategoryId) {
         List<Workout> workouts = workoutOptionsService.findAllWorkoutByWorkoutCategoryId(workoutCategoryId);
-
         return ResponseEntity.ok(workouts);
     }
+
 }

@@ -1,5 +1,6 @@
 package com.predev.gymcrm.entity;
 
+import com.predev.gymcrm.dto.resp.SearchWorkoutRoutineRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,4 +24,19 @@ public class WorkoutRoutine {
     private LocalDateTime updateDate;
 
     private Workout workout;
+
+    public SearchWorkoutRoutineRespDto toSearchWorkoutRoutineRespDto() {
+        return SearchWorkoutRoutineRespDto.builder()
+                .workoutRoutineId(workoutRoutineId)
+                .reservationId(reservationId)
+                .workoutId(workoutId)
+                .workoutName(workout.getWorkoutName())
+                .workoutCategoryId(workout.getWorkoutCategory().getWorkoutCategoryId())
+                .workoutCategoryName(workout.getWorkoutCategory().getWorkoutCategoryName())
+                .workoutRoutineCount(workoutRoutineCount)
+                .workoutRoutineSet(workoutRoutineSet)
+                .workoutRoutineWeight(workoutRoutineWeight)
+                .workoutRoutineOrder(workoutRoutineOrder)
+                .build();
+    }
 }

@@ -13,6 +13,5 @@ public interface TrainerMapper {
     List<Reservation> findMyMembersByTrainerAccountId(int trainerAccountId);
     Trainer getAllTrainerInfo(int accountId);
     int updateTrainerProfileImgUrl(Trainer trainer);
-    int saveRoutines(List<WorkoutRoutine> workoutRoutines);
 
 }

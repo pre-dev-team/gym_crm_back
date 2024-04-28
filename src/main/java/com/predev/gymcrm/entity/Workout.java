@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -19,5 +18,5 @@ public class Workout {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    List<WorkoutCategory> workoutCategories;
+    private WorkoutCategory workoutCategory;
 }

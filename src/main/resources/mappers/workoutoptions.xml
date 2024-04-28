@@ -16,7 +16,7 @@
         <result property="workoutName" column="workout_name" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
-        <collection property="workoutCategories" javaType="List" resultMap="WorkoutCategoryResultMap" />
+        <association property="workoutCategory" resultMap="WorkoutCategoryResultMap" />
     </resultMap>
 
     <select id="getAllWorkoutCategory" resultMap="WorkoutCategoryResultMap">
@@ -43,7 +43,6 @@
         where
             wt.workout_category_id=#{workoutCategoryId}
     </select>
-
 
 </mapper>
 
