@@ -51,6 +51,12 @@
                 )
             </foreach>
     </insert>
+    <delete id="deleteRoutines">
+        delete from
+            workout_routine_tb
+        where
+            reservation_id = #{reservationId};
+    </delete>
     <select id="findWorkoutRoutines" resultMap="WorkoutRoutineResultMap">
         select
             wrt.workout_routine_id,

@@ -18,12 +18,16 @@ public class WorkoutRoutineController {
 
     @PostMapping("/trainer")
     public ResponseEntity<?> makeRoutine(@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
-        workoutRoutineService.makeRoutine(routineMakeReqDtos);
-        return ResponseEntity.ok(routineMakeReqDtos);
+        return ResponseEntity.ok(workoutRoutineService.makeRoutine(routineMakeReqDtos));
     }
 
     @GetMapping("/trainer")
     public ResponseEntity<?> findReservationRoutine(int reservationId) {
         return ResponseEntity.ok(workoutRoutineService.findRoutinesByReservationId(reservationId));
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity<?> editRoutine(@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
+        return ResponseEntity.ok(workoutRoutineService.EditRoutines(routineMakeReqDtos));
     }
 }

@@ -9,5 +9,5 @@ import java.util.List;
 public interface WorkoutRoutineMapper {
     int saveRoutines(List<WorkoutRoutine> workoutRoutines);
     List<WorkoutRoutine> findWorkoutRoutines(int reservationId);
-
+    int deleteRoutines(int reservationId);
 }

@@ -21,6 +21,5 @@ public class RoutineMakeReqDto {
                 .workoutRoutineWeight(workoutRoutineWeight)
                 .workoutRoutineOrder(workoutRoutineOrder)
                 .build();
-
     }
 }
