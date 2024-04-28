@@ -118,17 +118,7 @@ public class ReservationService {
         String startDate = CommonService.trimDateString(reqDto.getStartDate());
         String endDate = CommonService.trimDateString(reqDto.getEndDate());
         List<Reservation> reservations = reservationMapper.findReservationByAccountIdAndPeriod(reqDto.getAccountId(), startDate, endDate);
-        List<SearchReservationUserRespDto> respDtos = reservations.stream().map(reservation -> {
-                Account userAccount = authMapper.findAccountByUserId(reservation.getUserId());
-                return SearchReservationUserRespDto.builder()
-                        .reservationId(reservation.getReservationId())
-                        .UserId(reservation.getUserId())
-                        .name(userAccount.getName())
-                        .timeDuration(reservation.getTime().getTimeDuration())
-                        .build();
-                }
-        ).collect(Collectors.toList());
-        return respDtos;
+        return reservations.stream().map(Reservation::toSearchReservationUserRespDto).collect(Collectors.toList());
     }
 
     public int cancelReservationByReservationId(int reservationId) {

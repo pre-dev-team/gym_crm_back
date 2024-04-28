@@ -8,7 +8,9 @@ import lombok.Data;
 @Data
 public class SearchReservationUserRespDto {
     private int reservationId;
-    private int UserId;
+    private int userId;
     private String name;
+    private int timeId;
     private String timeDuration;
+    private String reservationDate;
 }

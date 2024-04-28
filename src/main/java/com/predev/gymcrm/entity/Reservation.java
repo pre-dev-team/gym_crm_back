@@ -32,6 +32,17 @@ public class Reservation {
     private UserAccountView userAccountView;
     private TrainerAccountView trainerAccountView;
 
+    public SearchReservationUserRespDto toSearchReservationUserRespDto() {
+        return SearchReservationUserRespDto.builder()
+                .reservationId(reservationId)
+                .reservationDate(reservationDate)
+                .userId(userId)
+                .name(userAccountView.getName())
+                .timeId(timeId)
+                .timeDuration(time.getTimeDuration())
+                .build();
+    }
+
     public SearchReservationRespDto toSearchReservationRespDto() {
         return SearchReservationRespDto.builder()
                 .reservationId(reservationId)
