@@ -18,8 +18,12 @@ public class WorkoutRoutineService {
     WorkoutRoutineMapper workoutRoutineMapper;
 
     public int makeRoutine(List<RoutineMakeReqDto> routineMakeReqDtos) {
-        List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(RoutineMakeReqDto::toEntity).collect(Collectors.toList());
-        int successCount = workoutRoutineMapper.saveRoutines(workoutRoutines);
+        int successCount = 0;
+        List<WorkoutRoutine> prevWorkoutRoutines = workoutRoutineMapper.findWorkoutRoutines(routineMakeReqDtos.get(0).getReservationId());
+        if(prevWorkoutRoutines.isEmpty()) {
+            List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(RoutineMakeReqDto::toEntity).collect(Collectors.toList());
+            successCount = workoutRoutineMapper.saveRoutines(workoutRoutines);
+        }
         return successCount;
     }
 
@@ -29,7 +33,7 @@ public class WorkoutRoutineService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public int EditRoutines(List<RoutineMakeReqDto> routineMakeReqDtos) {
+    public int editRoutines(List<RoutineMakeReqDto> routineMakeReqDtos) {
         int successCount = 0;
         successCount += workoutRoutineMapper.deleteRoutines(routineMakeReqDtos.get(0).getReservationId());
         List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(RoutineMakeReqDto::toEntity).collect(Collectors.toList());

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/routine")
@@ -18,7 +19,11 @@ public class WorkoutRoutineController {
 
     @PostMapping("/trainer")
     public ResponseEntity<?> makeRoutine(@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
-        return ResponseEntity.ok(workoutRoutineService.makeRoutine(routineMakeReqDtos));
+        int successCount = workoutRoutineService.makeRoutine(routineMakeReqDtos);
+        if(successCount == 0) {
+            return ResponseEntity.badRequest().body(Map.of("error", "이미 등록된 루틴이 존재합니다"));
+        }
+        return ResponseEntity.ok(successCount);
     }
 
     @GetMapping("/trainer")
@@ -28,6 +33,6 @@ public class WorkoutRoutineController {
 
     @PostMapping("/edit")
     public ResponseEntity<?> editRoutine(@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
-        return ResponseEntity.ok(workoutRoutineService.EditRoutines(routineMakeReqDtos));
+        return ResponseEntity.ok(workoutRoutineService.editRoutines(routineMakeReqDtos));
     }
 }
