@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class SelectHolidayRespDto {
     private int holidayId;
     private String holidayDate;
-    private int TimeId;
+    private int timeId;
     private String name;
     private int confirm;
 }

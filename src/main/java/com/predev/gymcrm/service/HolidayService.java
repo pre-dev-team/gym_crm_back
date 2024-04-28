@@ -54,16 +54,7 @@ public class HolidayService {
     public List<SelectHolidayRespDto> selectHoliday(int accountId) {
         List<Holiday> holidays = holidayMapper.selectHolidayByAccountId(accountId);
         Account account = authMapper.findAccountByAccountId(accountId);
-        List<SelectHolidayRespDto> respDtos = holidays.stream().map(holiday ->
-                SelectHolidayRespDto.builder()
-                        .holidayId(holiday.getHolidayId())
-                        .holidayDate(holiday.getHolidayDate())
-                        .TimeId(holiday.getTimeId())
-                        .name(account.getName())
-                        .confirm(holiday.getConfirm())
-                        .build()
-        ).collect(Collectors.toList());
-        return respDtos;
+        return holidays.stream().map(holiday -> holiday.toSelectHolidayRespDto(account.getName())).collect(Collectors.toList());
     }
 
     public List<AdminSearchHolidayRespDto> getUnconfirmedHolidays(int trainerId) {
@@ -83,4 +74,16 @@ public class HolidayService {
                 reqDto.isStatus()
         );
     }
+
+    public List<Integer> getHolidaytimeIdsByTrainerIdAndHolidayDate(int trainerId, String holidayDate) {
+        String trimedHolidayDate = CommonService.trimDateString(holidayDate);
+        List<Holiday> holidays = holidayMapper.findHolidayByTrainerIdAndDate(trainerId,trimedHolidayDate);
+        List<Integer> timeIds = new ArrayList<>();
+        if(!holidays.isEmpty()) {
+            timeIds = holidays.stream().map(Holiday::getTimeId).collect(Collectors.toList());
+        }
+        return timeIds;
+    }
+
+
 }

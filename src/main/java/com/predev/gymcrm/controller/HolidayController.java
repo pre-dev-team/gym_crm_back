@@ -33,4 +33,8 @@ public class HolidayController {
         return ResponseEntity.ok(holidayService.selectHoliday(accountId));
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<?> findHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
+        return ResponseEntity.ok(holidayService.getHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
+    }
 }
