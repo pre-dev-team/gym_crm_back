@@ -14,7 +14,25 @@
         <result property="workoutRoutineOrder" column="workout_routine_order" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
+        <association property="workout" resultMap="WorkoutResultMap" />
     </resultMap>
+
+    <resultMap id="WorkoutResultMap" type="com.predev.gymcrm.entity.Workout" >
+        <id property="workoutId" column="workout_id" />
+        <result property="workoutName" column="workout_name" />
+        <result property="workoutCategoryId" column="workout_category_id" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="workoutCategory" resultMap="WorkoutCategoryResultMap" />
+    </resultMap>
+
+    <resultMap id="WorkoutCategoryResultMap" type="com.predev.gymcrm.entity.WorkoutCategory">
+        <id property="workoutCategoryId" column="workout_category_id" />
+        <result property="workoutCategoryName" column="workout_category_name" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+    </resultMap>
+
     <insert id="saveRoutines" parameterType="list">
         insert into
             workout_routine_tb
@@ -35,17 +53,23 @@
     </insert>
     <select id="findWorkoutRoutines" resultMap="WorkoutRoutineResultMap">
         select
-            workout_routine_id,
-            reservation_id,
-            workout_id,
-            workout_routine_count,
-            workout_routine_set,
-            workout_routine_weight,
-            workout_routine_order
+            wrt.workout_routine_id,
+            wrt.reservation_id,
+            wrt.workout_id,
+            wt.workout_name,
+            wt.workout_category_id,
+            wct.workout_category_name,
+            wrt.workout_routine_count,
+            wrt.workout_routine_set,
+            wrt.workout_routine_weight,
+            wrt.workout_routine_order
         from
-            workout_routine_tb
+            workout_routine_tb wrt
+            left outer join workout_tb wt
+                on(wrt.workout_id = wt.workout_id)
+            left outer join workout_category_tb wct
+                on(wt.workout_category_id = wct.workout_category_id)
         where
             reservation_id = #{reservationId};
     </select>
-
 </mapper>

@@ -1,6 +1,7 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
+import com.predev.gymcrm.dto.resp.SearchWorkoutRoutineRespDto;
 import com.predev.gymcrm.entity.WorkoutRoutine;
 import com.predev.gymcrm.repository.WorkoutRoutineMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,13 @@ public class WorkoutRoutineService {
 
 
     public void makeRoutine(List<RoutineMakeReqDto> routineMakeReqDtos) {
-        List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(dto -> dto.toEntity()).collect(Collectors.toList());
+        List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(RoutineMakeReqDto::toEntity).collect(Collectors.toList());
         int successCount = workoutRoutineMapper.saveRoutines(workoutRoutines);
         System.out.println(successCount);
+    }
+
+    public List<SearchWorkoutRoutineRespDto> findRoutinesByReservationId(int reservationId) {
+        List<WorkoutRoutine> workoutRoutines = workoutRoutineMapper.findWorkoutRoutines(reservationId);
+        return workoutRoutines.stream().map(WorkoutRoutine::toSearchWorkoutRoutineRespDto).collect(Collectors.toList());
     }
 }

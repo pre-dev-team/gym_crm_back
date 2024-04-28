@@ -2,7 +2,6 @@ package com.predev.gymcrm.controller;
 
 
 import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
-import com.predev.gymcrm.service.TrainerService;
 import com.predev.gymcrm.service.WorkoutRoutineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/routine")
-public class RoutineController {
+public class WorkoutRoutineController {
 
     @Autowired
     private WorkoutRoutineService workoutRoutineService;
@@ -23,8 +22,8 @@ public class RoutineController {
         return ResponseEntity.ok(routineMakeReqDtos);
     }
 
-    @GetMapping("trainer")
+    @GetMapping("/trainer")
     public ResponseEntity<?> findReservationRoutine(int reservationId) {
-        return ResponseEntity.ok(reservationId);
+        return ResponseEntity.ok(workoutRoutineService.findRoutinesByReservationId(reservationId));
     }
 }
