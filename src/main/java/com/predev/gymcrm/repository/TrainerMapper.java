@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface TrainerMapper {
@@ -13,5 +14,5 @@ public interface TrainerMapper {
     List<Reservation> findMyMembersByTrainerAccountId(int trainerAccountId);
     Trainer getAllTrainerInfo(int accountId);
     int updateTrainerProfileImgUrl(Trainer trainer);
-
+    List<WeeklyTrainerReservationCounts> findWeeklyTrainerReservationCounts(List<Map<String, String>> weekData);
 }
