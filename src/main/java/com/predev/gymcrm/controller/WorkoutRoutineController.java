@@ -26,7 +26,7 @@ public class WorkoutRoutineController {
         return ResponseEntity.ok(successCount);
     }
 
-    @GetMapping("/trainer")
+    @GetMapping("/find")
     public ResponseEntity<?> findReservationRoutine(int reservationId) {
         return ResponseEntity.ok(workoutRoutineService.findRoutinesByReservationId(reservationId));
     }
