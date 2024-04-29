@@ -53,4 +53,8 @@ public class AdminController {
         return ResponseEntity.ok(successCount);
     }
 
+    @GetMapping("/reservations/month/count")
+    public ResponseEntity<?> getWeeklyTrainerReservationCounts() {
+        return ResponseEntity.ok(adminService.getWeeklyTrainerReservationCounts());
+    }
 }

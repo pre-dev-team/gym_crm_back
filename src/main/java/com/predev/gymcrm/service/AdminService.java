@@ -3,15 +3,23 @@ package com.predev.gymcrm.service;
 import com.predev.gymcrm.dto.req.AdminSearchReservationReqDto;
 import com.predev.gymcrm.dto.resp.AdminSearchTrainerRespDto;
 import com.predev.gymcrm.dto.resp.AdminSearchUserRespDto;
+import com.predev.gymcrm.dto.resp.AdminSearchWeeklyTrainerReservationCountsRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
 import com.predev.gymcrm.entity.Reservation;
 import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.User;
+import com.predev.gymcrm.entity.WeeklyTrainerReservationCounts;
 import com.predev.gymcrm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -99,6 +107,23 @@ public class AdminService {
                 )
                 .build()
         ).collect(Collectors.toList());
+    }
+
+    public List<AdminSearchWeeklyTrainerReservationCountsRespDto> getWeeklyTrainerReservationCounts() {
+        LocalDate today = LocalDate.now();
+        LocalDate firstDayOfMonth = today.with(TemporalAdjusters.firstDayOfMonth());
+        LocalDate firstDayOfFirstWeek = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));
+        List<Map<String, String>> weekData = new ArrayList<>();
+        for(int i=0; i<4; i++) {
+            weekData.add(
+                    Map.of(
+                    "startDate",firstDayOfFirstWeek.plusDays(i*(7)).toString(),
+                    "endDate",firstDayOfFirstWeek.plusDays(i*(7)+6).toString()
+                    )
+            );
+        }
+        return trainerMapper.findWeeklyTrainerReservationCounts(weekData).stream()
+                .map(WeeklyTrainerReservationCounts::toRespDto).collect(Collectors.toList());
     }
 
 }

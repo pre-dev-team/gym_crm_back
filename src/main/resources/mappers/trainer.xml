@@ -129,4 +129,30 @@
             account_id = #{accountId}
     </update>
 
+    <select id="findWeeklyTrainerReservationCounts" resultType="com.predev.gymcrm.entity.WeeklyTrainerReservationCounts">
+        with weeklyreservationcounts as (
+            select
+            tav.trainer_id,
+            tav.name,
+            sum(case when reservation_date between #{weekData[0].startDate} and #{weekData[0].endDate} then 1 else 0 end) as firstweekcount,
+            sum(case when reservation_date between #{weekData[1].startDate} and #{weekData[1].endDate} then 1 else 0 end) as secondweekcount,
+            sum(case when reservation_date between #{weekData[2].startDate} and #{weekData[2].endDate} then 1 else 0 end) as thirdweekcount,
+            sum(case when reservation_date between #{weekData[3].startDate} and #{weekData[3].endDate} then 1 else 0 end) as forthweekcount
+        from
+            trainer_account_view tav
+        left join
+            reservation_tb rt on (tav.trainer_id = rt.trainer_id)
+        group by
+            tav.trainer_id, tav.name
+        )
+        select
+            trainer_id as trainerId,
+            name as trainerName,
+            firstweekcount as firstWeekCount,
+            secondweekcount as secondWeekCount,
+            thirdweekcount as thirdWeekCount,
+            forthweekcount as forthWeekCount
+        from
+            weeklyreservationcounts;
+    </select>
 </mapper>
