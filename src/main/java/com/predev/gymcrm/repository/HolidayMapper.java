@@ -22,8 +22,11 @@ public interface HolidayMapper {
             @Param("holidayDate") String holidayDate,
             @Param("status") boolean status
     );
+    List<Holiday> findHolidayByTrainerIdAndDate(
+            @Param("trainerId") int trainerId,
+            @Param("holidayDate") String date
+    );
     List<Holiday> getAllHolidays();
-
     List<AdminSearchHoliday> getAllAdminSearchHolidyByTrainerId(
             @Param("trainerId") int trainerId,
             @Param("status") int status

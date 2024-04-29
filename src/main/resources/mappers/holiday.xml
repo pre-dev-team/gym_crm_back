@@ -161,5 +161,16 @@
         order by
             ht.holiday_date desc;
     </select>
+    <select id="findHolidayByTrainerIdAndDate" resultMap="HolidayResultMap">
+        select
+            trainer_id,
+            holiday_date,
+            time_id
+        from
+            holiday_tb
+        where
+            trainer_id = #{trainerId}
+            and holiday_date = #{holidayDate}
+    </select>
 
 </mapper>
