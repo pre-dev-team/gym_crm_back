@@ -136,8 +136,4 @@ public class ReservationService {
         return reservations.stream().map(Reservation::toSelectMyMembersInformationRespDto).collect(Collectors.toList());
     }
 
-    public List<AdminSearchReservationCountRespDto> findEachTrainerReservationCount(AdminSearchReservationCountReqDto reqDto) {
-        List<AdminSearchReservationCount> trainerReservationCounts = reservationMapper.findEachTrainerReservationCount(reqDto.getStartDate(), reqDto.getEndDate());
-        return trainerReservationCounts.stream().map(AdminSearchReservationCount::toRespDto).collect(Collectors.toList());
-    }
 }

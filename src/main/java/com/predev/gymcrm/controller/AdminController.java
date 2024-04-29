@@ -1,12 +1,18 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.AdminDecideHolidayAppliesReqDto;
+import com.predev.gymcrm.dto.req.AdminSearchReservationCountReqDto;
 import com.predev.gymcrm.dto.req.AdminSearchReservationReqDto;
 import com.predev.gymcrm.service.AdminService;
 import com.predev.gymcrm.service.HolidayService;
+import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
@@ -31,6 +37,10 @@ public class AdminController {
     @GetMapping("/reservations")
     public ResponseEntity<?> searchReservations(AdminSearchReservationReqDto reqDto) {
         return ResponseEntity.ok(adminService.SearchReservations(reqDto));
+    }
+    @GetMapping("reservations/month/count")
+    public ResponseEntity<?> searchReservationCount(AdminSearchReservationCountReqDto reqDto) {
+        return ResponseEntity.ok(adminService.findEachTrainerReservationCount(reqDto));
     }
 
     @GetMapping("/holidays/unconfirmed")

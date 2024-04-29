@@ -1,9 +1,12 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.dto.req.AdminSearchReservationCountReqDto;
 import com.predev.gymcrm.dto.req.AdminSearchReservationReqDto;
+import com.predev.gymcrm.dto.resp.AdminSearchReservationCountRespDto;
 import com.predev.gymcrm.dto.resp.AdminSearchTrainerRespDto;
 import com.predev.gymcrm.dto.resp.AdminSearchUserRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
+import com.predev.gymcrm.entity.AdminSearchReservationCount;
 import com.predev.gymcrm.entity.Reservation;
 import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.User;
@@ -11,6 +14,8 @@ import com.predev.gymcrm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -101,4 +106,8 @@ public class AdminService {
         ).collect(Collectors.toList());
     }
 
+    public List<AdminSearchReservationCountRespDto> findEachTrainerReservationCount(AdminSearchReservationCountReqDto reqDto) {
+        return reservationMapper.findEachTrainerReservationCount(reqDto.getStartDate(),reqDto.getEndDate())
+                .stream().map(AdminSearchReservationCount::toRespDto).collect(Collectors.toList());
+    }
 }
