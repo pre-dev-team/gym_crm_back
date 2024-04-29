@@ -14,6 +14,7 @@ public class SearchInbodyRespDto {
     private String inbodyUrl;
     private int userId;
     private int weight;
+    private String name;
     private int muscleMass;
     private int fatMass;
 }
