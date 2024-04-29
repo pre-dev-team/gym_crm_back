@@ -28,20 +28,17 @@ public interface ReservationMapper {
             @Param("trainerId") int trainerId,
             @Param("today") String today
     );
-
     List<Reservation> findReservationByNameAndPeriod(
             @Param("searchType") int searchType,
             @Param("name") String name,
             @Param("startDate") String startDate,
             @Param("endDate") String endDate
     );
-
     List<Reservation> findReservationByAccountIdAndPeriod(
             @Param("accountId") int accountId,
             @Param("startDate") String startDate,
             @Param("endDate") String endDate
     );
-
     int findReservationCountByUserId(int userId);
     int findMemberCountOfTrainerByTrainerId(int trainerId);
     int deleteReservationByReservationId(int reservationId);
@@ -49,7 +46,6 @@ public interface ReservationMapper {
             @Param("prevReservationId")int prevReservationId,
             @Param("reservation") Reservation reservation
     );
-
     List<Reservation> selectMyMembersInformationByAccountIdByUserId(
             @Param("accountId") int accountId,
             @Param("userId") int userId
