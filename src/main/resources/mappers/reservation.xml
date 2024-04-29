@@ -362,6 +362,25 @@
             tav.account_id = #{accountId}
             and rvt.user_id = #{userId};
     </select>
+    <select id="findEachTrainerReservationCount"
+            resultType="com.predev.gymcrm.entity.AdminSearchReservationCount">
+        select
+            rvt.trainer_id as trainerId,
+            tav.name as trainerName,
+            count(rvt.trainer_id) as reservationCount
+        from
+            reservation_tb rvt
+            left outer join time_tb tt on (tt.time_id = rvt.time_id)
+            left outer join user_account_view uav on (rvt.user_id = uav.user_id)
+            left outer join trainer_account_view tav on (rvt.trainer_id = tav.trainer_id)
+        where
+            rvt.reservation_date between #{startDate} and #{endDate}
+        group by
+            rvt.trainer_id
+        order by
+            rvt.reservation_date,
+            rvt.time_id;
+    </select>
 
 
 </mapper>

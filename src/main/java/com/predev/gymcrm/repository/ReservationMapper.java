@@ -1,6 +1,7 @@
 package com.predev.gymcrm.repository;
 
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.entity.AdminSearchReservationCount;
 import com.predev.gymcrm.entity.Reservation;
 import com.predev.gymcrm.entity.Trainer;
 import org.apache.ibatis.annotations.Mapper;
@@ -36,6 +37,11 @@ public interface ReservationMapper {
     );
     List<Reservation> findReservationByAccountIdAndPeriod(
             @Param("accountId") int accountId,
+            @Param("startDate") String startDate,
+            @Param("endDate") String endDate
+    );
+
+    List<AdminSearchReservationCount> findEachTrainerReservationCount(
             @Param("startDate") String startDate,
             @Param("endDate") String endDate
     );
