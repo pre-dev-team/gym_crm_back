@@ -13,6 +13,18 @@
         <result property="muscleMass" column="muscle_mass" />
         <result property="fatMass" column="fat_mass" />
         <result property="createDate" column="create_date" />
+        <association property="userAccountView" resultMap="UserAccountViewResultMap" />
+    </resultMap>
+
+    <resultMap id="UserAccountViewResultMap" type="com.predev.gymcrm.entity.UserAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="userId" column="user_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
     </resultMap>
 
     <insert
@@ -49,16 +61,18 @@
 
     <select id="findInbodyByUserId" resultMap="InbodyResultMap">
         select
-            inbody_id,
-            inbody_url,
-            user_id,
-            weight,
-            muscle_mass,
-            fat_mass
+            it.inbody_id,
+            it.inbody_url,
+            it.user_id,
+            it.weight,
+            it.muscle_mass,
+            it.fat_mass,
+            uav.name
         from
-            inbody_tb
+            inbody_tb it
+            left outer join user_account_view uav on(uav.user_id = it.user_id)
         where
-            user_id = #{userId};
+            it.user_id = #{userId}
     </select>
 
 </mapper>

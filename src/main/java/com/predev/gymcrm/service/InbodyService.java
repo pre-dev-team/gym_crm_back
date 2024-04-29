@@ -3,6 +3,7 @@ package com.predev.gymcrm.service;
 import com.predev.gymcrm.dto.req.InbodyReqDto;
 import com.predev.gymcrm.dto.resp.InbodyRespDto;
 import com.predev.gymcrm.dto.resp.SearchInbodyRespDto;
+import com.predev.gymcrm.dto.resp.SearchUnreservedTrainerRespDto;
 import com.predev.gymcrm.entity.Inbody;
 import com.predev.gymcrm.repository.InbodyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,18 +46,9 @@ public class InbodyService {
                 .collect(Collectors.toList());
     }
 
-    public SearchInbodyRespDto getInbodyInformation(int userId) {
-        Inbody inbody = inbodyMapper.findInbodyByUserId(userId);
-        System.out.println(inbody);
-        SearchInbodyRespDto searchInbodyRespDto =
-                SearchInbodyRespDto.builder()
-                        .inbodyId(inbody.getInbodyId())
-                        .inbodyUrl(inbody.getInbodyUrl())
-                        .userId(inbody.getUserId())
-                        .weight(inbody.getWeight())
-                        .muscleMass(inbody.getMuscleMass())
-                        .fatMass(inbody.getFatMass())
-                        .build();
-        return searchInbodyRespDto;
+    public List<SearchInbodyRespDto> getInbodyInformation(int userId) {
+        List<Inbody> inbodys = inbodyMapper.findInbodyByUserId(userId);
+
+        return inbodys.stream().map(Inbody::toSearchInbodyRespDto).collect(Collectors.toList());
     }
 }
