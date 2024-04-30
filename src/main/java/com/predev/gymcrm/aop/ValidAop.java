@@ -1,7 +1,11 @@
 package com.predev.gymcrm.aop;
 
 import com.predev.gymcrm.dto.req.AccountSignupReqDto;
+
+import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
+
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+
 import com.predev.gymcrm.exception.ValidException;
 import com.predev.gymcrm.repository.AuthMapper;
 import com.predev.gymcrm.repository.HolidayMapper;
@@ -76,6 +80,30 @@ public class ValidAop {
                 for(FieldError fieldError : fieldErrors) {
                     String fieldName = fieldError.getField();   // DTO 변수명
                     String message = fieldError.getDefaultMessage();    // 메세지내용
+                    errorMap.put(fieldName, message);
+                }
+                throw new ValidException(errorMap);
+            }
+        }
+
+        if(methodName.equals("oAuth2Signup")) {
+            OAuth2SignupReqDto oAuth2SignupReqDto = null;
+
+            for (Object arg : args) {
+                if (arg.getClass() == OAuth2SignupReqDto.class) {
+                    oAuth2SignupReqDto = (OAuth2SignupReqDto) arg;
+                }
+            }
+            if(authMapper.findAccountByUsername(oAuth2SignupReqDto.getUsername()) != null) {
+                ObjectError objectError = new FieldError("username", "username", "이미 존재하는 사용자이름입니다.");
+                bindingResult.addError(objectError);
+            }
+            if(bindingResult.hasErrors()) {
+                List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+                Map<String, String> errorMap = new HashMap<>();
+                for(FieldError fieldError : fieldErrors) {
+                    String fieldName = fieldError.getField();
+                    String message = fieldError.getDefaultMessage();
                     errorMap.put(fieldName, message);
                 }
                 throw new ValidException(errorMap);

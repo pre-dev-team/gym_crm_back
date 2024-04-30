@@ -25,6 +25,7 @@ public class PermitAllFilter extends OncePerRequestFilter {
                 "/review",
                 "/holiday",
                 "/inbody",
+                "/oauth2",
                 "/routine",
                 "/mail"
         );

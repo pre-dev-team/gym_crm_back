@@ -4,6 +4,8 @@ import com.predev.gymcrm.security.exception.AuthEntryPoint;
 import com.predev.gymcrm.security.filter.JwtAuthenticationFilter;
 import com.predev.gymcrm.security.filter.MailSessionFilter;
 import com.predev.gymcrm.security.filter.PermitAllFilter;
+import com.predev.gymcrm.security.handler.OAuth2SuccessHandler;
+import com.predev.gymcrm.service.OAuth2PrincipalUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,6 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     AuthEntryPoint authEntryPoint;
 
+    @Autowired
+    OAuth2PrincipalUserService oAuth2PrincipalUserService;
+    @Autowired
+    OAuth2SuccessHandler oAuth2SuccessHandler;
+
+
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -46,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**","/admin/**","/common/**",
                         "/reservation/**","/trainer/**", "/review/**",
                         "/options/**", "/holiday/**", "/inbody/**",
-                        "/routine/**","/mail/**")
+                        "/routine/**","/mail/**", "/oauth2/**")
                 .permitAll()
                 .antMatchers("/user/**")
                 .hasRole("USER")
@@ -57,6 +65,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(mailSessionFilter,UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling()
-                .authenticationEntryPoint(authEntryPoint);
+                .authenticationEntryPoint(authEntryPoint)
+                .and()
+                .oauth2Login()
+                .successHandler(oAuth2SuccessHandler)
+                .userInfoEndpoint()
+                .userService(oAuth2PrincipalUserService);
     }
 }

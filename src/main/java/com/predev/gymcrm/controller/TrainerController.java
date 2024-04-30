@@ -1,5 +1,6 @@
 package com.predev.gymcrm.controller;
 
+import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
 import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
@@ -10,6 +11,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/trainer")
@@ -39,6 +42,15 @@ public class TrainerController {
     public ResponseEntity<?> updateTrainerImg(@RequestBody UpdateTrainerProfileImgReqDto reqDto) {
         trainerService.updateTrainerProfileImg(reqDto);
         return ResponseEntity.ok(true);
+    }
+    // trainer routine
+    @PostMapping("/routine")
+    public ResponseEntity<?> makeRoutine (@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
+
+        System.out.println(routineMakeReqDtos);
+        trainerService.makeRoutine(routineMakeReqDtos);
+
+        return ResponseEntity.ok(routineMakeReqDtos);
     }
 
 }
