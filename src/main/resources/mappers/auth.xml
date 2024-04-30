@@ -241,4 +241,18 @@
             and email = #{email}
     </select>
 
+    <select id="findAccountByUserNameAndEmail" resultMap="AccountResultMap">
+        select
+            account_id,
+            role_id,
+            username,
+            name,
+            email
+        from
+            account_tb
+        where
+            username = #{username}
+            and email = #{email}
+    </select>
+
 </mapper>
