@@ -2,9 +2,11 @@ package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.AccountSigninReqDto;
+import com.predev.gymcrm.dto.req.OAuth2MergeReqDto;
 import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
 import com.predev.gymcrm.dto.resp.SearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.entity.OAuth2;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
 import com.predev.gymcrm.dto.req.AccountSignupReqDto;
@@ -46,7 +48,6 @@ public class AuthService {
         }
     }
 
-    @ValidAspect
     @Transactional(rollbackFor = Exception.class)
     public void oAuth2Signup(OAuth2SignupReqDto oAuth2SignupReqDto) {
         int successCount = 0;
@@ -73,6 +74,24 @@ public class AuthService {
         if(successCount < 2) {
             throw new SaveException();
         }
+    }
+
+    public void oAuth2Merge(OAuth2MergeReqDto oAuth2MergeReqDto) {
+        Account account = authMapper.findAccountByUsername(oAuth2MergeReqDto.getUsername());
+
+        System.out.println(oAuth2MergeReqDto);
+
+        if(account == null) {
+            throw  new UsernameNotFoundException("사용자 정보를 확인하세요.");
+        }
+        if(!passwordEncoder.matches(oAuth2MergeReqDto.getPassword(), account.getPassword())){
+            throw new BadCredentialsException("사용자 정보를 확인하세요");
+        }
+        OAuth2 oAuth2 = OAuth2.builder()
+                .oauth2Name(oAuth2MergeReqDto.getOauth2Name())
+                .accountId(account.getAccountId())
+                .oauth2ProviderName(oAuth2MergeReqDto.getOauth2ProviderName())
+                .build();
     }
 
     public String Signin(AccountSigninReqDto reqDto) {

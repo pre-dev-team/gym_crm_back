@@ -74,12 +74,28 @@ public class ValidAop {
                 throw new ValidException(errorMap);
             }
         }
+
         if(methodName.equals("oAuth2Signup")) {
             OAuth2SignupReqDto oAuth2SignupReqDto = null;
+
             for (Object arg : args) {
                 if (arg.getClass() == OAuth2SignupReqDto.class) {
                     oAuth2SignupReqDto = (OAuth2SignupReqDto) arg;
                 }
+            }
+            if(authMapper.findAccountByUsername(oAuth2SignupReqDto.getUsername()) != null) {
+                ObjectError objectError = new FieldError("username", "username", "이미 존재하는 사용자이름입니다.");
+                bindingResult.addError(objectError);
+            }
+            if(bindingResult.hasErrors()) {
+                List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+                Map<String, String> errorMap = new HashMap<>();
+                for(FieldError fieldError : fieldErrors) {
+                    String fieldName = fieldError.getField();
+                    String message = fieldError.getDefaultMessage();
+                    errorMap.put(fieldName, message);
+                }
+                throw new ValidException(errorMap);
             }
         }
 

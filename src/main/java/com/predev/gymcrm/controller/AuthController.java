@@ -1,14 +1,11 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.aop.annotation.ValidAspect;
-import com.predev.gymcrm.dto.req.AccountSigninReqDto;
-import com.predev.gymcrm.dto.req.EditPasswordReqDto;
-import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
+import com.predev.gymcrm.dto.req.*;
 import com.predev.gymcrm.service.AuthService;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import com.predev.gymcrm.dto.req.AccountSignupReqDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,12 +34,22 @@ public class AuthController {
         authService.trainerSignup(reqDto);
         return ResponseEntity.created(null).body(reqDto);
     }
+
     @ValidAspect
     @PostMapping("/oauth2/signup")
     public ResponseEntity<?> oAuth2Signup(@Valid @RequestBody OAuth2SignupReqDto oAuth2SignupReqDto, BindingResult bindingResult) {
         authService.oAuth2Signup(oAuth2SignupReqDto);
         return ResponseEntity.created(null).body(true);
     }
+
+
+    @PostMapping("/oauth2/merge")
+    public ResponseEntity<?> oAuth2Merge(@RequestBody OAuth2MergeReqDto oAuth2MergeReqDto) {
+        authService.oAuth2Merge(oAuth2MergeReqDto);
+
+        return ResponseEntity.ok(true);
+    }
+
 
     @PostMapping("/account/signin")
     public ResponseEntity<?> userSignin(@RequestBody AccountSigninReqDto reqDto) {

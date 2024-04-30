@@ -67,7 +67,7 @@
         insert into
             user_tb
         values
-            (0, #{accountId}, null, now(), now())
+            (0, #{accountId}, now(), now())
     </insert>
     <insert id="saveTrainer">
         insert into
@@ -246,14 +246,15 @@
             oat.oauth2_provider_name
         from
             account_tb at
-            left outer join role_tb rt on(rt.role_id = at.role_id)
-            left outer join oauth2_tb oat on(oat.account_id = at.account_id);
+            left outer join role_tb rt on (rt.role_id = at.role_id)
+            left outer join oauth2_tb oat on (oat.account_id = at.account_id)
         where
-            oat.oauth2_name = #{oAuth2Name}
+            oat.oauth2_name = #{oauth2Name};
     </select>
+
     <insert id="saveOAuth2" parameterType="com.predev.gymcrm.entity.OAuth2">
         insert into oauth2_tb
-        values(0, #{oauth2Name}, #{accountId}, #{oAuth2ProviderName}, now(), now())
+        values(0, #{oauth2Name}, #{accountId}, #{oauth2ProviderName}, now(), now())
     </insert>
 
 </mapper>
