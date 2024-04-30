@@ -1,10 +1,12 @@
 package com.predev.gymcrm.controller;
 
+import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.CancelHolidayReqDto;
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
 import com.predev.gymcrm.service.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,7 +16,6 @@ public class HolidayController {
     @Autowired
     private HolidayService holidayService;
 
-
     @PostMapping("/insert")
     public ResponseEntity<?> saveTrainerHoliday(@RequestBody TrainerHolidayReqDto trainerHolidayReqDto) {
         holidayService.insertTrainerHoliday(trainerHolidayReqDto);
@@ -23,7 +24,6 @@ public class HolidayController {
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteHoliday(@RequestBody CancelHolidayReqDto cancelHolidayReqDto) {
-        System.out.println(cancelHolidayReqDto);
         holidayService.deleteHoliday(cancelHolidayReqDto);
         return ResponseEntity.ok(cancelHolidayReqDto);
     }
@@ -33,4 +33,8 @@ public class HolidayController {
         return ResponseEntity.ok(holidayService.selectHoliday(accountId));
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<?> findHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
+        return ResponseEntity.ok(holidayService.getHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
+    }
 }

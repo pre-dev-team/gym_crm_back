@@ -16,6 +16,30 @@
         <association property="time" resultMap="TimeResultMap" />
         <association property="user" resultMap="UserResultMap" />
         <association property="trainer" resultMap="TrainerResultMap" />
+        <association property="userAccountView" resultMap="UserAccountViewResultMap"/>
+        <association property="trainerAccountView" resultMap="TrainerAccountViewResultMap"/>
+    </resultMap>
+
+    <resultMap id="UserAccountViewResultMap" type="com.predev.gymcrm.entity.UserAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="userId" column="user_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
+
+    <resultMap id="TrainerAccountViewResultMap" type="com.predev.gymcrm.entity.TrainerAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
     </resultMap>
 
     <resultMap id="UserResultMap" type="com.predev.gymcrm.entity.User">
@@ -70,6 +94,7 @@
         values
             (0, #{userId}, #{trainerId}, #{timeId}, #{reservationDate}, now(), now());
     </insert>
+
     <update id="updateReservationByReservationId">
         update
             reservation_tb
@@ -291,6 +316,8 @@
                     and name like concat('%', #{name}, '%')
             </when>
         </choose>
+        order by
+            rt.reservation_date desc
     </select>
 
     <select id="findReservationByAccountIdAndPeriod"
@@ -298,23 +325,42 @@
         select
             rvt.reservation_id,
             rvt.user_id,
+            uav.name,
             rvt.trainer_id,
             rvt.time_id,
+            tt.time_duration,
             rvt.reservation_date,
             rvt.create_date,
-            rvt.update_date,
-            tt.time_duration
+            rvt.update_date
         from
             reservation_tb rvt
             left outer join time_tb tt on (tt.time_id = rvt.time_id)
-            left outer join user_tb ut on (ut.user_id = rvt.user_id)
-            left outer join trainer_tb tit on (tit.trainer_id = rvt.trainer_id)
-            left outer join account_tb at on(at.account_id = tit.account_id)
+            left outer join user_account_view uav on (rvt.user_id = uav.user_id)
+            left outer join trainer_account_view tav on (rvt.trainer_id = tav.trainer_id)
         where
-            at.account_id = #{accountId}
+            tav.account_id = #{accountId}
             and rvt.reservation_date between #{startDate} and #{endDate}
         order by
-            rvt.reservation_date
+            rvt.reservation_date,
+            rvt.time_id
+    </select>
+
+    <select id="selectMyMembersInformationByAccountIdByUserId" resultMap="ReservationResultMap">
+        select
+            tav.account_id,
+            rvt.user_id,
+            rvt.reservation_date,
+            uav.name,
+            uav.phone,
+            tt.time_duration
+        from
+            reservation_tb rvt
+            left outer join user_account_view uav on(uav.user_id = rvt.user_id)
+            left outer join trainer_account_view tav on(tav.trainer_id = rvt.trainer_id)
+            left outer join time_tb tt on(tt.time_id = rvt.time_id)
+        where
+            tav.account_id = #{accountId}
+            and rvt.user_id = #{userId};
     </select>
 
 

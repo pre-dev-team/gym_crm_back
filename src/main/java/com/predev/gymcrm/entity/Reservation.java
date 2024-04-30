@@ -1,7 +1,9 @@
 package com.predev.gymcrm.entity;
 
+import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationUserRespDto;
+import com.predev.gymcrm.dto.resp.SelectMyMembersInformationRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +29,19 @@ public class Reservation {
     private User user;
     private Trainer trainer;
     private List<WorkoutRoutine> workoutRoutines;
+    private UserAccountView userAccountView;
+    private TrainerAccountView trainerAccountView;
+
+    public SearchReservationUserRespDto toSearchReservationUserRespDto() {
+        return SearchReservationUserRespDto.builder()
+                .reservationId(reservationId)
+                .reservationDate(reservationDate)
+                .userId(userId)
+                .name(userAccountView.getName())
+                .timeId(timeId)
+                .timeDuration(time.getTimeDuration())
+                .build();
+    }
 
     public SearchReservationRespDto toSearchReservationRespDto() {
         return SearchReservationRespDto.builder()
@@ -34,6 +49,27 @@ public class Reservation {
                 .userId(userId)
                 .trainerId(trainerId)
                 .timeId(timeId)
+                .timeDuration(time.getTimeDuration())
+                .build();
+    }
+
+    public SearchMyMembersRespDto toSearchMyMembersRespDto() {
+        return SearchMyMembersRespDto.builder()
+                .userId(userId)
+                .accountId(userAccountView.getAccountId())
+                .name(userAccountView.getName())
+                .email(userAccountView.getEmail())
+                .phone(userAccountView.getPhone())
+                .build();
+    }
+
+    public SelectMyMembersInformationRespDto toSelectMyMembersInformationRespDto() {
+        return SelectMyMembersInformationRespDto.builder()
+                .accountId(trainerAccountView.getAccountId())
+                .userId(userId)
+                .reservationDate(reservationDate)
+                .name(userAccountView.getName())
+                .phone(userAccountView.getPhone())
                 .timeDuration(time.getTimeDuration())
                 .build();
     }

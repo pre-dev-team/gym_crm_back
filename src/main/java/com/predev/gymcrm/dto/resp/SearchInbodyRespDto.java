@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SelectHolidayRespDto {
-    private int holidayId;
-    private String holidayDate;
-    private int timeId;
+public class SearchInbodyRespDto {
+    private int inbodyId;
+    private String inbodyUrl;
+    private int userId;
+    private int weight;
     private String name;
-    private int confirm;
+    private int muscleMass;
+    private int fatMass;
 }

@@ -34,7 +34,10 @@ public class JwtProvider {
         this.authMapper = authMapper;
     }
 
-    public String generateToken(Account account) {
+
+
+    public String generateJwt(Account account) {
+
             int accountId = account.getAccountId();
             String username = account.getUsername();
             Collection<? extends GrantedAuthority> authorities = account.getAuthorities();

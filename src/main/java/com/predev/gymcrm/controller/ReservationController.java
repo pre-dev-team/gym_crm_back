@@ -3,6 +3,7 @@ package com.predev.gymcrm.controller;
 import com.predev.gymcrm.dto.req.*;
 import com.predev.gymcrm.dto.resp.MyTodayScheduleRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationUserRespDto;
+import com.predev.gymcrm.dto.resp.SelectMyMembersInformationRespDto;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -65,5 +66,11 @@ public class ReservationController {
     public ResponseEntity<?> editReservation(@RequestBody EditReservationReqDto reqDto) {
         reservationService.updateReservation(reqDto);
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/user/information")
+    public ResponseEntity<?> getMymemberInformation(SearchMymembersInformationReqDto searchMymembersInformationReqDto) {
+        List<SelectMyMembersInformationRespDto> respDtos = reservationService.selectMymembersInformation(searchMymembersInformationReqDto);
+        return ResponseEntity.ok(respDtos);
     }
 }

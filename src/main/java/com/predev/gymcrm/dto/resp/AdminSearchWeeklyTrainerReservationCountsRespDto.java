@@ -5,17 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class AdminSearchHolidayRespDto {
+public class AdminSearchWeeklyTrainerReservationCountsRespDto {
     private int trainerId;
-    private String holidayDate;
-    private int startTimeId;
-    private int endTimeId;
-    private String createDate;
-    private String name;
+    private String trainerName;
+    private int firstWeekCount;
+    private int secondWeekCount;
+    private int thirdWeekCount;
+    private int forthWeekCount;
 }

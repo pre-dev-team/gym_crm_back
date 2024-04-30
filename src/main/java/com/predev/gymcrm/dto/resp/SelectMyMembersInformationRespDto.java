@@ -9,10 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SelectHolidayRespDto {
-    private int holidayId;
-    private String holidayDate;
-    private int timeId;
+public class SelectMyMembersInformationRespDto {
+    private int accountId;
+    private int userId;
+    private String reservationDate;
     private String name;
-    private int confirm;
+    private String phone;
+    private String timeDuration;
 }

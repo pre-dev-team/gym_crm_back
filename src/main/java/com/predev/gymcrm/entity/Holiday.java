@@ -1,6 +1,7 @@
 package com.predev.gymcrm.entity;
 
 import com.predev.gymcrm.dto.resp.AdminSearchHolidayRespDto;
+import com.predev.gymcrm.dto.resp.SelectHolidayRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,15 +26,13 @@ public class Holiday {
     private List<Time> times;
     private Trainer trainer;
 
-    public AdminSearchHolidayRespDto toAdminSearchHolidayRespDto() {
-        return AdminSearchHolidayRespDto.builder()
+    public SelectHolidayRespDto toSelectHolidayRespDto(String name) {
+        return SelectHolidayRespDto.builder()
                 .holidayId(holidayId)
-                .trainerId(trainerId)
-                .timeId(timeId)
-                .confirm(confirm)
-                .createDate(createDate)
                 .holidayDate(holidayDate)
-                .trainerName(trainer.getAccount().getName())
+                .timeId(timeId)
+                .name(name)
+                .confirm(confirm)
                 .build();
     }
 }

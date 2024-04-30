@@ -35,6 +35,7 @@ public class AuthController {
         return ResponseEntity.created(null).body(reqDto);
     }
 
+
     @ValidAspect
     @PostMapping("/oauth2/signup")
     public ResponseEntity<?> oAuth2Signup(@Valid @RequestBody OAuth2SignupReqDto oAuth2SignupReqDto, BindingResult bindingResult) {
@@ -50,6 +51,11 @@ public class AuthController {
         return ResponseEntity.ok(true);
     }
 
+    @DeleteMapping("/trainer")
+    public ResponseEntity<?> deleteTrainer(@RequestParam(value = "trainerId")int trainerId) {
+        authService.deleteTrainer(trainerId);
+        return ResponseEntity.ok(trainerId);
+    }
 
     @PostMapping("/account/signin")
     public ResponseEntity<?> userSignin(@RequestBody AccountSigninReqDto reqDto) {

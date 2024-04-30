@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.predev.gymcrm.repository.WorkoutRoutineMapper">
+    <resultMap id="WorkoutRoutineResultMap" type="com.predev.gymcrm.entity.WorkoutRoutine">
+        <id property="workoutRoutineId" column="workout_routine_id" />
+        <result property="reservationId" column="reservation_id" />
+        <result property="workoutId" column="workout_id" />
+        <result property="workoutRoutineCount" column="workout_routine_count" />
+        <result property="workoutRoutineSet" column="workout_routine_set" />
+        <result property="workoutRoutineWeight" column="workout_routine_weight" />
+        <result property="workoutRoutineOrder" column="workout_routine_order" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="workout" resultMap="WorkoutResultMap" />
+    </resultMap>
+
+    <resultMap id="WorkoutResultMap" type="com.predev.gymcrm.entity.Workout" >
+        <id property="workoutId" column="workout_id" />
+        <result property="workoutName" column="workout_name" />
+        <result property="workoutCategoryId" column="workout_category_id" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="workoutCategory" resultMap="WorkoutCategoryResultMap" />
+    </resultMap>
+
+    <resultMap id="WorkoutCategoryResultMap" type="com.predev.gymcrm.entity.WorkoutCategory">
+        <id property="workoutCategoryId" column="workout_category_id" />
+        <result property="workoutCategoryName" column="workout_category_name" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+    </resultMap>
+
+    <insert id="saveRoutines" parameterType="list">
+        insert into
+            workout_routine_tb
+        values
+            <foreach collection="list" item="workoutRoutine" separator=",">
+                (
+                    #{workoutRoutine.workoutRoutineId},
+                    #{workoutRoutine.reservationId},
+                    #{workoutRoutine.workoutId},
+                    #{workoutRoutine.workoutRoutineCount},
+                    #{workoutRoutine.workoutRoutineSet},
+                    #{workoutRoutine.workoutRoutineWeight},
+                    #{workoutRoutine.workoutRoutineOrder},
+                    now(),
+                    now()
+                )
+            </foreach>
+    </insert>
+    <delete id="deleteRoutines">
+        delete from
+            workout_routine_tb
+        where
+            reservation_id = #{reservationId};
+    </delete>
+    <select id="findWorkoutRoutines" resultMap="WorkoutRoutineResultMap">
+        select
+            wrt.workout_routine_id,
+            wrt.reservation_id,
+            wrt.workout_id,
+            wt.workout_name,
+            wt.workout_category_id,
+            wct.workout_category_name,
+            wrt.workout_routine_count,
+            wrt.workout_routine_set,
+            wrt.workout_routine_weight,
+            wrt.workout_routine_order
+        from
+            workout_routine_tb wrt
+            left outer join workout_tb wt
+                on(wrt.workout_id = wt.workout_id)
+            left outer join workout_category_tb wct
+                on(wt.workout_category_id = wct.workout_category_id)
+        where
+            reservation_id = #{reservationId};
+    </select>
+</mapper>

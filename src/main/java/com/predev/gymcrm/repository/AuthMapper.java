@@ -17,6 +17,8 @@ AuthMapper {
     public int saveUser(@Param("accountId") int accountId);
     public int saveTrainer(@Param("accountId")int accountId);
 
+    public Account findAccountByNameAndEmail(@Param("name") String name, @Param("email") String email);
+    public Account findAccountByUserNameAndEmail(@Param("username") String username, @Param("email") String email);
     public Account findAccountByUsername(String username);
     public Account findAccountByPhone(String phone);
     public Account findAccountByAccountId(int accountId);
@@ -26,6 +28,7 @@ AuthMapper {
     public Integer findTrainerIdByAccountId(int accountId);
     public List<User> findUsersByName(String name);
     public Account findAccountByOAuth2Name(String oAuth2Name);
+    public int deleteTrainer(int trainerId);
     public void modifyAccountPassword(Account account);
     public int saveOAuth2(OAuth2 oAuth2);
 }

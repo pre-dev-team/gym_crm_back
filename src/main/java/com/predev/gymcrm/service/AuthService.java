@@ -76,6 +76,7 @@ public class AuthService {
         }
     }
 
+
     public void oAuth2Merge(OAuth2MergeReqDto oAuth2MergeReqDto) {
         Account account = authMapper.findAccountByUsername(oAuth2MergeReqDto.getUsername());
 
@@ -92,6 +93,12 @@ public class AuthService {
                 .accountId(account.getAccountId())
                 .oauth2ProviderName(oAuth2MergeReqDto.getOauth2ProviderName())
                 .build();
+    }
+
+    public void deleteTrainer(int trainerId) {
+        System.out.println(trainerId);
+        authMapper.deleteTrainer(trainerId);
+
     }
 
     public String Signin(AccountSigninReqDto reqDto) {

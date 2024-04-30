@@ -69,12 +69,14 @@
         values
             (0, #{accountId}, now(), now())
     </insert>
+
     <insert id="saveTrainer">
         insert into
             trainer_tb
         values
             (0, #{accountId}, null, now(), now())
     </insert>
+
     <update id="modifyAccountPassword" parameterType="com.predev.gymcrm.entity.Account">
         update
             account_tb
@@ -84,6 +86,13 @@
         where
             account_id = #{accountId}
     </update>
+
+    <delete id="deleteTrainer" parameterType="integer">
+        delete from
+            trainer_tb
+        where
+            trainer_id = #{trainerId}
+    </delete>
 
     <!--###################       SELECT       ###################    -->
 
@@ -155,6 +164,7 @@
         where
             account_id = #{accountId}
     </select>
+
     <select id="findAccountByUserId" resultType="com.predev.gymcrm.entity.Account">
         select
             ut.user_id,
@@ -192,6 +202,7 @@
         where
             trainer_id = #{trainerId}
     </select>
+
     <select id="findUserIdByAccountId" resultType="java.lang.Integer">
         select
             user_id
@@ -208,7 +219,6 @@
             trainer_tb
         where
             account_id = #{accountId}
-
     </select>
 
     <select id="findUsersByName" resultMap="UserResultMap">
@@ -227,6 +237,7 @@
             <if test="name != null and name != ''">
                 and at.name like concat('%', #{name}, '%')
             </if>
+
    </select>
     <select id="findAccountByOAuth2Name" resultMap="AccountResultMap">
         select
@@ -256,5 +267,36 @@
         insert into oauth2_tb
         values(0, #{oauth2Name}, #{accountId}, #{oauth2ProviderName}, now(), now())
     </insert>
+
+    </select>
+
+    <select id="findAccountByNameAndEmail" resultMap="AccountResultMap">
+        select
+            account_id,
+            role_id,
+            username,
+            name,
+            email
+        from
+            account_tb
+        where
+            name = #{name}
+            and email = #{email}
+    </select>
+
+    <select id="findAccountByUserNameAndEmail" resultMap="AccountResultMap">
+        select
+            account_id,
+            role_id,
+            username,
+            name,
+            email
+        from
+            account_tb
+        where
+            username = #{username}
+            and email = #{email}
+    </select>
+
 
 </mapper>

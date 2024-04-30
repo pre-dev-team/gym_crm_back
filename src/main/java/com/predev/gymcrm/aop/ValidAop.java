@@ -1,9 +1,16 @@
 package com.predev.gymcrm.aop;
 
 import com.predev.gymcrm.dto.req.AccountSignupReqDto;
+
 import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
+
+import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+
 import com.predev.gymcrm.exception.ValidException;
 import com.predev.gymcrm.repository.AuthMapper;
+import com.predev.gymcrm.repository.HolidayMapper;
+import com.predev.gymcrm.service.CommonService;
+import com.predev.gymcrm.service.HolidayService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,6 +21,7 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +32,9 @@ public class ValidAop {
 
     @Autowired
     private AuthMapper authMapper;
+
+    @Autowired
+    private HolidayMapper holidayMapper;
 
     @Pointcut("@annotation(com.predev.gymcrm.aop.annotation.ValidAspect)")
     private void pointCut() {
