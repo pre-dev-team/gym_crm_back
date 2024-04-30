@@ -1,9 +1,12 @@
 package com.predev.gymcrm.service;
 
+import com.predev.gymcrm.dto.req.FindPwReqDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.repository.AuthMapper;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -53,6 +56,27 @@ public class AccountMailService {
                 exception.printStackTrace();
             }
         }
+
         return result;
+    }
+
+    public Account findAccountByNameAndEmail(String username, String email) {
+        return authMapper.findAccountByNameAndEmail(username, email);
+    }
+
+    public void sendTemporaryPassword(String username, String email) {
+
+        String temporaryPassword = generateTemporaryPassword();
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(email);
+        mailMessage.setSubject("임시 비밀번호 발급");
+        mailMessage.setText("안녕하세요, " + username + "님!\n\n임시 비밀번호는 다음과 같습니다: " + temporaryPassword);
+        javaMailSender.send(mailMessage);
+    }
+
+    private String generateTemporaryPassword() {
+        // 임시 비밀번호는 10자의 랜덤 문자열로 생성
+        return RandomStringUtils.randomAlphanumeric(10);
     }
 }
