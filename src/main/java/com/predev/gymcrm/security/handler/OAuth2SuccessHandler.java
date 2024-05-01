@@ -44,7 +44,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         }
 
         // OAuth2 로그인을 통해 회원가입을 진행한 기록이 있는 상태
-        String accessToken = jwtProvider.generateToken(account);
+        String accessToken = jwtProvider.generateJwt(account);
         response.sendRedirect("http://" + clientAddress + "/auth/oauth2/merge?accessToken=" + accessToken);
 
 

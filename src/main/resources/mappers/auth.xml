@@ -268,8 +268,6 @@
         values(0, #{oauth2Name}, #{accountId}, #{oauth2ProviderName}, now(), now())
     </insert>
 
-    </select>
-
     <select id="findAccountByNameAndEmail" resultMap="AccountResultMap">
         select
             account_id,

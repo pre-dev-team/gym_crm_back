@@ -110,7 +110,7 @@ public class AuthService {
         if (!passwordEncoder.matches(reqDto.getPassword(), account.getPassword())) {
             throw new BadCredentialsException("사용자 정보를 확인하세요.");
         }
-        return jwtProvider.generateToken(account);
+        return jwtProvider.generateJwt(account);
     }
 
     public int findUserIdByAccountId(int accountId) {

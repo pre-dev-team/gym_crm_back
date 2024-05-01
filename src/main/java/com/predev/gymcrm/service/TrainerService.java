@@ -11,10 +11,7 @@ import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.Reservation;
 import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.WorkoutRoutine;
-import com.predev.gymcrm.repository.AuthMapper;
-import com.predev.gymcrm.repository.CommonMapper;
-import com.predev.gymcrm.repository.ReservationMapper;
-import com.predev.gymcrm.repository.TrainerMapper;
+import com.predev.gymcrm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +25,9 @@ public class TrainerService {
 
     @Autowired
     private TrainerMapper trainerMapper;
+
+    @Autowired
+    private WorkoutRoutineMapper workoutRoutineMapper;
 
     @Autowired
     private AuthMapper authMapper;
@@ -71,7 +71,7 @@ public class TrainerService {
       
     public void makeRoutine(List<RoutineMakeReqDto> routineMakeReqDtos) {
         List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(dto -> dto.toEntity()).collect(Collectors.toList());
-        int successCount = trainerMapper.saveRoutines(workoutRoutines);
+        int successCount = workoutRoutineMapper.saveRoutines(workoutRoutines);
         System.out.println(successCount);
 
     }
