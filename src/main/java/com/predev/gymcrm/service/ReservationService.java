@@ -52,6 +52,7 @@ public class ReservationService {
 
 
         int trainerAccountId = authMapper.findAccountByTrainerId(reqDto.getTrainerId()).getAccountId();
+        System.out.println(trainerAccountId);
         String userName = authMapper.findAccountByAccountId(reqDto.getAccountId()).getName();
         String title = "예약알림";
         String message = userName+"님이 "+ (reqDto.getTimeId() + 9) + "~" + (reqDto.getTimeId() + 10) + "타임 예약 하였습니다.";
