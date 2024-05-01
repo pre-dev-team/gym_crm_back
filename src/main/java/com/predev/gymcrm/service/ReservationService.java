@@ -23,6 +23,9 @@ public class ReservationService {
     @Autowired
     private AuthMapper authMapper;
 
+    @Autowired
+    FCMPushNotificationService fcmPushNotificationService;
+
     public String trimDateString(String date) {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
@@ -46,6 +49,13 @@ public class ReservationService {
         int userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
         String date = reqDto.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         reservationMapper.saveReservation(reqDto.toReservationEntity(date, userId));
+
+
+        int trainerAccountId = authMapper.findAccountByTrainerId(reqDto.getTrainerId()).getAccountId();
+        String userName = authMapper.findAccountByAccountId(reqDto.getAccountId()).getName();
+        String title = "예약알림";
+        String message = userName+"님이 "+ (reqDto.getTimeId() + 9) + "~" + (reqDto.getTimeId() + 10) + "타임 예약 하였습니다.";
+        fcmPushNotificationService.sendFCMOneToOne(trainerAccountId, title, message);
     }
 
     public List<SearchReservationRespDto> searchReservationsByUserId(int accountId) {

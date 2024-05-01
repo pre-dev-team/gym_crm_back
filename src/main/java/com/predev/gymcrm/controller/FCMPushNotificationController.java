@@ -12,6 +12,7 @@ public class FCMPushNotificationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(FCMTokenReqDto tokenReqDto) {
+        System.out.println(tokenReqDto);
         return ResponseEntity.ok(tokenReqDto);
     }
 }

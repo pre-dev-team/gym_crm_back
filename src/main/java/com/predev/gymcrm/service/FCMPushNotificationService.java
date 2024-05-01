@@ -7,9 +7,11 @@ import com.google.firebase.messaging.WebpushNotification;
 import com.predev.gymcrm.entity.NotificationMessage;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -31,7 +33,30 @@ public class FCMPushNotificationService {
         tokenMap.remove(accountId);
     }
 
-    public void send(NotificationMessage notificationMessage) throws ExecutionException, InterruptedException {
+    public String getToken(final int accountId) {
+        return tokenMap.get(accountId);
+    }
+
+    public void sendFCMOneToOne(int accountId, String title, String message) {
+        send(NotificationMessage.builder()
+                .token(getToken(accountId))
+                .title(title)
+                .message(message)
+                .build());
+    }
+
+    @Async
+    public void sendFCMFromOneToMany(List<Integer> accountIds, String title, String message) {
+        accountIds.forEach(accountId -> {
+            send(NotificationMessage.builder()
+                    .token(getToken(accountId))
+                    .title(title)
+                    .message(message)
+                    .build());
+        });
+    }
+
+    public void send(NotificationMessage notificationMessage) {
 
         Message message = Message.builder()
                 .setToken(notificationMessage.getToken())
@@ -40,7 +65,13 @@ public class FCMPushNotificationService {
                         .build())
                 .build();
         System.out.println(message.toString());
-        firebaseMessaging.sendAsync(message).get();
+        try {
+            firebaseMessaging.sendAsync(message).get();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
