@@ -1,4 +1,4 @@
-package com.study.library.config;
+package com.predev.gymcrm.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
@@ -11,8 +11,10 @@ import org.springframework.core.io.ClassPathResource;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+
 @Configuration
 public class FCMConfig {
+
     @Value("${fcm.certification}")
     private String FIREBASE_CONFIG_PATH;
 
@@ -41,4 +43,5 @@ public class FCMConfig {
     public FirebaseMessaging firebaseMessaging() {
         return FirebaseMessaging.getInstance(FirebaseApp.getInstance());
     }
+
 }
