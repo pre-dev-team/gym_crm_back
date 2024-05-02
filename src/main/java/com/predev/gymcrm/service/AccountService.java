@@ -37,14 +37,15 @@ public class AccountService {
     }
 
     public int editAdminPassword(AdminPasswordChangeReqDto reqDto) {
+        System.out.println(reqDto);
         Account account = authMapper.findAccountByUsername("admin");
         String encodedPassword = account.getPassword();
-        if(!passwordEncoder.matches(reqDto.getPrevPassword(),encodedPassword)) {
+        if(!passwordEncoder.matches(reqDto.getPrevPassword(), encodedPassword)) {
             throw new ValidException(Map.of("oldPassword","비밀번호 인증에 실패하였습니다 \n다시입력하세요"));
         }
-        if(passwordEncoder.matches(reqDto.getNewPassword(), encodedPassword)) {
+        if(passwordEncoder.matches(reqDto.getPassword(), encodedPassword)) {
             throw new ValidException(Map.of("newPassword","새로운 비밀번호는 이전 비밀번호와 같을 수 없습니다 \n다시입력하세요"));
         }
-        return authMapper.modifyAdminPassword(reqDto.getNewPassword());
+        return authMapper.modifyAdminPassword(reqDto.getPassword());
     }
 }

@@ -63,7 +63,8 @@ public class AdminController {
         return ResponseEntity.ok(adminService.getWeeklyTrainerReservationCounts());
     }
 
-    public ResponseEntity<?> changeAdminPassword(AdminPasswordChangeReqDto reqDto) {
+    @PutMapping("/edit/password")
+    public ResponseEntity<?> changeAdminPassword(@RequestBody AdminPasswordChangeReqDto reqDto) {
         return ResponseEntity.ok(accountService.editAdminPassword(reqDto));
     }
 }

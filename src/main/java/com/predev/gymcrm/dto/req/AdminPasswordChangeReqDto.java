@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class AdminPasswordChangeReqDto {
     private String prevPassword;
-    private String newPassword;
+    private String Password;
 }
