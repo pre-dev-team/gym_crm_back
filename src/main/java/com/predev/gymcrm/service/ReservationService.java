@@ -23,6 +23,9 @@ public class ReservationService {
     @Autowired
     private AuthMapper authMapper;
 
+    @Autowired
+    FCMPushNotificationService fcmPushNotificationService;
+
     public String trimDateString(String date) {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
@@ -46,6 +49,13 @@ public class ReservationService {
         int userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
         String date = reqDto.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         reservationMapper.saveReservation(reqDto.toReservationEntity(date, userId));
+
+        int trainerAccountId = authMapper.findAccountByTrainerId(reqDto.getTrainerId()).getAccountId();
+        System.out.println(trainerAccountId);
+        String userName = authMapper.findAccountByAccountId(reqDto.getAccountId()).getName();
+        String title = "예약알림";
+        String message = userName+"님이 "+ date + " " + (reqDto.getTimeId() + 9) + ":00~" + (reqDto.getTimeId() + 10) + ":00 타임 예약 하였습니다.";
+        fcmPushNotificationService.sendFCMOneToOne(trainerAccountId, title, message);
     }
 
     public List<SearchReservationRespDto> searchReservationsByUserId(int accountId) {
@@ -122,6 +132,14 @@ public class ReservationService {
     }
 
     public int cancelReservationByReservationId(int reservationId) {
+        Reservation reservation = reservationMapper.getReservationByReservationId(reservationId);
+        String userName = reservation.getUserAccountView().getName();
+        int trainerAccountId = reservation.getTrainerAccountView().getAccountId();
+        int timeId = reservation.getTimeId();
+        String date = reservation.getReservationDate();
+        String title = "예약 취소알림";
+        String message = userName+"님이 "+ date + " " + (timeId + 9) + ":00~" + (timeId + 10) + ":00 타임 예약을 취소 하였습니다.";
+        fcmPushNotificationService.sendFCMOneToOne(trainerAccountId, title, message);
         return reservationMapper.deleteReservationByReservationId(reservationId);
     }
 

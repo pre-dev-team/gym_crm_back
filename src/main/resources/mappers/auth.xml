@@ -184,9 +184,8 @@
             user_id = #{userId}
     </select>
 
-    <select id="findAccountByTrainerId" resultType="com.predev.gymcrm.entity.Account">
+    <select id="findAccountByTrainerId" resultMap="AccountResultMap">
         select
-            tt.trainer_id,
             at.account_id,
             at.role_id,
             at.username,
