@@ -296,5 +296,13 @@
             and email = #{email}
     </select>
 
+    <update id="modifyAccountTemporaryPw" parameterType="com.predev.gymcrm.entity.Account">
+        update
+            account_tb
+        set
+            password = #{password}
+        where
+            account_id = #{accountId}
+    </update>
 
 </mapper>

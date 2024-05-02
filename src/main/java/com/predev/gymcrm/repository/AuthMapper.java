@@ -31,4 +31,5 @@ AuthMapper {
     public int deleteTrainer(int trainerId);
     public void modifyAccountPassword(Account account);
     public int saveOAuth2(OAuth2 oAuth2);
+    public void modifyAccountTemporaryPw(@Param("accountId") int accountId, @Param("password") String password);
 }

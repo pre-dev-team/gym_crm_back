@@ -18,6 +18,8 @@ public class AccountService {
 
     @Autowired
     private AuthMapper authMapper;
+
+
     public void editAccountPassword(EditPasswordReqDto reqDto) {
         Account account = authMapper.findAccountByAccountId(reqDto.getAccountId());
         String encodedPassword = account.getPassword();
