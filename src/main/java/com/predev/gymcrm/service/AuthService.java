@@ -37,7 +37,6 @@ public class AuthService {
     @Transactional(rollbackFor = Exception.class)
     public void userSignup(AccountSignupReqDto reqDto) {
         int successCount = 0;
-        System.out.println(reqDto);
         Account account = reqDto.toEntity(passwordEncoder);
 
         successCount += authMapper.saveAccount(1,account);
@@ -65,7 +64,6 @@ public class AuthService {
     @Transactional(rollbackFor = Exception.class)
     public void trainerSignup(AccountSignupReqDto reqDto) {
         int successCount = 0;
-        System.out.println(reqDto);
         Account account = reqDto.toEntity(passwordEncoder);
 
         successCount += authMapper.saveAccount(98,account);
@@ -79,8 +77,6 @@ public class AuthService {
 
     public void oAuth2Merge(OAuth2MergeReqDto oAuth2MergeReqDto) {
         Account account = authMapper.findAccountByUsername(oAuth2MergeReqDto.getUsername());
-
-        System.out.println(oAuth2MergeReqDto);
 
         if(account == null) {
             throw  new UsernameNotFoundException("사용자 정보를 확인하세요.");
@@ -96,7 +92,6 @@ public class AuthService {
     }
 
     public void deleteTrainer(int trainerId) {
-        System.out.println(trainerId);
         authMapper.deleteTrainer(trainerId);
 
     }

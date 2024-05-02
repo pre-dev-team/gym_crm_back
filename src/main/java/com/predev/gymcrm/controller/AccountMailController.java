@@ -1,5 +1,6 @@
 package com.predev.gymcrm.controller;
 
+import com.predev.gymcrm.dto.req.FindPwReqDto;
 import com.predev.gymcrm.dto.req.SearchUsernameReqDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.service.AccountMailService;
@@ -24,14 +25,23 @@ public class AccountMailController {
 
     @PostMapping("/send")
     public ResponseEntity<?> send(HttpServletRequest request, @RequestBody SearchUsernameReqDto reqDto) {
+        request.getSession().setAttribute("timer", new Date());
         Account account = accountMailService.getAccountByNameAndEmail(reqDto.getName(), reqDto.getEmail());
         accountMailService.searchAccountByMail(account);
-        request.getSession().setAttribute("timer", new Date());
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @GetMapping("/find/password")
-    public ResponseEntity<?> findPassword() {
-        return ResponseEntity.ok(null);
+    @PostMapping("/send/temporary/password")
+    public ResponseEntity<?> sendTemporaryPassword(HttpServletRequest request, @RequestBody FindPwReqDto findPwReqDto) {
+        request.getSession().setAttribute("timer", new Date());
+        Account account = accountMailService.findAccountByNameAndEmail(findPwReqDto.getUsername(), findPwReqDto.getEmail());
+        accountMailService.sendTemporaryPassword(account);
+
+        if (account != null && accountMailService.sendTemporaryPassword(account)) {
+            return ResponseEntity.ok("임시 비밀번호가 성공적으로 전송되었습니다.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("임시 비밀번호 전송에 실패했습니다.");
+        }
     }
 }
