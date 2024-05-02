@@ -27,11 +27,18 @@ public class MailSessionFilter extends OncePerRequestFilter {
             lastReqDateTime = lastReqDate.getTime();
             long timeInterval = Math.abs(nowTime - lastReqDateTime);
             if (timeInterval < expireTime) {
+
                 long totalSeconds = (expireTime - timeInterval) / 1000;
                 long minutes = totalSeconds / 60;
                 long seconds = totalSeconds % 60;
                 System.out.println(totalSeconds);
-                response.sendError(HttpStatus.BAD_REQUEST.value(), "잔여시간: " + minutes + ":" + seconds);
+
+                try {
+                    throw new RequestInLimitTimeException(totalSeconds);
+                } catch (RequestInLimitTimeException e) {
+                    response.sendError(HttpStatus.BAD_REQUEST.value(), "잔여시간: " + minutes + ":" + seconds);
+                    return;
+                }
             }
         }
         filterChain.doFilter(request, response);

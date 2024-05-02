@@ -25,16 +25,19 @@ public class AccountMailController {
 
     @PostMapping("/send")
     public ResponseEntity<?> send(HttpServletRequest request, @RequestBody SearchUsernameReqDto reqDto) {
+        request.getSession().setAttribute("timer", new Date());
         Account account = accountMailService.getAccountByNameAndEmail(reqDto.getName(), reqDto.getEmail());
         accountMailService.searchAccountByMail(account);
-        request.getSession().setAttribute("timer", new Date());
+
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @PostMapping("/send/temporary/password")
     public ResponseEntity<?> sendTemporaryPassword(HttpServletRequest request, @RequestBody FindPwReqDto findPwReqDto) {
+        request.getSession().setAttribute("timer", new Date());
         Account account = accountMailService.findAccountByNameAndEmail(findPwReqDto.getUsername(), findPwReqDto.getEmail());
         accountMailService.sendTemporaryPassword(account);
+
         if (account != null && accountMailService.sendTemporaryPassword(account)) {
             return ResponseEntity.ok("임시 비밀번호가 성공적으로 전송되었습니다.");
         } else {
