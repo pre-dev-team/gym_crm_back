@@ -30,5 +30,6 @@ AuthMapper {
     public Account findAccountByOAuth2Name(String oAuth2Name);
     public int deleteTrainer(int trainerId);
     public void modifyAccountPassword(Account account);
+    public int modifyAdminPassword(String newPassword);
     public int saveOAuth2(OAuth2 oAuth2);
 }

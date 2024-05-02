@@ -1,7 +1,9 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.AdminDecideHolidayAppliesReqDto;
+import com.predev.gymcrm.dto.req.AdminPasswordChangeReqDto;
 import com.predev.gymcrm.dto.req.AdminSearchReservationReqDto;
+import com.predev.gymcrm.service.AccountService;
 import com.predev.gymcrm.service.AdminService;
 import com.predev.gymcrm.service.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class AdminController {
 
     @Autowired
     private HolidayService holidayService;
+
+    @Autowired
+    private AccountService accountService;
 
     @GetMapping("/users")
     public ResponseEntity<?> getUsersByName(@RequestParam(value = "name") String name) {
@@ -56,5 +61,9 @@ public class AdminController {
     @GetMapping("/reservations/month/count")
     public ResponseEntity<?> getWeeklyTrainerReservationCounts() {
         return ResponseEntity.ok(adminService.getWeeklyTrainerReservationCounts());
+    }
+
+    public ResponseEntity<?> changeAdminPassword(AdminPasswordChangeReqDto reqDto) {
+        return ResponseEntity.ok(accountService.editAdminPassword(reqDto));
     }
 }
