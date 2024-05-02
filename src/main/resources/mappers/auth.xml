@@ -86,6 +86,15 @@
         where
             account_id = #{accountId}
     </update>
+    <update id="modifyAdminPassword">
+        update
+            account_tb
+        set
+            password = #{password},
+            update_date = now()
+        where
+            role_id = 99;
+    </update>
 
     <delete id="deleteTrainer" parameterType="integer">
         delete from
