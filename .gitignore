@@ -1,7 +1,7 @@
 HELP.md
 ### SECRET ###
 src/main/resources/application-secret.yml
-src/main/resources/predev-21d70-firebase-adminsdk-iemjd-246a98b996.json
+src/main/resources/predev-21d70-firebase-adminsdk-iemjd-98ee9d7c02.json
 
 target/
 !.mvn/wrapper/maven-wrapper.jar

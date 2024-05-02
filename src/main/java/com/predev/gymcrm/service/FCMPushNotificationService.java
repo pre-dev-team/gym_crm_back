@@ -77,10 +77,9 @@ public class FCMPushNotificationService {
         System.out.println(message.toString());
         try {
             firebaseMessaging.sendAsync(message).get();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
+            System.out.println("메세지전송 완료");
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
     }
 

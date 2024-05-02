@@ -362,6 +362,21 @@
             tav.account_id = #{accountId}
             and rvt.user_id = #{userId};
     </select>
+    <select id="getReservationByReservationId" resultMap="ReservationResultMap">
+        select
+            tav.account_id,
+            uav.name,
+            rt.time_id,
+            rt.reservation_date
+        from
+            reservation_tb rt
+            left outer join trainer_account_view tav
+                on(rt.trainer_id = tav.trainer_id)
+            left outer join user_account_view uav
+                on(rt.user_id = uav.user_id)
+        where
+            rt.reservation_id = #{reservationId};
+    </select>
 
 
 </mapper>

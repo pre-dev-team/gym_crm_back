@@ -49,9 +49,9 @@ public interface ReservationMapper {
             @Param("prevReservationId")int prevReservationId,
             @Param("reservation") Reservation reservation
     );
-
     List<Reservation> selectMyMembersInformationByAccountIdByUserId(
             @Param("accountId") int accountId,
             @Param("userId") int userId
     );
+    Reservation getReservationByReservationId(@Param("reservationId") int reservationId);
 }
