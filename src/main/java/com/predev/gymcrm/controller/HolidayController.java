@@ -1,13 +1,11 @@
 package com.predev.gymcrm.controller;
 
-import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.AdminDecideHolidayAppliesReqDto;
 import com.predev.gymcrm.dto.req.CancelHolidayReqDto;
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
 import com.predev.gymcrm.service.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
