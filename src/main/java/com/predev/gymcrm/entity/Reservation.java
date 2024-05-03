@@ -1,9 +1,6 @@
 package com.predev.gymcrm.entity;
 
-import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
-import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
-import com.predev.gymcrm.dto.resp.SearchReservationUserRespDto;
-import com.predev.gymcrm.dto.resp.SelectMyMembersInformationRespDto;
+import com.predev.gymcrm.dto.resp.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -43,16 +40,6 @@ public class Reservation {
                 .build();
     }
 
-    public SearchReservationRespDto toSearchReservationRespDto() {
-        return SearchReservationRespDto.builder()
-                .reservationId(reservationId)
-                .userId(userId)
-                .trainerId(trainerId)
-                .timeId(timeId)
-                .timeDuration(time.getTimeDuration())
-                .build();
-    }
-
     public SearchMyMembersRespDto toSearchMyMembersRespDto() {
         return SearchMyMembersRespDto.builder()
                 .userId(userId)
@@ -74,4 +61,39 @@ public class Reservation {
                 .build();
     }
 
+    public MyTodayScheduleRespDto toMyTodayScheduleRespDto() {
+        return MyTodayScheduleRespDto.builder()
+                .reservationId(reservationId)
+                .trainerId(trainerId)
+                .timeId(timeId)
+                .timeDuration(time.getTimeDuration())
+                .phone(userAccountView.getPhone())
+                .name(userAccountView.getName())
+                .build();
+    }
+
+    public SearchReservationRespDto toSearchReservationRespDto() {
+        return SearchReservationRespDto.builder()
+                .reservationId(reservationId)
+                .reservationDate(reservationDate)
+                .trainerId(trainerId)
+                .name(trainerAccountView.getName())
+                .timeId(timeId)
+                .timeDuration(time.getTimeDuration())
+                .build();
+    }
+
+    public SearchAllReservationRespDto toSearchAllReservationRespDto() {
+        return SearchAllReservationRespDto.builder()
+                .reservationId(reservationId)
+                .userId(userId)
+                .username(userAccountView.getUsername())
+                .name(userAccountView.getName())
+                .trainerId(trainerId)
+                .trainerUsername(trainerAccountView.getUsername())
+                .trainerName(trainerAccountView.getName())
+                .timeId(time.getTimeId())
+                .timeDuration(time.getTimeDuration())
+                .build();
+    }
 }

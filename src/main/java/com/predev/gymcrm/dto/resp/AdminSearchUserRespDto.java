@@ -10,10 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class AdminSearchUserRespDto {
-
     private int userId;
     private String name;
-    private int ReservationCount;
-
+    private int reservationCount;
 }
 

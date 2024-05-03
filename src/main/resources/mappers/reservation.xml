@@ -133,31 +133,8 @@
         from
             reservation_tb rvt
             left outer join time_tb tt on (tt.time_id = rvt.time_id)
-            left outer join user_tb ut on (ut.user_id = rvt.user_id)
-            left outer join trainer_tb tit on (tit.trainer_id = rvt.trainer_id)
-    </select>
-
-    <select id="findReservationByAccountId"
-            resultType="com.predev.gymcrm.entity.Reservation"
-            resultMap="ReservationResultMap"
-    >
-        select
-            rvt.reservation_id,
-            rvt.user_id,
-            rvt.trainer_id,
-            rvt.time_id,
-            rvt.reservation_date,
-            rvt.create_date,
-            rvt.update_date,
-            tt.time_duration
-        from
-            reservation_tb rvt
-            left outer join time_tb tt on (tt.time_id = rvt.time_id)
-            left outer join user_tb ut on (ut.user_id = rvt.user_id)
-            left outer join trainer_tb tit on (tit.trainer_id = rvt.trainer_id)
-            left outer join account_tb at on(at.account_id = tit.account_id)
-        where
-            at.account_id = #{accountId}
+            left outer join user_account_view uav on (uav.user_id = rvt.user_id)
+            left outer join trainer_account_view tav on (tav.trainer_id = rvt.trainer_id)
     </select>
 
     <select id="findReservationsByUserId" parameterType="integer" resultMap="ReservationResultMap">
@@ -205,16 +182,17 @@
     >
         SELECT
             rst.reservation_id,
-            trainer_id,
-            ut.user_id,
+            rst.trainer_id,
+            uav.user_id,
+            uav.name,
             rst.time_id,
-            ttb.time_duration
+            tt.time_duration
         FROM
             reservation_tb rst
-            LEFT OUTER JOIN user_tb ut ON (ut.user_id = rst.user_id)
-            LEFT OUTER JOIN time_tb ttb ON (rst.time_id = ttb.time_id)
+            LEFT OUTER JOIN user_account_view uav ON (uav.user_id = rst.user_id)
+            LEFT OUTER JOIN time_tb tt ON (rst.time_id = tt.time_id)
         WHERE
-            rst.trainer_id = #{trainerId}
+            rst.trainer_id = 6
             AND rst.reservation_date = #{today}
     </select>
 
@@ -359,6 +337,27 @@
                 on(rt.user_id = uav.user_id)
         where
             rt.reservation_id = #{reservationId};
+    </select>
+
+    <select id="findMyMembersByTrainerAccountId" resultMap="ReservationResultMap">
+        select
+            rt.reservation_id,
+            rt.trainer_id,
+            rt.user_id,
+            uav.name,
+            uav.account_id,
+            uav.phone,
+            uav.email
+        from
+            reservation_tb rt
+            left outer join user_account_view uav
+            on (rt.user_id = uav.user_id)
+            left outer join trainer_account_view tav
+            on (rt.trainer_id = tav.trainer_id)
+        where
+            tav.account_id = #{trainerAccountId}
+        group by
+            user_id;
     </select>
 
 </mapper>

@@ -39,8 +39,8 @@ public class ReviewService {
     }
     // 모든 리뷰를 조회하는 메서드
     public List<ReviewRespDto> searchAllUserReviews(SearchUserReviewReqDto reqDto) {
-        System.out.println(reqDto.getAccountId());
-        List<TrainerReview> reviewsByUserAccountId = reviewMapper.findReviewsByUserAccountId(reqDto.getAccountId());
+        System.out.println(reqDto.getUserId());
+        List<TrainerReview> reviewsByUserAccountId = reviewMapper.findReviewsByUserAccountId(reqDto.getUserId());
         return reviewsByUserAccountId.stream().map(TrainerReview::toReviewRespDto).collect(Collectors.toList());
     }
     public List<TopRatedReviewsRespDto> searchTopRatedReviews() {

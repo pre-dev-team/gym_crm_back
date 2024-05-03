@@ -14,6 +14,19 @@
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
         <association property="trainer" resultMap="TrainerResultMap"/>
+        <association property="trainerAccountView" resultMap="TrainerAccountViewResultMap"/>
+    </resultMap>
+
+    <resultMap id="TrainerAccountViewResultMap" type="com.predev.gymcrm.entity.TrainerAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="trainerProfileImgUrl" column="trainer_profile_img_url" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="name" column="name" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
     </resultMap>
 
     <resultMap id="TrainerResultMap" type="com.predev.gymcrm.entity.Trainer">
