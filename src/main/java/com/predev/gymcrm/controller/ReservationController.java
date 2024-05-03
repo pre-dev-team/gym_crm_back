@@ -41,10 +41,7 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.findAll());
     }
 
-    @GetMapping("/trainer/day")
-    public ResponseEntity<?> getUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
-        return ResponseEntity.ok(reservationService.SearchUnreservedTrainers(reqDto));
-    }
+
 
     @GetMapping("/trainer/schedulefor2days")
     public ResponseEntity<?> getTodayReservation(MyTodayScheduleReqDto reqDto) {
@@ -73,4 +70,6 @@ public class ReservationController {
         List<SelectMyMembersInformationRespDto> respDtos = reservationService.selectMymembersInformation(searchMymembersInformationReqDto);
         return ResponseEntity.ok(respDtos);
     }
+
+
 }

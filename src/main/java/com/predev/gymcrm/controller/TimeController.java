@@ -1,6 +1,6 @@
 package com.predev.gymcrm.controller;
 import com.predev.gymcrm.dto.resp.TimeRespDto;
-import com.predev.gymcrm.service.CommonService;
+import com.predev.gymcrm.service.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,14 +10,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/common")
-public class CommonController {
+public class TimeController {
 
     @Autowired
-    private CommonService commonService;
+    private TimeService timeService;
 
     @GetMapping("/duration")
     public ResponseEntity<?> getDuration() {
-        List<TimeRespDto> timePeriods = commonService.getTimes();
+        List<TimeRespDto> timePeriods = timeService.getTimes();
         return ResponseEntity.ok(timePeriods);
     }
 

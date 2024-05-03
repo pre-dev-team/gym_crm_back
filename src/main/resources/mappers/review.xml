@@ -39,7 +39,6 @@
         <association property="trainer" resultMap="TrainerResultMap" />
     </resultMap>
 
-    <!-- 트레이너 리뷰 삽입 쿼리 -->
     <insert id="insertTrainerReview" parameterType="com.predev.gymcrm.entity.TrainerReview">
         INSERT INTO
             trainer_review_tb
@@ -47,7 +46,6 @@
             (0, #{trainerId}, #{userId}, #{trainerReviewText}, #{trainerReviewScore}, now(), now())
     </insert>
 
-    <!-- 모든 트레이너 리뷰 조회 쿼리 -->
     <select
             id="findAllTrainerReviews"
             resultType="com.predev.gymcrm.entity.TrainerReview"
@@ -59,7 +57,6 @@
             trainer_review_tb
     </select>
 
-    <!-- 특정 트레이너의 리뷰를 조회하는 쿼리 -->
     <select
             id="findReviewsByTrainerId"
             parameterType="int"
@@ -112,15 +109,6 @@
     </select>
 
 
-    <select
-            id="findAllTrainers"
-            resultType="com.predev.gymcrm.entity.Trainer"
-            resultMap="TrainerResultMap">
-        SELECT
-            *
-        FROM
-            trainer_tb
-    </select>
 
     <select id="findTopRatedTrainers" resultType="int">
         SELECT
@@ -139,7 +127,6 @@
         ) AS top_rated_trainers
     </select>
 
-    <!-- 각 트레이너들의 평균 점수를 계산하는 쿼리 -->
     <select id="findAverageRatingByTrainer" resultType="Double">
         SELECT
             trainer_id,
@@ -150,7 +137,6 @@
             trainer_id
     </select>
 
-    <!-- 리뷰 갯수가 많은 3명의 트레이너들 중에서 각 트레이너마다 평점이 높은 리뷰 하나를 선정하는 쿼리 -->
     <select id="findTopReviewAmongTopTrainers" resultMap="ReviewResultMap">
         SELECT
             trt.*
@@ -186,26 +172,23 @@
 
     <select id="findTopReviewByTrainerId" resultMap="ReviewResultMap">
         SELECT
-        trt.*
+            trt.*
         FROM
-        trainer_review_tb trt
-        INNER JOIN (
-        SELECT
-        trainer_id,
-        MAX(trainer_review_score) AS max_score,
-        MAX(create_date) AS max_create_date
-        FROM
-        trainer_review_tb
-        WHERE
-        trainer_id = #{trainerId}
-        GROUP BY
-        trainer_id
-        ) AS max_scores ON trt.trainer_id = max_scores.trainer_id
-        AND trt.trainer_review_score = max_scores.max_score
-        AND trt.create_date = max_scores.max_create_date
+            trainer_review_tb trt
+            INNER JOIN (
+                SELECT
+                    trainer_id,
+                    MAX(trainer_review_score) AS max_score,
+                    MAX(create_date) AS max_create_date
+                FROM
+                    trainer_review_tb
+                WHERE
+                    trainer_id = #{trainerId}
+                GROUP BY
+                    trainer_id
+                    ) AS max_scores ON trt.trainer_id = max_scores.trainer_id
+                    AND trt.trainer_review_score = max_scores.max_score
+                    AND trt.create_date = max_scores.max_create_date
     </select>
-
-
-
 
 </mapper>

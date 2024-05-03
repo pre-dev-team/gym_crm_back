@@ -1,16 +1,11 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
+import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
 import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
-import com.predev.gymcrm.dto.resp.RoutineMakeRespDto;
-import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
-import com.predev.gymcrm.dto.resp.TrainerForReservationRespDto;
-import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
-import com.predev.gymcrm.entity.Account;
-import com.predev.gymcrm.entity.Reservation;
-import com.predev.gymcrm.entity.Trainer;
-import com.predev.gymcrm.entity.WorkoutRoutine;
+import com.predev.gymcrm.dto.resp.*;
+import com.predev.gymcrm.entity.*;
 import com.predev.gymcrm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,50 +27,30 @@ public class TrainerService {
     @Autowired
     private AuthMapper authMapper;
 
-
-
     public List<SearchMyMembersRespDto> selectMyMembers(int trainerAccountId) {
         List<Reservation> reservations = trainerMapper.findMyMembersByTrainerAccountId(trainerAccountId);
         return reservations.stream().map(Reservation::toSearchMyMembersRespDto).collect(Collectors.toList());
     }
 
-    public TrainerInfoRespDto getAllTrainerInfo(int accountId) {
-        Trainer trainer = trainerMapper.getAllTrainerInfo(accountId);
+    public TrainerInfoRespDto selectAllTrainerInfo(int accountId) {
+        TrainerAccountView trainer = trainerMapper.findAllTrainerInfo(accountId);
         if(trainer != null) {
-            return TrainerInfoRespDto.builder()
-                    .trainerId(trainer.getTrainerId())
-                    .name(trainer.getAccount().getName())
-                    .username(trainer.getAccount().getUsername())
-                    .phone(trainer.getAccount().getPhone())
-                    .email(trainer.getAccount().getEmail())
-                    .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())
-                    .build();
+            return trainer.toTrainerInfoRespDto();
         }
-
         return null;
     }
 
-    public List<TrainerForReservationRespDto> getTrainersForReservation() {
-        List<Trainer> trainers = trainerMapper.getTrainers();
-        return trainers.stream().map(trainer -> TrainerForReservationRespDto.builder()
-                .trainerId(trainer.getTrainerId())
-                .trainerProfileImgUrl(trainer.getTrainerProfileImgUrl())
-                .name(trainer.getAccount().getName())
-                .build()).collect(Collectors.toList());
+    public List<TrainerForReservationRespDto> selectTrainersForReservation() {
+        List<TrainerAccountView> trainers = trainerMapper.findTrainers();
+        return trainers.stream().map(TrainerAccountView::trainerForReservationRespDto).collect(Collectors.toList());
     }
-
     public void updateTrainerProfileImg(UpdateTrainerProfileImgReqDto reqDto) {
         trainerMapper.updateTrainerProfileImgUrl(reqDto.toEntity());
-
     }
-      
-    public void makeRoutine(List<RoutineMakeReqDto> routineMakeReqDtos) {
-        List<WorkoutRoutine> workoutRoutines = routineMakeReqDtos.stream().map(dto -> dto.toEntity()).collect(Collectors.toList());
-        int successCount = workoutRoutineMapper.saveRoutines(workoutRoutines);
-        System.out.println(successCount);
-
+    public List<SearchUnreservedTrainerRespDto> searchUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
+        List<TrainerAccountView> trainers = trainerMapper.findAvailableTrainerAtDayAndTime(TimeService.trimDateString(reqDto.getDate()), reqDto.getTimeId());
+        List<SearchUnreservedTrainerRespDto> respDtos = trainers.stream().map(TrainerAccountView::toSearchUnreservedTrainerRespDto).collect(Collectors.toList());
+        return respDtos;
     }
-
-
 
 }

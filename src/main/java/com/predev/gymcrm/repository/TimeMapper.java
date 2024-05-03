@@ -1,15 +1,14 @@
 package com.predev.gymcrm.repository;
 import com.predev.gymcrm.entity.Time;
-import com.predev.gymcrm.entity.Trainer;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 
 @Mapper
-public interface CommonMapper {
+public interface TimeMapper {
     // 시간대 정보를 가져오는 쿼리
     List<Time> getTimes();
-    String getTrainerProfileImgUrl(int trainerId);
+
 
 }

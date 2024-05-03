@@ -117,7 +117,7 @@
     </delete>
 
 
-    <select id="getAllReservation"
+    <select id="findAllReservation"
             resultType="com.predev.gymcrm.entity.Reservation"
             resultMap="ReservationResultMap"
     >
@@ -160,8 +160,6 @@
             at.account_id = #{accountId}
     </select>
 
-
-
     <select id="findReservationsByUserId" parameterType="integer" resultMap="ReservationResultMap">
         select
             rt.reservation_id,
@@ -202,25 +200,7 @@
             </if>
     </select>
 
-    <select id="findTrainerByDay" resultMap="TrainerResultMap">
-        select
-            tt.trainer_id,
-            tt.trainer_profile_img_url,
-            tt.account_id,
-            at.name,
-            rt.reservation_date,
-            rt.time_id
-        from
-            trainer_tb tt
-            left outer join account_tb at on(tt.account_id = at.account_id)
-            left outer join reservation_tb rt on(tt.trainer_id = rt.trainer_id)
-            and reservation_date = #{reservationDate}
-            and time_id = #{timeId}
-        where
-            time_id is null
-    </select>
-
-    <select id="getTodayReservation"
+    <select id="findTodayReservation"
             resultMap="ReservationResultMap"
     >
         SELECT
@@ -248,6 +228,7 @@
         where
             user_id = #{userId}
     </select>
+
     <select id="findMemberCountOfTrainerByTrainerId"
             resultType="int"
     >
@@ -266,6 +247,7 @@
             ) as reservation_member_count
 
     </select>
+
     <select id="findReservationByNameAndPeriod"
             resultMap="ReservationResultMap">
         <choose>
@@ -345,7 +327,7 @@
             rvt.time_id
     </select>
 
-    <select id="selectMyMembersInformationByAccountIdByUserId" resultMap="ReservationResultMap">
+    <select id="findMyMembersInformationByAccountIdByUserId" resultMap="ReservationResultMap">
         select
             tav.account_id,
             rvt.user_id,
@@ -362,7 +344,8 @@
             tav.account_id = #{accountId}
             and rvt.user_id = #{userId};
     </select>
-    <select id="getReservationByReservationId" resultMap="ReservationResultMap">
+
+    <select id="findReservationByReservationId" resultMap="ReservationResultMap">
         select
             tav.account_id,
             uav.name,
@@ -377,6 +360,5 @@
         where
             rt.reservation_id = #{reservationId};
     </select>
-
 
 </mapper>

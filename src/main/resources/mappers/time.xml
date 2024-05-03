@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.predev.gymcrm.repository.CommonMapper">
+<mapper namespace="com.predev.gymcrm.repository.TimeMapper">
     <resultMap id="TimeResultMap" type="com.predev.gymcrm.entity.Time">
         <id property="timeId" column="time_id"/>
         <result property="timeDuration" column="time_duration"/>
@@ -38,17 +38,5 @@
         from
             time_tb
     </select>
-
-
-
-    <select id="getTrainerProfileImgUrl" resultType="String">
-        SELECT
-            trainer_profile_img_url
-        FROM
-            trainer_tb
-        WHERE
-            trainer_id = #{trainerId}
-    </select>
-
 
 </mapper>
