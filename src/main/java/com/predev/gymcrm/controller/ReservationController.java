@@ -41,8 +41,6 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.searchAll());
     }
 
-
-
     @GetMapping("/trainer/schedulefor2days")
     public ResponseEntity<?> getTodayReservation(MyTodayScheduleReqDto reqDto) {
         List<MyTodayScheduleRespDto> reservations = reservationService.searchTodayReservation(reqDto);

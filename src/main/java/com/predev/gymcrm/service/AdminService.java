@@ -48,25 +48,25 @@ public class AdminService {
         ).collect(Collectors.toList());
     }
 
-    public List<AdminSearchTrainerRespDto> SearchTrainers() {
-        List<TrainerAccountView> trainers = trainerMapper.findTrainers();
-        return trainers.stream()
-                .map(trainer -> AdminSearchTrainerRespDto.builder()
-                        .trainerId(trainer.getTrainerId())
-                        .name(trainer.getName())
-                        .memberCount(
-                                reservationMapper.findMemberCountOfTrainerByTrainerId(
-                                        trainer.getTrainerId()
-                                )
-                        )
-                        .avgScore(
-                                reviewMapper.findAvgReviewScoreByTrainerId(
-                                        trainer.getTrainerId()
-                                )
-                        )
-                        .build()
-                ).collect(Collectors.toList());
-    }
+//    public List<AdminSearchTrainerRespDto> SearchTrainers() {
+//        List<TrainerAccountView> trainers = trainerMapper.findTrainers();
+//        return trainers.stream()
+//                .map(trainer -> AdminSearchTrainerRespDto.builder()
+//                        .trainerId(trainer.getTrainerId())
+//                        .name(trainer.getName())
+//                        .memberCount(
+//                                reservationMapper.findMemberCountOfTrainerByTrainerId(
+//                                        trainer.getTrainerId()
+//                                )
+//                        )
+//                        .avgScore(
+//                                reviewMapper.findAvgReviewScoreByTrainerId(
+//                                        trainer.getTrainerId()
+//                                )
+//                        )
+//                        .build()
+//                ).collect(Collectors.toList());
+//    }
 
     public List<SearchReservationRespDto> SearchReservations(AdminSearchReservationReqDto reqDto) {
         String startDate = TimeService.trimDateString(reqDto.getStartDate());
@@ -77,32 +77,7 @@ public class AdminService {
                 startDate,
                 endDate
         );
-
-        if (reqDto.getSearchType() == 2) {
-            return reservations.stream().map(reservation -> SearchReservationRespDto.builder()
-                    .reservationId(reservation.getReservationId())
-                    .reservationDate(reservation.getReservationDate())
-                    .timeDuration(reservation.getTime().getTimeDuration())
-                    .name(
-                            authMapper.findAccountByUserId(reservation.getUserId())
-                                    .getName()
-                    )
-                    .trainerName(reservation.getTrainer().getAccount().getName())
-                    .build()
-            ).collect(Collectors.toList());
-        }
-
-        return reservations.stream().map(reservation -> SearchReservationRespDto.builder()
-                .reservationId(reservation.getReservationId())
-                .reservationDate(reservation.getReservationDate())
-                .timeDuration(reservation.getTime().getTimeDuration())
-                .name(reservation.getUser().getAccount().getName())
-                .trainerName(
-                        authMapper.findAccountByTrainerId(reservation.getTrainerId())
-                                .getName()
-                )
-                .build()
-        ).collect(Collectors.toList());
+        return null;
     }
 
     public List<AdminSearchWeeklyTrainerReservationCountsRespDto> getWeeklyTrainerReservationCounts() {

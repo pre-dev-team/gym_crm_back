@@ -14,13 +14,11 @@ public interface ReservationMapper {
     public int saveReservation(Reservation reservation);
     public List<Reservation> findAllReservation();
     public List<Reservation> findReservationsByUserId(int userId);
-    public List<Reservation> findReservationByAccountId(int accountId);
     public List<Reservation> findReservationByDate(
             @Param("userId") int userId,
             @Param("trainerId") int trainerId,
             @Param("reservationDate") String reservationDate
     );
-
     List<Reservation> findTodayReservation(
             @Param("trainerId") int trainerId,
             @Param("today") String today

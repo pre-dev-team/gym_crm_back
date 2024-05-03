@@ -10,7 +10,6 @@ import java.util.List;
 @Mapper
 public interface InbodyMapper {
     int insertInbody(Inbody inbody);
-
     List<Inbody> findInbodyByAccountId(int accountId);
     List<Inbody> findInbodyByUserId(int userId);
 }

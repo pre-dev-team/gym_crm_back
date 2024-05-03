@@ -112,4 +112,12 @@ public class AuthService {
         return authMapper.findUserIdByAccountId(accountId);
     }
 
+    public int searchTrainerId(int accountId) {
+        int trainerId = authMapper.findTrainerIdByAccountId(accountId);
+
+        return trainerId;
+    }
+
+
+
 }

@@ -22,7 +22,6 @@ public class FCMPushNotificationController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody FCMTokenReqDto tokenReqDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(tokenReqDto);
         Principal principal = (Principal) authentication.getPrincipal();
         int accountId = principal.getAccountId();
         fcmPushNotificationService.register(accountId, tokenReqDto.getFcmToken());
