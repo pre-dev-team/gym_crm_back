@@ -37,8 +37,31 @@
         <result property="createDate" column="create_date"/>
         <result property="updateDate" column="update_date"/>
         <association property="trainer" resultMap="TrainerResultMap" />
+        <association property="trainerAccountView" resultMap="TrainerAccountViewResultMap" />
+        <association property="userAccountView" resultMap="UserAccountViewResultMap" />
     </resultMap>
 
+    <resultMap id="UserAccountViewResultMap" type="com.predev.gymcrm.entity.UserAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="userId" column="user_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
+
+    <resultMap id="TrainerAccountViewResultMap" type="com.predev.gymcrm.entity.TrainerAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
     <!-- 트레이너 리뷰 삽입 쿼리 -->
     <insert id="insertTrainerReview" parameterType="com.predev.gymcrm.entity.TrainerReview">
         INSERT INTO
@@ -46,18 +69,6 @@
         VALUES
             (0, #{trainerId}, #{userId}, #{trainerReviewText}, #{trainerReviewScore}, now(), now())
     </insert>
-
-    <!-- 모든 트레이너 리뷰 조회 쿼리 -->
-    <select
-            id="findAllTrainerReviews"
-            resultType="com.predev.gymcrm.entity.TrainerReview"
-            resultMap="ReviewResultMap"
-    >
-        SELECT
-            *
-        FROM
-            trainer_review_tb
-    </select>
 
     <!-- 특정 트레이너의 리뷰를 조회하는 쿼리 -->
     <select
@@ -81,131 +92,66 @@
             trainer_id = #{trainerId}
     </select>
 
-    <select id="findReviewsByUserId"
-            resultType="com.predev.gymcrm.entity.TrainerReview"
-            resultMap="ReviewResultMap">
+    <select id="findTopRatedReviews" resultType="com.predev.gymcrm.entity.TopRatedReview">
+        select
+            *
+        from
+            (
+                select
+                    row_number() over(partition by trt.trainer_id order by trt.trainer_review_score desc, trt.update_date desc) rankNumber,
+                    trt.trainer_review_id as trainerReviewId,
+                    trt.user_id as userId,
+                    uav.username as username,
+                    trt.trainer_review_score as trainerReviewScore,
+                    trt.trainer_review_text as trainerReviewText,
+                    tav.name as trainerName,
+                    tav.trainer_profile_img_url as trainerProfileImgUrl,
+                    top3.review_count as reviewCount
+                from
+                    trainer_review_tb trt
+                    left outer join trainer_account_view tav
+                        on(trt.trainer_id = tav.trainer_id)
+                    left outer join user_account_view uav
+                        on(trt.user_id = uav.user_id)
+                    left outer join
+                                    (
+                                        select
+                                            trainer_id,
+                                            count(*) as review_count
+                                        from
+                                            trainer_review_tb
+                                        group by
+                                            trainer_id
+                                        order by
+                                            review_count desc
+                                        limit 3) top3
+                        on(top3.trainer_id = tav.trainer_id and top3.review_count > 0)
+            ) top_review
+        where
+            rankNumber = 1
+        order by
+            trainerReviewScore desc
+        limit 3
+    </select>
+    <select id="findReviewsByUserAccountId" resultMap="ReviewResultMap">
         select
             trt.trainer_review_id,
             trt.trainer_id,
             trt.user_id,
             trt.trainer_review_text,
             trt.trainer_review_score,
-            at.name,
+            tav.name,
+            tav.trainer_profile_img_url,
             trt.create_date
         from
             trainer_review_tb trt
-            left outer join trainer_tb tt
-                on(trt.trainer_id = tt.trainer_id)
-            left outer join account_tb at
-                on(tt.account_id = at.account_id)
+            left outer join trainer_account_view tav
+                on(trt.trainer_id = tav.trainer_id)
+            left outer join user_account_view uav
+                on(trt.user_id = uav.user_id)
         where
-            user_id = #{userId}
+            uav.account_id = #{accountId}
     </select>
-
-    <select id="findAvgReviewScoreByTrainerId" resultType="java.lang.Double">
-        select
-            avg(trainer_review_score)
-        from
-            trainer_review_tb
-        where
-            trainer_id = #{trainerId}
-    </select>
-
-
-    <select
-            id="findAllTrainers"
-            resultType="com.predev.gymcrm.entity.Trainer"
-            resultMap="TrainerResultMap">
-        SELECT
-            *
-        FROM
-            trainer_tb
-    </select>
-
-    <select id="findTopRatedTrainers" resultType="int">
-        SELECT
-            trainer_id
-        FROM (
-            SELECT
-                trainer_id,
-                COUNT(*) AS review_count
-            FROM
-                trainer_review_tb
-            GROUP BY
-                trainer_id
-            ORDER BY
-                review_count DESC
-            LIMIT 3
-        ) AS top_rated_trainers
-    </select>
-
-    <!-- 각 트레이너들의 평균 점수를 계산하는 쿼리 -->
-    <select id="findAverageRatingByTrainer" resultType="Double">
-        SELECT
-            trainer_id,
-            AVG(trainer_review_score) AS average_rating
-        FROM
-            trainer_review_tb
-        GROUP BY
-            trainer_id
-    </select>
-
-    <!-- 리뷰 갯수가 많은 3명의 트레이너들 중에서 각 트레이너마다 평점이 높은 리뷰 하나를 선정하는 쿼리 -->
-    <select id="findTopReviewAmongTopTrainers" resultMap="ReviewResultMap">
-        SELECT
-            trt.*
-        FROM
-            trainer_review_tb trt
-        INNER JOIN (
-            SELECT
-                trainer_id,
-                MAX(trainer_review_score) AS max_score
-            FROM
-                trainer_review_tb
-            WHERE
-                trainer_id IN (
-                    SELECT
-                        trainer_id
-                    FROM (
-                            SELECT
-                                trainer_id,
-                                COUNT(*) AS review_count
-                            FROM
-                                trainer_review_tb
-                            GROUP BY
-                                trainer_id
-                            ORDER BY
-                                review_count DESC
-                            LIMIT 3
-                                ) AS top_rated_trainers
-                                )
-                            GROUP BY
-                                trainer_id
-                                ) AS max_scores ON trt.trainer_id = max_scores.trainer_id AND trt.trainer_review_score = max_scores.max_score
-    </select>
-
-    <select id="findTopReviewByTrainerId" resultMap="ReviewResultMap">
-        SELECT
-        trt.*
-        FROM
-        trainer_review_tb trt
-        INNER JOIN (
-        SELECT
-        trainer_id,
-        MAX(trainer_review_score) AS max_score,
-        MAX(create_date) AS max_create_date
-        FROM
-        trainer_review_tb
-        WHERE
-        trainer_id = #{trainerId}
-        GROUP BY
-        trainer_id
-        ) AS max_scores ON trt.trainer_id = max_scores.trainer_id
-        AND trt.trainer_review_score = max_scores.max_score
-        AND trt.create_date = max_scores.max_create_date
-    </select>
-
-
 
 
 </mapper>

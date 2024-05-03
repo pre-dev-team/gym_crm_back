@@ -40,11 +40,14 @@ public class FCMPushNotificationService {
 
     public void sendFCMOneToOne(int accountId, String title, String message) {
         System.out.println(tokenMap);
-        send(NotificationMessage.builder()
+        String token = getToken(accountId);
+        if(token != null) {
+            send(NotificationMessage.builder()
                 .token(getToken(accountId))
                 .title(title)
                 .message(message)
                 .build());
+        }
     }
 
     @Async

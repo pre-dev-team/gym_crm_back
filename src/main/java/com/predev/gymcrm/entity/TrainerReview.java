@@ -22,7 +22,8 @@ public class TrainerReview {
     private LocalDateTime updateDate;
 
     private Trainer trainer;
-
+    private TrainerAccountView trainerAccountView;
+    private UserAccountView userAccountView;
     public ReviewRespDto toReviewRespDto() {
         return ReviewRespDto.builder()
                 .trainerReviewId(this.trainerReviewId)
@@ -31,6 +32,8 @@ public class TrainerReview {
                 .reviewText(this.trainerReviewText)
                 .reviewScore(this.trainerReviewScore)
                 .createDate(this.createDate)
+                .trainerProfileImgUrl(trainerAccountView.getTrainerProfileImgUrl())
+                .trainerName(trainerAccountView.getName())
                 .build();
     }
 }
