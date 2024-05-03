@@ -13,17 +13,6 @@
         <result property="reservationDate" column="reservation_date" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
-        <association property="trainer" resultMap="TrainerResultMap" />
-    </resultMap>
-
-    <resultMap id="ReservationResultMap2" type="com.predev.gymcrm.entity.Reservation">
-        <id property="reservationId" column="reservation_id" />
-        <result property="userId" column="user_id" />
-        <result property="trainerId" column="trainer_id" />
-        <result property="timeId" column="time_id" />
-        <result property="reservationDate" column="reservation_date" />
-        <result property="createDate" column="create_date" />
-        <result property="updateDate" column="update_date" />
         <association property="trainerAccountView" resultMap="TrainerAccountViewResultMap" />
         <association property="userAccountView" resultMap="UserAccountViewResultMap" />
     </resultMap>
@@ -85,27 +74,6 @@
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
     </resultMap>
-
-    <select id="findMyMembersByTrainerAccountId" resultMap="ReservationResultMap2">
-        select
-            rt.reservation_id,
-            rt.trainer_id,
-            rt.user_id,
-            uav.name,
-            uav.account_id,
-            uav.phone,
-            uav.email
-        from
-            reservation_tb rt
-            left outer join user_account_view uav
-                on (rt.user_id = uav.user_id)
-            left outer join trainer_account_view tav
-                on (rt.trainer_id = tav.trainer_id)
-        where
-            tav.account_id = #{trainerAccountId}
-        group by
-            user_id;
-    </select>
 
     <select id="findTrainers" resultMap="TrainerAccountViewResultMap">
         select

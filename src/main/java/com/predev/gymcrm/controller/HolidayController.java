@@ -18,7 +18,7 @@ public class HolidayController {
     private HolidayService holidayService;
 
     @PostMapping("/insert")
-    public ResponseEntity<?> saveTrainerHoliday(@RequestBody TrainerHolidayReqDto trainerHolidayReqDto) {
+    public ResponseEntity<?> addTrainerHoliday(@RequestBody TrainerHolidayReqDto trainerHolidayReqDto) {
         holidayService.insertTrainerHoliday(trainerHolidayReqDto);
         return ResponseEntity.created(null).body(true);
     }
@@ -30,13 +30,13 @@ public class HolidayController {
     }
 
     @GetMapping("/select")
-    public ResponseEntity<?> selectHolidays(@RequestParam(value = "accountId") int accountId) {
+    public ResponseEntity<?> getHolidays(@RequestParam(value = "accountId") int accountId) {
         return ResponseEntity.ok(holidayService.selectHoliday(accountId));
     }
 
     @GetMapping("/find")
-    public ResponseEntity<?> findHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
-        return ResponseEntity.ok(holidayService.getHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
+    public ResponseEntity<?> getHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
+        return ResponseEntity.ok(holidayService.selectHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
     }
 
     @GetMapping("/admin/unconfirmed")
@@ -50,9 +50,9 @@ public class HolidayController {
     }
 
     @PutMapping("/admin/decide")
-    public ResponseEntity<?> decidedHolidayApplies(@RequestBody AdminDecideHolidayAppliesReqDto reqDto) {
+    public ResponseEntity<?> updateHolidayApplies(@RequestBody AdminDecideHolidayAppliesReqDto reqDto) {
         int successCount = 0;
-        successCount = holidayService.decideHolidayApplies(reqDto);
+        successCount = holidayService.editHolidayApplies(reqDto);
         if(successCount == 0) {
             ResponseEntity.badRequest().body(reqDto);
         }

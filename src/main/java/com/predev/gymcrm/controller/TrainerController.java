@@ -22,11 +22,6 @@ public class TrainerController {
     @Autowired
     private TrainerService trainerService;
 
-    @GetMapping("/mypage/members")
-    public ResponseEntity<?> getMyMembers(@RequestParam(value = "accountId") int trainerAccountId) {
-        return ResponseEntity.ok(trainerService.selectMyMembers(trainerAccountId));
-    }
-
     @GetMapping("/mypage/trainerInfo")
     public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "accountId") int accountId) {
         TrainerInfoRespDto trainerInfo = trainerService.selectAllTrainerInfo(accountId);
@@ -37,7 +32,6 @@ public class TrainerController {
     public ResponseEntity<?> getTrainers() {
         return ResponseEntity.ok(trainerService.selectTrainersForReservation());
     }
-
     @PutMapping("/mypage/trainerimg")
     public ResponseEntity<?> updateTrainerImg(@RequestBody UpdateTrainerProfileImgReqDto reqDto) {
         trainerService.updateTrainerProfileImg(reqDto);

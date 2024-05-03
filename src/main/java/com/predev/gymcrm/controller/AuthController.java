@@ -46,7 +46,6 @@ public class AuthController {
     @PostMapping("/oauth2/merge")
     public ResponseEntity<?> oAuth2Merge(@RequestBody OAuth2MergeReqDto oAuth2MergeReqDto) {
         authService.oAuth2Merge(oAuth2MergeReqDto);
-
         return ResponseEntity.ok(true);
     }
 
@@ -63,18 +62,12 @@ public class AuthController {
 
     @PostMapping("/account/signin")
     public ResponseEntity<?> userSignin(@RequestBody AccountSigninReqDto reqDto) {
-        authService.Signin(reqDto);
         return ResponseEntity.ok(authService.Signin(reqDto));
     }
 
     @GetMapping("/account/trainerid")
     public ResponseEntity<?> getTrainerId(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(reservationService.getTrainerId(accountId));
-    }
-
-    @GetMapping("/account/myinfo")
-    public ResponseEntity<?> getMyInfo(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(authService.getAccountInfoByAccountId(accountId));
+        return ResponseEntity.ok(authService.searchTrainerId(accountId));
     }
 
 }

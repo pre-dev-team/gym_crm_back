@@ -31,7 +31,7 @@ public class FCMConfig {
                 System.out.println("파이어베이스 앱 시작");
                 return firebaseApp;
             } else {
-                return FirebaseApp.getInstance(); // 이미 초기화된 경우 기존 인스턴스 반환
+                return FirebaseApp.getInstance();
             }
         } catch (IOException e) {
             System.out.println("파이어베이스 앱 시작 실패: " + e.getMessage());

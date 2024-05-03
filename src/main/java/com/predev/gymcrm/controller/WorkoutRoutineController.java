@@ -25,12 +25,10 @@ public class WorkoutRoutineController {
         }
         return ResponseEntity.ok(successCount);
     }
-
     @GetMapping("/find")
     public ResponseEntity<?> findReservationRoutine(int reservationId) {
         return ResponseEntity.ok(workoutRoutineService.findRoutinesByReservationId(reservationId));
     }
-
     @PostMapping("/edit")
     public ResponseEntity<?> editRoutine(@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
         return ResponseEntity.ok(workoutRoutineService.editRoutines(routineMakeReqDtos));
