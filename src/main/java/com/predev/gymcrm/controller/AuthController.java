@@ -68,10 +68,4 @@ public class AuthController {
         return ResponseEntity.ok(reservationService.getTrainerId(accountId));
     }
 
-    @GetMapping("/account/myinfo")
-    public ResponseEntity<?> getMyInfo(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(authService.getAccountInfoByAccountId(accountId));
-    }
-
-
 }

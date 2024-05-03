@@ -14,41 +14,23 @@ import java.util.stream.Collectors;
 
 @Service
 public class InbodyService {
-    private final InbodyMapper inbodyMapper;
 
     @Autowired
-    public InbodyService(InbodyMapper inbodyMapper) {
-        this.inbodyMapper = inbodyMapper;
-    }
+    private InbodyMapper inbodyMapper;
 
     public int addInbody(InbodyReqDto inbodyReqDto) {
         int successCount = 0;
         successCount =inbodyMapper.insertInbody(inbodyReqDto.toInbodyEntity());
-
         return successCount;
     }
 
-    public List<InbodyRespDto> getInbodyByAccountId(int accountId) {
-        System.out.println("Received accountId in service: " + accountId);
+    public List<InbodyRespDto> selectInbodyByUserId(int accountId) {
         List<Inbody> inbodyList = inbodyMapper.findInbodyByAccountId(accountId);
-
-        System.out.println("Retrieved inbodies from database: " + inbodyList);
-        return inbodyList.stream()
-                .map(Inbody::toInbodyRespDto) // 수정된 부분
-                .collect(Collectors.toList());
+        return inbodyList.stream().map(Inbody::toInbodyRespDto).collect(Collectors.toList());
     }
 
-    public List<InbodyRespDto> getInbodyByUserId(int accountId) {
-        List<Inbody> inbodyList = inbodyMapper.findInbodyByAccountId(accountId);
-
-        return inbodyList.stream()
-                .map(Inbody::toInbodyRespDto)
-                .collect(Collectors.toList());
-    }
-
-    public List<SearchInbodyRespDto> getInbodyInformation(int userId) {
+    public List<SearchInbodyRespDto> selectInbodyInformation(int userId) {
         List<Inbody> inbodys = inbodyMapper.findInbodyByUserId(userId);
-
         return inbodys.stream().map(Inbody::toSearchInbodyRespDto).collect(Collectors.toList());
     }
 }

@@ -21,7 +21,7 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping("/user/make")
-    public ResponseEntity<?> makeReservation(@RequestBody MakeReservationReqDto reqDto) {
+    public ResponseEntity<?> getReservation(@RequestBody MakeReservationReqDto reqDto) {
         reservationService.insertReservation(reqDto);
         return ResponseEntity.ok(null);
     }
@@ -33,19 +33,19 @@ public class ReservationController {
 
     @GetMapping("/day")
     public ResponseEntity<?> getDayReservations(SearchDayReservationReqDto reqDto) {
-        return ResponseEntity.ok(reservationService.SearchDayReservation(reqDto));
+        return ResponseEntity.ok(reservationService.searchDayReservation(reqDto));
     }
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllReservation() {
-        return ResponseEntity.ok(reservationService.findAll());
+        return ResponseEntity.ok(reservationService.searchAll());
     }
 
 
 
     @GetMapping("/trainer/schedulefor2days")
     public ResponseEntity<?> getTodayReservation(MyTodayScheduleReqDto reqDto) {
-        List<MyTodayScheduleRespDto> reservations = reservationService.getTodayReservation(reqDto);
+        List<MyTodayScheduleRespDto> reservations = reservationService.searchTodayReservation(reqDto);
         return ResponseEntity.ok(reservations);
     }
 
@@ -56,12 +56,12 @@ public class ReservationController {
 
     @DeleteMapping("/user")
     public ResponseEntity<?> deleteReservation(@RequestParam(value = "reservationId") int reservationId) {
-        return ResponseEntity.ok(reservationService.cancelReservationByReservationId(reservationId));
+        return ResponseEntity.ok(reservationService.deleteReservationByReservationId(reservationId));
     }
 
     @PutMapping("/user")
-    public ResponseEntity<?> editReservation(@RequestBody EditReservationReqDto reqDto) {
-        reservationService.updateReservation(reqDto);
+    public ResponseEntity<?> updateReservation(@RequestBody EditReservationReqDto reqDto) {
+        reservationService.editReservation(reqDto);
         return ResponseEntity.ok(null);
     }
 
@@ -71,5 +71,10 @@ public class ReservationController {
         return ResponseEntity.ok(respDtos);
     }
 
+    @GetMapping("/mypage/members")
+    public ResponseEntity<?> getMyMembers(@RequestParam(value = "accountId") int trainerAccountId) {
+        return ResponseEntity.ok(reservationService.selectMyMembers(trainerAccountId));
+
+    }
 
 }

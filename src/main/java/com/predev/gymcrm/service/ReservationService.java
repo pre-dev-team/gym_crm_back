@@ -30,7 +30,7 @@ public class ReservationService {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public List<SearchReservationRespDto> findAll() {
+    public List<SearchReservationRespDto> searchAll() {
         return reservationMapper.findAllReservation().stream()
                 .map(Reservation::toSearchReservationRespDto)
                 .map(respDto -> {
@@ -74,7 +74,7 @@ public class ReservationService {
         }).collect(Collectors.toList());
     }
 
-    public List<Time> SearchDayReservation(SearchDayReservationReqDto reqDto) {
+    public List<Time> searchDayReservation(SearchDayReservationReqDto reqDto) {
         int userId = 0;
         try{
             userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
@@ -87,10 +87,8 @@ public class ReservationService {
 
 
 
-    public List<MyTodayScheduleRespDto> getTodayReservation(MyTodayScheduleReqDto reqDto) {
+    public List<MyTodayScheduleRespDto> searchTodayReservation(MyTodayScheduleReqDto reqDto) {
         String today = TimeService.trimDateString(reqDto.getToday());
-        // 예약 정보를 가져오는 비지니스 로직 작성
-        // 예시로 비지니스 로직을 호출하여 예약 정보를 가져오는 코드 작성
         List<Reservation> reservations = reservationMapper.findTodayReservation(reqDto.getTrainerId(), today);
         List<MyTodayScheduleRespDto> respDtoList = null;
         respDtoList = reservations.stream().map(reservation -> {
@@ -108,7 +106,7 @@ public class ReservationService {
         return respDtoList;
     }
 
-    public int getTrainerId(int accountId) {
+    public int searchTrainerId(int accountId) {
         int trainerId = authMapper.findTrainerIdByAccountId(accountId);
 
         return trainerId;
@@ -121,7 +119,7 @@ public class ReservationService {
         return reservations.stream().map(Reservation::toSearchReservationUserRespDto).collect(Collectors.toList());
     }
 
-    public int cancelReservationByReservationId(int reservationId) {
+    public int deleteReservationByReservationId(int reservationId) {
         Reservation reservation = reservationMapper.findReservationByReservationId(reservationId);
         String userName = reservation.getUserAccountView().getName();
         int trainerAccountId = reservation.getTrainerAccountView().getAccountId();
@@ -133,7 +131,7 @@ public class ReservationService {
         return reservationMapper.deleteReservationByReservationId(reservationId);
     }
 
-    public void updateReservation(EditReservationReqDto reqDto) {
+    public void editReservation(EditReservationReqDto reqDto) {
         String date = trimDateString(reqDto.getDate());
         int userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
         reservationMapper.updateReservationByReservationId(reqDto.getPrevReservationId(), reqDto.toReservationEntity(date,userId));
@@ -142,6 +140,12 @@ public class ReservationService {
     public List<SelectMyMembersInformationRespDto> selectMymembersInformation(SearchMymembersInformationReqDto reqDto) {
         List<Reservation> reservations = reservationMapper.findMyMembersInformationByAccountIdByUserId(reqDto.getAccountId(), reqDto.getUserId());
         return reservations.stream().map(Reservation::toSelectMyMembersInformationRespDto).collect(Collectors.toList());
+    }
+
+
+    public List<SearchMyMembersRespDto> selectMyMembers(int trainerAccountId) {
+        List<Reservation> reservations = reservationMapper.findMyMembersByTrainerAccountId(trainerAccountId);
+        return reservations.stream().map(Reservation::toSearchMyMembersRespDto).collect(Collectors.toList());
     }
 
 

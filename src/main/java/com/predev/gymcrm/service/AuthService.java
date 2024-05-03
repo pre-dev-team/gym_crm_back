@@ -112,20 +112,4 @@ public class AuthService {
         return authMapper.findUserIdByAccountId(accountId);
     }
 
-    public SearchAccountInfoRespDto getAccountInfoByAccountId(int accountId) {
-        Account account = authMapper.findAccountByAccountId(accountId);
-        System.out.println(account);
-        if(account == null) {
-            System.out.println("account가 null입니다");
-            return null;
-        }
-        return SearchAccountInfoRespDto.builder()
-                .accountId(account.getAccountId())
-                .username(account.getUsername())
-                .name(account.getName())
-                .phone(account.getPhone())
-                .email(account.getEmail())
-                .build();
-    }
-
 }

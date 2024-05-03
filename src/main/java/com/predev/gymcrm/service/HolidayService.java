@@ -47,7 +47,6 @@ public class HolidayService {
 
     public void deleteHoliday(CancelHolidayReqDto reqDto) {
         int trainerId = authMapper.findTrainerIdByAccountId(reqDto.getAccountId());
-
         holidayMapper.deleteHoliday(reqDto.toDeleteHolidayEntity(trainerId));
     }
 
@@ -57,17 +56,17 @@ public class HolidayService {
         return holidays.stream().map(holiday -> holiday.toSelectHolidayRespDto(account.getName())).collect(Collectors.toList());
     }
 
-    public List<AdminSearchHolidayRespDto> getUnconfirmedHolidays(int trainerId) {
+    public List<AdminSearchHolidayRespDto> selectUnconfirmedHolidays(int trainerId) {
         List<AdminSearchHoliday> holidays = holidayMapper.findAllAdminSearchHolidyByTrainerId(trainerId, 1);
         return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
     }
 
-    public List<AdminSearchHolidayRespDto> getConfirmedHolidays(int trainerId) {
+    public List<AdminSearchHolidayRespDto> selectConfirmedHolidays(int trainerId) {
         List<AdminSearchHoliday> holidays = holidayMapper.findAllAdminSearchHolidyByTrainerId(trainerId, 2);
         return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
     }
 
-    public int decideHolidayApplies(AdminDecideHolidayAppliesReqDto reqDto) {
+    public int updateHolidayApplies(AdminDecideHolidayAppliesReqDto reqDto) {
         return holidayMapper.updateHolidayConfirm(
                 reqDto.getTrainerId(),
                 reqDto.getHolidayDate(),
@@ -75,7 +74,7 @@ public class HolidayService {
         );
     }
 
-    public List<Integer> getHolidaytimeIdsByTrainerIdAndHolidayDate(int trainerId, String holidayDate) {
+    public List<Integer> selectHolidaytimeIdsByTrainerIdAndHolidayDate(int trainerId, String holidayDate) {
         String trimedHolidayDate = TimeService.trimDateString(holidayDate);
         List<Holiday> holidays = holidayMapper.findHolidayByTrainerIdAndDate(trainerId,trimedHolidayDate);
         List<Integer> timeIds = new ArrayList<>();

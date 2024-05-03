@@ -17,7 +17,7 @@ public class HolidayController {
     private HolidayService holidayService;
 
     @PostMapping("/insert")
-    public ResponseEntity<?> saveTrainerHoliday(@RequestBody TrainerHolidayReqDto trainerHolidayReqDto) {
+    public ResponseEntity<?> addTrainerHoliday(@RequestBody TrainerHolidayReqDto trainerHolidayReqDto) {
         holidayService.insertTrainerHoliday(trainerHolidayReqDto);
         return ResponseEntity.created(null).body(true);
     }
@@ -29,12 +29,12 @@ public class HolidayController {
     }
 
     @GetMapping("/select")
-    public ResponseEntity<?> selectHolidays(@RequestParam(value = "accountId") int accountId) {
+    public ResponseEntity<?> getHolidays(@RequestParam(value = "accountId") int accountId) {
         return ResponseEntity.ok(holidayService.selectHoliday(accountId));
     }
 
     @GetMapping("/find")
-    public ResponseEntity<?> findHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
-        return ResponseEntity.ok(holidayService.getHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
+    public ResponseEntity<?> getHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
+        return ResponseEntity.ok(holidayService.selectHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
     }
 }

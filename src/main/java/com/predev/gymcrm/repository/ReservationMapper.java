@@ -52,5 +52,5 @@ public interface ReservationMapper {
     );
     Reservation findReservationByReservationId(@Param("reservationId") int reservationId);
 
-
+    List<Reservation> findMyMembersByTrainerAccountId(int trainerAccountId);
 }

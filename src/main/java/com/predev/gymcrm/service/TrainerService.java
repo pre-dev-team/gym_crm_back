@@ -27,11 +27,6 @@ public class TrainerService {
     @Autowired
     private AuthMapper authMapper;
 
-    public List<SearchMyMembersRespDto> selectMyMembers(int trainerAccountId) {
-        List<Reservation> reservations = trainerMapper.findMyMembersByTrainerAccountId(trainerAccountId);
-        return reservations.stream().map(Reservation::toSearchMyMembersRespDto).collect(Collectors.toList());
-    }
-
     public TrainerInfoRespDto selectAllTrainerInfo(int accountId) {
         TrainerAccountView trainer = trainerMapper.findAllTrainerInfo(accountId);
         if(trainer != null) {

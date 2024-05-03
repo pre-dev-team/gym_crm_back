@@ -23,8 +23,8 @@ public class Holiday {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    private List<Time> times;
     private Trainer trainer;
+    private TrainerAccountView trainerAccountView;
 
     public SelectHolidayRespDto toSelectHolidayRespDto(String name) {
         return SelectHolidayRespDto.builder()

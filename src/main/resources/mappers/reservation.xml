@@ -361,4 +361,25 @@
             rt.reservation_id = #{reservationId};
     </select>
 
+    <select id="findMyMembersByTrainerAccountId" resultMap="ReservationResultMap">
+        select
+            rt.reservation_id,
+            rt.trainer_id,
+            rt.user_id,
+            uav.name,
+            uav.account_id,
+            uav.phone,
+            uav.email
+        from
+            reservation_tb rt
+            left outer join user_account_view uav
+            on (rt.user_id = uav.user_id)
+            left outer join trainer_account_view tav
+            on (rt.trainer_id = tav.trainer_id)
+        where
+            tav.account_id = #{trainerAccountId}
+        group by
+            user_id;
+    </select>
+
 </mapper>

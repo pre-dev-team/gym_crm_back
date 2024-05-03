@@ -35,18 +35,18 @@ public class AdminController {
 
     @GetMapping("/holidays/unconfirmed")
     public ResponseEntity<?> getUnconfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
-        return ResponseEntity.ok(holidayService.getUnconfirmedHolidays(trainerId));
+        return ResponseEntity.ok(holidayService.selectUnconfirmedHolidays(trainerId));
     }
 
     @GetMapping("/holidays/confirmed")
     public ResponseEntity<?> getConfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
-        return ResponseEntity.ok(holidayService.getConfirmedHolidays(trainerId));
+        return ResponseEntity.ok(holidayService.selectConfirmedHolidays(trainerId));
     }
 
     @PutMapping("/holidays/decide")
     public ResponseEntity<?> decidedHolidayApplies(@RequestBody AdminDecideHolidayAppliesReqDto reqDto) {
         int successCount = 0;
-        successCount = holidayService.decideHolidayApplies(reqDto);
+        successCount = holidayService.updateHolidayApplies(reqDto);
         if(successCount == 0) {
             ResponseEntity.badRequest().body(reqDto);
         }

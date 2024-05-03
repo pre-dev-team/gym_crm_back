@@ -11,7 +11,6 @@ import java.util.Map;
 public interface TrainerMapper {
 
     List<TrainerAccountView> findTrainers();
-    List<Reservation> findMyMembersByTrainerAccountId(int trainerAccountId);
     TrainerAccountView findAllTrainerInfo(int accountId);
     int updateTrainerProfileImgUrl(Trainer trainer);
     List<WeeklyTrainerReservationCounts> findWeeklyTrainerReservationCounts(List<Map<String, String>> weekData);

@@ -31,4 +31,8 @@ public class AccountController {
         return ResponseEntity.ok(reqDto);
     }
 
+    @GetMapping("/myinfo")
+    public ResponseEntity<?> getMyInfo(@RequestParam(value = "accountId") int accountId) {
+        return ResponseEntity.ok(accountService.getAccountInfoByAccountId(accountId));
+    }
 }
