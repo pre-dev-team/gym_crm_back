@@ -18,7 +18,7 @@ public class WorkoutOptionsService {
 
 
     public List<WorkoutCategory> getAllWorkoutCategory(){
-        return workoutOptionsMapper.getAllWorkoutCategory();
+        return workoutOptionsMapper.findAllWorkoutCategory();
     }
 
     public List<Workout> findAllWorkoutByWorkoutCategoryId(int workoutCategoryId) {

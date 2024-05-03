@@ -9,7 +9,6 @@ import java.util.Map;
 
 @Mapper
 public interface TrainerMapper {
-
     List<TrainerAccountView> findTrainers();
     TrainerAccountView findAllTrainerInfo(int accountId);
     int updateTrainerProfileImgUrl(Trainer trainer);
@@ -19,6 +18,5 @@ public interface TrainerMapper {
             @Param("timeId") int timeId
     );
     String findTrainerProfileImgUrl(int trainerId);
-
     List<AdminSearchTrainer> findAdminSearchTrainers();
 }

@@ -10,12 +10,10 @@ import java.util.List;
 
 @Mapper
 public interface HolidayMapper {
-
     int saveHoliday(
             @Param("timeIds") List<Integer> timeIds,
             @Param("holiday") Holiday holiday
     );
-
     int deleteHoliday(Holiday holiday);
     int updateHolidayConfirm(
             @Param("trainerId") int trainerId,
@@ -37,5 +35,4 @@ public interface HolidayMapper {
             @Param("startTimeId") int startTimeId,
             @Param("endTimeId") int endTimeId
     );
-
 }

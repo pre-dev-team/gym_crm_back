@@ -21,7 +21,7 @@ public class TimeService {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
     public List<TimeRespDto> getTimes() {
-        List<Time> times = timeMapper.getTimes();
+        List<Time> times = timeMapper.findTimes();
         return times.stream()
                 .map(Time::toTimeRespDto)
                 .collect(Collectors.toList());

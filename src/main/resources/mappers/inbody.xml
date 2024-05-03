@@ -28,7 +28,7 @@
     </resultMap>
 
     <insert
-            id="insertInbody"
+            id="saveInbody"
             parameterType="com.predev.gymcrm.entity.Inbody">
         INSERT INTO
             inbody_tb

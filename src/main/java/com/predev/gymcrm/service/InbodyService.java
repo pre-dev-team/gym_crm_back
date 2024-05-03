@@ -19,7 +19,7 @@ public class InbodyService {
 
     public int addInbody(TrainerAddInbodyReqDto trainerAddInbodyReqDto) {
         int successCount = 0;
-        successCount =inbodyMapper.insertInbody(trainerAddInbodyReqDto.toInbodyEntity());
+        successCount =inbodyMapper.saveInbody(trainerAddInbodyReqDto.toInbodyEntity());
         return successCount;
     }
 
