@@ -12,7 +12,6 @@ public class ReviewRespDto {
     private int userId;
     private String reviewText;
     private int reviewScore;
-    private String username;
     private String trainerName;
     private String trainerProfileImgUrl;
     private LocalDateTime createDate;

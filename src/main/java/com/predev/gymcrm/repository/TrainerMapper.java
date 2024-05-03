@@ -15,4 +15,5 @@ public interface TrainerMapper {
     Trainer getAllTrainerInfo(int accountId);
     int updateTrainerProfileImgUrl(Trainer trainer);
     List<WeeklyTrainerReservationCounts> findWeeklyTrainerReservationCounts(List<Map<String, String>> weekData);
+    String getTrainerProfileImgUrl(int trainerId);
 }

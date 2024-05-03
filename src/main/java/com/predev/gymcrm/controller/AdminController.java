@@ -28,11 +28,6 @@ public class AdminController {
         return ResponseEntity.ok(adminService.SearchUsersByName(name));
     }
 
-    @GetMapping("/trainers")
-    public ResponseEntity<?> getTrainers() {
-        return ResponseEntity.ok(adminService.SearchTrainers());
-    }
-
     @GetMapping("/reservations")
     public ResponseEntity<?> searchReservations(AdminSearchReservationReqDto reqDto) {
         return ResponseEntity.ok(adminService.SearchReservations(reqDto));

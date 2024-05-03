@@ -41,14 +41,4 @@
 
 
 
-    <select id="getTrainerProfileImgUrl" resultType="String">
-        SELECT
-            trainer_profile_img_url
-        FROM
-            trainer_tb
-        WHERE
-            trainer_id = #{trainerId}
-    </select>
-
-
 </mapper>

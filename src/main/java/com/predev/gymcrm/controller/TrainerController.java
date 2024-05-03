@@ -33,7 +33,7 @@ public class TrainerController {
         return ResponseEntity.ok(trainerInfo);
     }
 
-    @GetMapping("/trainers")
+    @GetMapping("/trainers/user")
     public ResponseEntity<?> getTrainers() {
         return ResponseEntity.ok(trainerService.getTrainersForReservation());
     }
@@ -46,10 +46,8 @@ public class TrainerController {
     // trainer routine
     @PostMapping("/routine")
     public ResponseEntity<?> makeRoutine (@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
-
         System.out.println(routineMakeReqDtos);
         trainerService.makeRoutine(routineMakeReqDtos);
-
         return ResponseEntity.ok(routineMakeReqDtos);
     }
 
