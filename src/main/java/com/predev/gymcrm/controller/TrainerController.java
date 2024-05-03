@@ -1,6 +1,7 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
+import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
 import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
 import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
@@ -28,14 +29,14 @@ public class TrainerController {
 
     @GetMapping("/mypage/trainerInfo")
     public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "accountId") int accountId) {
-        TrainerInfoRespDto trainerInfo = trainerService.getAllTrainerInfo(accountId);
+        TrainerInfoRespDto trainerInfo = trainerService.selectAllTrainerInfo(accountId);
 
         return ResponseEntity.ok(trainerInfo);
     }
 
     @GetMapping("/trainers/user")
     public ResponseEntity<?> getTrainers() {
-        return ResponseEntity.ok(trainerService.getTrainersForReservation());
+        return ResponseEntity.ok(trainerService.selectTrainersForReservation());
     }
 
     @PutMapping("/mypage/trainerimg")
@@ -50,5 +51,9 @@ public class TrainerController {
         trainerService.makeRoutine(routineMakeReqDtos);
         return ResponseEntity.ok(routineMakeReqDtos);
     }
-
+    
+    @GetMapping("/trainer/day")
+    public ResponseEntity<?> getUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
+        return ResponseEntity.ok(trainerService.searchUnreservedTrainers(reqDto));
+    }
 }

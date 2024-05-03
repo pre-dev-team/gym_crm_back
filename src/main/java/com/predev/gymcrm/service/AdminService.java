@@ -5,17 +5,13 @@ import com.predev.gymcrm.dto.resp.AdminSearchTrainerRespDto;
 import com.predev.gymcrm.dto.resp.AdminSearchUserRespDto;
 import com.predev.gymcrm.dto.resp.AdminSearchWeeklyTrainerReservationCountsRespDto;
 import com.predev.gymcrm.dto.resp.SearchReservationRespDto;
-import com.predev.gymcrm.entity.Reservation;
-import com.predev.gymcrm.entity.Trainer;
-import com.predev.gymcrm.entity.User;
-import com.predev.gymcrm.entity.WeeklyTrainerReservationCounts;
+import com.predev.gymcrm.entity.*;
 import com.predev.gymcrm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +49,11 @@ public class AdminService {
     }
 
     public List<AdminSearchTrainerRespDto> SearchTrainers() {
-        List<Trainer> trainers = trainerMapper.getTrainers();
+        List<TrainerAccountView> trainers = trainerMapper.findTrainers();
         return trainers.stream()
                 .map(trainer -> AdminSearchTrainerRespDto.builder()
                         .trainerId(trainer.getTrainerId())
-                        .name(trainer.getAccount().getName())
+                        .name(trainer.getName())
                         .memberCount(
                                 reservationMapper.findMemberCountOfTrainerByTrainerId(
                                         trainer.getTrainerId()
@@ -73,8 +69,8 @@ public class AdminService {
     }
 
     public List<SearchReservationRespDto> SearchReservations(AdminSearchReservationReqDto reqDto) {
-        String startDate = CommonService.trimDateString(reqDto.getStartDate());
-        String endDate = CommonService.trimDateString(reqDto.getEndDate());
+        String startDate = TimeService.trimDateString(reqDto.getStartDate());
+        String endDate = TimeService.trimDateString(reqDto.getEndDate());
         List<Reservation> reservations = reservationMapper.findReservationByNameAndPeriod(
                 reqDto.getSearchType(),
                 reqDto.getName(),

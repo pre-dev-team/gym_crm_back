@@ -107,17 +107,16 @@
             user_id;
     </select>
 
-    <select id="getTrainers" resultMap="TrainerResultMap">
+    <select id="findTrainers" resultMap="TrainerAccountViewResultMap">
         select
-            tt.trainer_id,
-            tt.account_id,
-            tt.trainer_profile_img_url,
-            at.name,
-            at.email,
-            at.phone
+            trainer_id,
+            account_id,
+            trainer_profile_img_url,
+            name,
+            email,
+            phone
         from
-            trainer_tb tt
-            left outer join account_tb at on (at.account_id = tt.account_id)
+            trainer_account_view
     </select>
 
     <update id="updateTrainerProfileImgUrl" parameterType="com.predev.gymcrm.entity.Trainer">
@@ -155,12 +154,55 @@
         from
             weeklyreservationcounts;
     </select>
-    <select id="getTrainerProfileImgUrl" resultType="String">
+
+    <select id="findAllTrainerInfo" resultMap="TrainerAccountViewResultMap">
+        select
+            trainer_id,
+            name,
+            username,
+            phone,
+            email,
+            trainer_profile_img_url
+        from
+            trainer_account_view
+        where
+            account_id= #{accountId};
+    </select>
+
+    <select
+            id="findAllTrainers"
+            resultType="com.predev.gymcrm.entity.Trainer"
+            resultMap="TrainerResultMap">
         SELECT
-        trainer_profile_img_url
+        *
         FROM
         trainer_tb
-        WHERE
-        trainer_id = #{trainerId}
     </select>
+
+    <select id="findTrainerProfileImgUrl" resultType="String">
+        SELECT
+            trainer_profile_img_url
+        FROM
+            trainer_tb
+        WHERE
+            trainer_id = #{trainerId}
+    </select>
+
+    <select id="findAvailableTrainerAtDayAndTime" resultMap="TrainerAccountViewResultMap">
+        select
+            tav.trainer_id,
+            tav.trainer_profile_img_url,
+            tav.account_id,
+            tav.name,
+            rt.reservation_date,
+            rt.time_id
+        from
+            trainer_account_view tav
+            left outer join reservation_tb rt on(tav.trainer_id = rt.trainer_id)
+            and rt.reservation_date = "2024-04-09"
+            and rt.time_id = 1
+        where
+            rt.time_id is null
+    </select>
+
 </mapper>

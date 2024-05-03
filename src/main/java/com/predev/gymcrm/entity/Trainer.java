@@ -1,5 +1,7 @@
 package com.predev.gymcrm.entity;
 
+import com.predev.gymcrm.dto.resp.SearchUnreservedTrainerRespDto;
+import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +24,5 @@ public class Trainer {
     private List<Reservation> reservations;
     private List<TrainerReview> trainerReviews;
     private Account account;
+
 }

@@ -28,13 +28,13 @@ public class HolidayService {
 
     public void insertTrainerHoliday(TrainerHolidayReqDto reqDto) {
         int trainerId = authMapper.findTrainerIdByAccountId(reqDto.getAccountId());
-        String date = CommonService.trimDateString(reqDto.getHolidayDate());
+        String date = TimeService.trimDateString(reqDto.getHolidayDate());
         List<Integer> timeIds = new ArrayList<>();
         for(int i = reqDto.getStartTimeId(); i < reqDto.getEndTimeId() + 1; i++) {
             timeIds.add(i);
         }
 
-        List<Holiday> isAlreadyHoliday = holidayMapper.searchHolidayByTrainerIdByHolidayDateByTimeId(
+        List<Holiday> isAlreadyHoliday = holidayMapper.findHolidayByTrainerIdByHolidayDateByTimeId(
                 trainerId, date, reqDto.getStartTimeId(), reqDto.getEndTimeId()
         );
 
@@ -52,23 +52,23 @@ public class HolidayService {
     }
 
     public List<SelectHolidayRespDto> selectHoliday(int accountId) {
-        List<Holiday> holidays = holidayMapper.selectHolidayByAccountId(accountId);
+        List<Holiday> holidays = holidayMapper.findHolidayByAccountId(accountId);
         Account account = authMapper.findAccountByAccountId(accountId);
         return holidays.stream().map(holiday -> holiday.toSelectHolidayRespDto(account.getName())).collect(Collectors.toList());
     }
 
     public List<AdminSearchHolidayRespDto> getUnconfirmedHolidays(int trainerId) {
-        List<AdminSearchHoliday> holidays = holidayMapper.getAllAdminSearchHolidyByTrainerId(trainerId, 1);
+        List<AdminSearchHoliday> holidays = holidayMapper.findAllAdminSearchHolidyByTrainerId(trainerId, 1);
         return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
     }
 
     public List<AdminSearchHolidayRespDto> getConfirmedHolidays(int trainerId) {
-        List<AdminSearchHoliday> holidays = holidayMapper.getAllAdminSearchHolidyByTrainerId(trainerId, 2);
+        List<AdminSearchHoliday> holidays = holidayMapper.findAllAdminSearchHolidyByTrainerId(trainerId, 2);
         return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
     }
 
     public int decideHolidayApplies(AdminDecideHolidayAppliesReqDto reqDto) {
-        return holidayMapper.determineHolidayConfirm(
+        return holidayMapper.updateHolidayConfirm(
                 reqDto.getTrainerId(),
                 reqDto.getHolidayDate(),
                 reqDto.isStatus()
@@ -76,7 +76,7 @@ public class HolidayService {
     }
 
     public List<Integer> getHolidaytimeIdsByTrainerIdAndHolidayDate(int trainerId, String holidayDate) {
-        String trimedHolidayDate = CommonService.trimDateString(holidayDate);
+        String trimedHolidayDate = TimeService.trimDateString(holidayDate);
         List<Holiday> holidays = holidayMapper.findHolidayByTrainerIdAndDate(trainerId,trimedHolidayDate);
         List<Integer> timeIds = new ArrayList<>();
         if(!holidays.isEmpty()) {

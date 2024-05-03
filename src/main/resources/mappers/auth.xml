@@ -4,9 +4,6 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.predev.gymcrm.repository.AuthMapper">
-
-    <!--###################       RESULT_MAP       ###################    -->
-
     <resultMap id="RoleResultMap" type="com.predev.gymcrm.entity.Role">
         <id property="roleId" column="role_id" />
         <result property="roleName" column="role_name" />
@@ -25,10 +22,10 @@
         <association property="role" resultMap="RoleResultMap" />
     </resultMap>
     <resultMap id="OAuth2ResultMap" type="com.predev.gymcrm.entity.OAuth2">
-        <id property="oAuth2Id" column="oauth2_id" />
-        <result property="oAuth2Name" column="oauth2_name"/>
+        <id property="oauth2Id" column="oauth2_id" />
+        <result property="oauth2Name" column="oauth2_name"/>
         <result property="accountId" column="account_id" />
-        <result property="oAuth2ProviderName" column="oauth2_provider_name" />
+        <result property="oauth2ProviderName" column="oauth2_provider_name" />
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
     </resultMap>
@@ -49,8 +46,6 @@
         <result property="updateDate" column="update_date" />
         <association property="account" resultMap="AccountResultMap"/>
     </resultMap>
-
-    <!--###################       INSERT       ###################    -->
 
     <insert
             id="saveAccount"
@@ -77,7 +72,12 @@
             (0, #{accountId}, null, now(), now())
     </insert>
 
-    <update id="modifyAccountPassword" parameterType="com.predev.gymcrm.entity.Account">
+    <insert id="saveOAuth2" parameterType="com.predev.gymcrm.entity.OAuth2">
+        insert into oauth2_tb
+        values(0, #{oauth2Name}, #{accountId}, #{oauth2ProviderName}, now(), now())
+    </insert>
+
+    <update id="updateAccountPassword" parameterType="com.predev.gymcrm.entity.Account">
         update
             account_tb
         set
@@ -86,7 +86,8 @@
         where
             account_id = #{accountId}
     </update>
-    <update id="modifyAdminPassword">
+
+    <update id="updateAdminPassword">
         update
             account_tb
         set
@@ -102,8 +103,6 @@
         where
             trainer_id = #{trainerId}
     </delete>
-
-    <!--###################       SELECT       ###################    -->
 
     <select
             id="findAccountByUsername"
@@ -156,6 +155,7 @@
         where
             at.phone = #{phone}
     </select>
+
     <select id="findAccountByAccountId"
             resultMap="AccountResultMap">
         select
@@ -247,6 +247,7 @@
             </if>
 
    </select>
+
     <select id="findAccountByOAuth2Name" resultMap="AccountResultMap">
         select
             at.account_id,
@@ -271,10 +272,7 @@
             oat.oauth2_name = #{oauth2Name};
     </select>
 
-    <insert id="saveOAuth2" parameterType="com.predev.gymcrm.entity.OAuth2">
-        insert into oauth2_tb
-        values(0, #{oauth2Name}, #{accountId}, #{oauth2ProviderName}, now(), now())
-    </insert>
+
 
     <select id="findAccountByNameAndEmail" resultMap="AccountResultMap">
         select
@@ -304,7 +302,7 @@
             and email = #{email}
     </select>
 
-    <update id="modifyAccountTemporaryPw" parameterType="com.predev.gymcrm.entity.Account">
+    <update id="updateAccountTemporaryPw" parameterType="com.predev.gymcrm.entity.Account">
         update
             account_tb
         set

@@ -95,7 +95,7 @@ public class AccountMailService {
                 javaMailSender.send(mimeMessage);
 
                 account.setPassword(encodedPassword);
-                authMapper.modifyAccountTemporaryPw(account.getAccountId(), account.getPassword());
+                authMapper.updateAccountTemporaryPw(account.getAccountId(), account.getPassword());
 
                 result = true;
             } catch (Exception exception) {

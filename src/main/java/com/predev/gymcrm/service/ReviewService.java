@@ -9,7 +9,7 @@ import com.predev.gymcrm.entity.TopRatedReview;
 import com.predev.gymcrm.entity.Trainer;
 import com.predev.gymcrm.entity.TrainerReview;
 import com.predev.gymcrm.repository.AuthMapper;
-import com.predev.gymcrm.repository.CommonMapper;
+import com.predev.gymcrm.repository.TimeMapper;
 import com.predev.gymcrm.repository.ReviewMapper;
 import com.predev.gymcrm.repository.TrainerMapper;
 import org.springframework.beans.factory.annotation.Autowired;

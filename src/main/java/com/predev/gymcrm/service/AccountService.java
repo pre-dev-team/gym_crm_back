@@ -35,7 +35,7 @@ public class AccountService {
             throw new ValidException(Map.of("newPasswordCheck","새로운 비밀번호가 서로 일치하지 않습니다 \n다시입력하세요"));
         }
         account.setPassword(passwordEncoder.encode(reqDto.getPassword()));
-        authMapper.modifyAccountPassword(account);
+        authMapper.updateAccountPassword(account);
     }
 
     public int editAdminPassword(AdminPasswordChangeReqDto reqDto) {
@@ -48,6 +48,6 @@ public class AccountService {
         if(passwordEncoder.matches(reqDto.getPassword(), encodedPassword)) {
             throw new ValidException(Map.of("newPassword","새로운 비밀번호는 이전 비밀번호와 같을 수 없습니다 \n다시입력하세요"));
         }
-        return authMapper.modifyAdminPassword(reqDto.getPassword());
+        return authMapper.updateAdminPassword(reqDto.getPassword());
     }
 }

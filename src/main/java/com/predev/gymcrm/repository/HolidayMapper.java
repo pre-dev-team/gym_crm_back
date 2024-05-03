@@ -17,7 +17,7 @@ public interface HolidayMapper {
     );
 
     int deleteHoliday(Holiday holiday);
-    int determineHolidayConfirm(
+    int updateHolidayConfirm(
             @Param("trainerId") int trainerId,
             @Param("holidayDate") String holidayDate,
             @Param("status") boolean status
@@ -26,14 +26,12 @@ public interface HolidayMapper {
             @Param("trainerId") int trainerId,
             @Param("holidayDate") String date
     );
-    List<Holiday> getAllHolidays();
-    List<AdminSearchHoliday> getAllAdminSearchHolidyByTrainerId(
+    List<AdminSearchHoliday> findAllAdminSearchHolidyByTrainerId(
             @Param("trainerId") int trainerId,
             @Param("status") int status
     );
-    List<Holiday> getAllHolidaysByTrainerId(int trainerId);
-    List<Holiday> selectHolidayByAccountId(int accountId);
-    List<Holiday> searchHolidayByTrainerIdByHolidayDateByTimeId(
+    List<Holiday> findHolidayByAccountId(int accountId);
+    List<Holiday> findHolidayByTrainerIdByHolidayDateByTimeId(
             @Param("trainerId") int trainerId,
             @Param("holidayDate") String holidayDate,
             @Param("startTimeId") int startTimeId,

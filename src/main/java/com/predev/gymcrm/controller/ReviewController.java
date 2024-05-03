@@ -24,6 +24,7 @@ public class ReviewController {
     public ResponseEntity<?> getUserReviews(SearchUserReviewReqDto reqDto) {
         return ResponseEntity.ok(reviewService.searchAllUserReviews(reqDto));
     }
+}
 
     // 상위 3명의 트레이너 정보 및 가장 높은 점수를 가진 리뷰 조회
     @GetMapping("/toprated")

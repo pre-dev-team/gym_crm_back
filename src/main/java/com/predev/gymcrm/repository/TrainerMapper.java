@@ -10,10 +10,14 @@ import java.util.Map;
 @Mapper
 public interface TrainerMapper {
 
-    List<Trainer> getTrainers();
+    List<TrainerAccountView> findTrainers();
     List<Reservation> findMyMembersByTrainerAccountId(int trainerAccountId);
-    Trainer getAllTrainerInfo(int accountId);
+    TrainerAccountView findAllTrainerInfo(int accountId);
     int updateTrainerProfileImgUrl(Trainer trainer);
     List<WeeklyTrainerReservationCounts> findWeeklyTrainerReservationCounts(List<Map<String, String>> weekData);
-    String getTrainerProfileImgUrl(int trainerId);
+    List<TrainerAccountView> findAvailableTrainerAtDayAndTime(
+            @Param("reservationDate") String reservationDate,
+            @Param("timeId") int timeId
+    );
+    String findTrainerProfileImgUrl(int trainerId);
 }

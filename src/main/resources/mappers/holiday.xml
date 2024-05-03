@@ -34,7 +34,6 @@
         <result property="email" column="email" />
     </resultMap>
 
-
     <insert id="saveHoliday">
         insert into
             holiday_tb
@@ -43,7 +42,8 @@
                 (0, #{holiday.trainerId}, #{holiday.holidayDate}, #{item}, 0, now(), now())
             </foreach>
     </insert>
-    <update id="determineHolidayConfirm">
+
+    <update id="updateHolidayConfirm">
         update
             holiday_tb
         set
@@ -68,41 +68,37 @@
             and holiday_date = #{holidayDate}
     </delete>
 
-    <select id="selectHolidayByAccountId" resultMap="HolidayResultMap">
+    <select id="findHolidayByAccountId" resultMap="HolidayResultMap">
         select
             ht.holiday_id,
             ht.holiday_date,
             ht.time_id,
-            at.name,
+            tav.name,
             ht.confirm
         from
             holiday_tb ht
-            left outer join trainer_tb tt1 on(tt1.trainer_id = ht.trainer_id)
-            left outer join account_tb at on(at.account_id = tt1.account_id)
+            left outer join trainer_account_view tav on(tav.trainer_id = ht.trainer_id)
         where
-            at.account_id = #{accountId};
+            tav.account_id = #{accountId};
     </select>
 
-    <select id="getAllHolidays" resultMap="HolidayResultMap">
+    <select id="findAllHolidays" resultMap="HolidayResultMap">
         select
             ht.holiday_id,
             ht.create_date,
-            at.name,
+            tav.name,
             ht.holiday_date,
             ht.trainer_id,
             ht.time_id,
             ht.confirm
         from
             holiday_tb ht
-        left outer join trainer_tb tt1
-            on(tt1.trainer_id = ht.trainer_id)
-        left outer join account_tb at
-            on(at.account_id = tt1.account_id)
+            left outer join trainer_account_view tav on(tav.trainer_id = ht.trainer_id)
         where
-            ht.holiday_date = #{holidayDate}
+            ht.holiday_date = #{holidayDate};
     </select>
 
-    <select id="searchHolidayByTrainerIdByHolidayDateByTimeId" resultMap="HolidayResultMap">
+    <select id="findHolidayByTrainerIdByHolidayDateByTimeId" resultMap="HolidayResultMap">
         select
             trainer_id,
             holiday_date,
@@ -114,26 +110,24 @@
         and holiday_date = #{holidayDate}
         and time_id between #{startTimeId} and #{endTimeId}
     </select>
-    <select id="getAllHolidaysByTrainerId" resultMap="HolidayResultMap">
+
+    <select id="findAllHolidaysByTrainerId" resultMap="HolidayResultMap">
         select
             ht.holiday_id,
             ht.create_date,
-            at.name,
+            tav.name,
             ht.holiday_date,
             ht.trainer_id,
             ht.time_id,
             ht.confirm
         from
             holiday_tb ht
-            left outer join trainer_tb tt1
-                on(tt1.trainer_id = ht.trainer_id)
-            left outer join account_tb at
-                on(at.account_id = tt1.account_id)
+            left outer join trainer_account_view tav on(tav.trainer_id = ht.trainer_id)
         where
             ht.trainer_id = #{trainerId}
     </select>
 
-    <select id="getAllAdminSearchHolidyByTrainerId" resultType="com.predev.gymcrm.entity.AdminSearchHoliday">
+    <select id="findAllAdminSearchHolidyByTrainerId" resultType="com.predev.gymcrm.entity.AdminSearchHoliday">
         select
             ht.trainer_id as trainerId,
             ht.holiday_date as holidayDate,
@@ -161,6 +155,7 @@
         order by
             ht.holiday_date desc;
     </select>
+
     <select id="findHolidayByTrainerIdAndDate" resultMap="HolidayResultMap">
         select
             trainer_id,

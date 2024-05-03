@@ -12,7 +12,7 @@ import java.util.List;
 public interface ReservationMapper {
 
     public int saveReservation(Reservation reservation);
-    public List<Reservation> getAllReservation();
+    public List<Reservation> findAllReservation();
     public List<Reservation> findReservationsByUserId(int userId);
     public List<Reservation> findReservationByAccountId(int accountId);
     public List<Reservation> findReservationByDate(
@@ -20,11 +20,8 @@ public interface ReservationMapper {
             @Param("trainerId") int trainerId,
             @Param("reservationDate") String reservationDate
     );
-    List<Trainer> findTrainerByDay(
-            @Param("reservationDate") String reservationDate,
-            @Param("timeId") int timeId
-    );
-    List<Reservation> getTodayReservation(
+
+    List<Reservation> findTodayReservation(
             @Param("trainerId") int trainerId,
             @Param("today") String today
     );
@@ -49,9 +46,11 @@ public interface ReservationMapper {
             @Param("prevReservationId")int prevReservationId,
             @Param("reservation") Reservation reservation
     );
-    List<Reservation> selectMyMembersInformationByAccountIdByUserId(
+    List<Reservation> findMyMembersInformationByAccountIdByUserId(
             @Param("accountId") int accountId,
             @Param("userId") int userId
     );
-    Reservation getReservationByReservationId(@Param("reservationId") int reservationId);
+    Reservation findReservationByReservationId(@Param("reservationId") int reservationId);
+
+
 }
