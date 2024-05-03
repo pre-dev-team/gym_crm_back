@@ -1,6 +1,7 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.aop.annotation.ValidAspect;
+import com.predev.gymcrm.dto.req.AdminDecideHolidayAppliesReqDto;
 import com.predev.gymcrm.dto.req.CancelHolidayReqDto;
 import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
 import com.predev.gymcrm.service.HolidayService;
@@ -36,5 +37,25 @@ public class HolidayController {
     @GetMapping("/find")
     public ResponseEntity<?> findHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
         return ResponseEntity.ok(holidayService.getHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
+    }
+
+    @GetMapping("/admin/unconfirmed")
+    public ResponseEntity<?> getUnconfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
+        return ResponseEntity.ok(holidayService.getUnconfirmedHolidays(trainerId));
+    }
+
+    @GetMapping("/admin/confirmed")
+    public ResponseEntity<?> getConfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
+        return ResponseEntity.ok(holidayService.getConfirmedHolidays(trainerId));
+    }
+
+    @PutMapping("/admin/decide")
+    public ResponseEntity<?> decidedHolidayApplies(@RequestBody AdminDecideHolidayAppliesReqDto reqDto) {
+        int successCount = 0;
+        successCount = holidayService.decideHolidayApplies(reqDto);
+        if(successCount == 0) {
+            ResponseEntity.badRequest().body(reqDto);
+        }
+        return ResponseEntity.ok(successCount);
     }
 }

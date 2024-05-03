@@ -11,7 +11,6 @@
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
     </resultMap>
-
     <resultMap id="AccountResultMap" type="com.predev.gymcrm.entity.Account">
         <id property="accountId" column="account_id" />
         <result property="username" column="username" />
@@ -229,23 +228,28 @@
             account_id = #{accountId}
     </select>
 
-    <select id="findUsersByName" resultMap="UserResultMap">
+    <select id="findUserInfosWithReservationCountByName" resultType="com.predev.gymcrm.entity.AdminSearchUser">
         select
-            ut.user_id,
-            ut.account_id,
-            at.username,
-            at.name,
-            at.phone,
-            at.email
+            uav.user_id as userId,
+            uav.account_id as userAccountId,
+            uav.username,
+            uav.name,
+            uav.phone,
+            uav.email,
+            rt.reservation_id as reservationId,
+            count(rt.reservation_id) as reservationCount
         from
-            user_tb ut
-            left outer join account_tb at on(at.account_id = ut.account_id)
+            user_account_view uav
+            left outer join reservation_tb rt on(uav.user_id = rt.user_id)
         where
             1 = 1
             <if test="name != null and name != ''">
-                and at.name like concat('%', #{name}, '%')
+                and uav.name like concat('%', #{name}, '%')
             </if>
-
+        group by
+            uav.user_id
+        order by
+            uav.user_id
    </select>
 
     <select id="findAccountByOAuth2Name" resultMap="AccountResultMap">

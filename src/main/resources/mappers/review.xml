@@ -150,7 +150,7 @@
             left outer join user_account_view uav
                 on(trt.user_id = uav.user_id)
         where
-            uav.account_id = #{accountId}
+            uav.user_id = #{userId}
     </select>
 
 

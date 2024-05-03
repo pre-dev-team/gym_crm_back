@@ -4,9 +4,12 @@ import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.AccountSigninReqDto;
 import com.predev.gymcrm.dto.req.OAuth2MergeReqDto;
 import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
+import com.predev.gymcrm.dto.resp.AdminSearchUserRespDto;
 import com.predev.gymcrm.dto.resp.SearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
+import com.predev.gymcrm.entity.AdminSearchUser;
 import com.predev.gymcrm.entity.OAuth2;
+import com.predev.gymcrm.entity.User;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
 import com.predev.gymcrm.dto.req.AccountSignupReqDto;
@@ -17,6 +20,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
@@ -128,4 +134,11 @@ public class AuthService {
                 .build();
     }
 
+    public List<AdminSearchUserRespDto> adminSearchUsersByName(String name) {
+        List<AdminSearchUser> users = authMapper.findUserInfosWithReservationCountByName(name);
+        if(users.isEmpty()) {
+            return null;
+        }
+        return users.stream().map(AdminSearchUser::toAdminSearchUserRespDto).collect(Collectors.toList());
+    }
 }

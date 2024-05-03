@@ -20,4 +20,6 @@ public interface TrainerMapper {
             @Param("timeId") int timeId
     );
     String findTrainerProfileImgUrl(int trainerId);
+
+    List<AdminSearchTrainer> findAdminSearchTrainers();
 }

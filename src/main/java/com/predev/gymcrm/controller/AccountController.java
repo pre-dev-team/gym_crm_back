@@ -1,6 +1,7 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.aop.annotation.ValidAspect;
+import com.predev.gymcrm.dto.req.AdminPasswordChangeReqDto;
 import com.predev.gymcrm.dto.req.EditPasswordReqDto;
 import com.predev.gymcrm.security.Principal;
 import com.predev.gymcrm.service.AccountService;
@@ -29,6 +30,11 @@ public class AccountController {
     public ResponseEntity<?> editPassword(@RequestBody EditPasswordReqDto reqDto) {
         accountService.editAccountPassword(reqDto);
         return ResponseEntity.ok(reqDto);
+    }
+
+    @PutMapping("/admin/edit/password")
+    public ResponseEntity<?> changeAdminPassword(@RequestBody AdminPasswordChangeReqDto reqDto) {
+        return ResponseEntity.ok(accountService.editAdminPassword(reqDto));
     }
 
 }

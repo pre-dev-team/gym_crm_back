@@ -204,5 +204,39 @@
         where
             rt.time_id is null
     </select>
+    <select id="findAdminSearchTrainers" resultType="com.predev.gymcrm.entity.AdminSearchTrainer">
+        select
+            tav.account_id as trainerAccountId,
+            tav.trainer_id as trainerId,
+            tav.trainer_profile_img_url as trainerProfileImgUrl,
+            tav.username,
+            tav.name,
+            tav.phone,
+            tav.email,
+            count(ut.user_id) as memberCount,
+            score.avgScore
+        from
+            trainer_account_view tav
+            left outer join reservation_tb rt
+                on(tav.trainer_id = rt.trainer_id)
+            left outer join user_tb ut
+                on(rt.user_id = ut.user_id)
+            left outer join (
+                                select
+                                tav.trainer_id,
+                                avg(trt.trainer_review_score) as avgScore
+                                from
+                                trainer_account_view tav
+                                left outer join trainer_review_tb trt
+                                on(tav.trainer_id = trt.trainer_id)
+                                group by
+                                tav.trainer_id
+                            ) score
+                on(tav.trainer_id = score.trainer_id)
+        group by
+            tav.trainer_id
+        order by
+            tav.trainer_id
+    </select>
 
 </mapper>

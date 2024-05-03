@@ -30,7 +30,6 @@ public class TrainerController {
     @GetMapping("/mypage/trainerInfo")
     public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "accountId") int accountId) {
         TrainerInfoRespDto trainerInfo = trainerService.selectAllTrainerInfo(accountId);
-
         return ResponseEntity.ok(trainerInfo);
     }
 
@@ -44,16 +43,19 @@ public class TrainerController {
         trainerService.updateTrainerProfileImg(reqDto);
         return ResponseEntity.ok(true);
     }
-    // trainer routine
-    @PostMapping("/routine")
-    public ResponseEntity<?> makeRoutine (@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
-        System.out.println(routineMakeReqDtos);
-        trainerService.makeRoutine(routineMakeReqDtos);
-        return ResponseEntity.ok(routineMakeReqDtos);
-    }
-    
+
     @GetMapping("/trainer/day")
     public ResponseEntity<?> getUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
         return ResponseEntity.ok(trainerService.searchUnreservedTrainers(reqDto));
+    }
+
+    @GetMapping("/admin/trainers")
+    public ResponseEntity<?> getTrainersByAdmin() {
+        return ResponseEntity.ok(trainerService.adminSearchTrainers());
+    }
+
+    @GetMapping("/admin/reservations/month/count")
+    public ResponseEntity<?> getWeeklyTrainerReservationCounts() {
+        return ResponseEntity.ok(trainerService.getWeeklyTrainerReservationCounts());
     }
 }

@@ -43,12 +43,16 @@ public class AuthController {
         return ResponseEntity.created(null).body(true);
     }
 
-
     @PostMapping("/oauth2/merge")
     public ResponseEntity<?> oAuth2Merge(@RequestBody OAuth2MergeReqDto oAuth2MergeReqDto) {
         authService.oAuth2Merge(oAuth2MergeReqDto);
 
         return ResponseEntity.ok(true);
+    }
+
+    @GetMapping("admin/users")
+    public ResponseEntity<?> getUsersByName(@RequestParam(value = "name") String name) {
+        return ResponseEntity.ok(authService.adminSearchUsersByName(name));
     }
 
     @DeleteMapping("/trainer")
@@ -72,6 +76,5 @@ public class AuthController {
     public ResponseEntity<?> getMyInfo(@RequestParam(value = "accountId") int accountId) {
         return ResponseEntity.ok(authService.getAccountInfoByAccountId(accountId));
     }
-
 
 }

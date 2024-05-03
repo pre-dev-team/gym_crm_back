@@ -71,5 +71,9 @@ public class ReservationController {
         return ResponseEntity.ok(respDtos);
     }
 
+    @GetMapping("/admin/reservations")
+    public ResponseEntity<?> searchReservations(AdminSearchReservationReqDto reqDto) {
+        return ResponseEntity.ok(reservationService.SearchReservations(reqDto));
+    }
 
 }

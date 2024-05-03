@@ -144,5 +144,10 @@ public class ReservationService {
         return reservations.stream().map(Reservation::toSelectMyMembersInformationRespDto).collect(Collectors.toList());
     }
 
+    public List<SearchReservationRespDto> SearchReservations(AdminSearchReservationReqDto reqDto) {
+        String startDate = TimeService.trimDateString(reqDto.getStartDate());
+        String endDate = TimeService.trimDateString(reqDto.getEndDate());
 
+        return null;
+    }
 }
