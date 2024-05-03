@@ -3,11 +3,9 @@ package com.predev.gymcrm.dto.resp;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Builder
 @Data
-public class SearchReservationRespDto {
+public class AdminSearchReservationRespDto {
     private int reservationId;
     private int trainerId;
     private String reservationDate;

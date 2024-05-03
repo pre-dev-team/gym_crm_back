@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SearchWorkoutRoutineRespDto {
+public class TrainerSearchWorkoutRoutineRespDto {
     private int workoutRoutineId;
     private int reservationId;
     private int workoutId;

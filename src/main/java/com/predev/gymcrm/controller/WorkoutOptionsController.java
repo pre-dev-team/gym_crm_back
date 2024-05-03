@@ -20,12 +20,12 @@ public class WorkoutOptionsController {
 
     @GetMapping("/category")
     public ResponseEntity<?>  getWorkoutCategory(){
-        return ResponseEntity.ok(workoutOptionsService.getAllWorkoutCategory());
+        return ResponseEntity.ok(workoutOptionsService.searchAllWorkoutCategory());
     }
 
     @GetMapping("/category/workouts")
     public ResponseEntity<?> getWorkouts(@RequestParam(value = "workoutCategoryId")int workoutCategoryId) {
-        List<Workout> workouts = workoutOptionsService.findAllWorkoutByWorkoutCategoryId(workoutCategoryId);
+        List<Workout> workouts = workoutOptionsService.searchAllWorkoutByWorkoutCategoryId(workoutCategoryId);
         return ResponseEntity.ok(workouts);
     }
 

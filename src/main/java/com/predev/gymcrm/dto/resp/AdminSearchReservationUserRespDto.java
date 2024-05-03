@@ -1,12 +1,11 @@
 package com.predev.gymcrm.dto.resp;
 
-import com.predev.gymcrm.entity.Time;
 import lombok.Builder;
 import lombok.Data;
 
 @Builder
 @Data
-public class SearchReservationUserRespDto {
+public class AdminSearchReservationUserRespDto {
     private int reservationId;
     private int userId;
     private String name;

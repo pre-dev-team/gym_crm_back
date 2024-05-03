@@ -1,12 +1,10 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.FindPwReqDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.repository.AuthMapper;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,7 +28,7 @@ public class AccountMailService {
     @Value("${server.deploy-address}")
     private String serverAddress;
 
-    public Account getAccountByNameAndEmail(String name, String email) {
+    public Account searchAccountByNameAndEmail(String name, String email) {
         return authMapper.findAccountByNameAndEmail(name, email);
     }
     public boolean searchAccountByMail(Account account) {
@@ -63,7 +61,7 @@ public class AccountMailService {
         return result;
     }
 
-    public Account findAccountByNameAndEmail(String username, String email) {
+    public Account searchAccountByUsernameAndEmail(String username, String email) {
         return authMapper.findAccountByUserNameAndEmail(username, email);
     }
 

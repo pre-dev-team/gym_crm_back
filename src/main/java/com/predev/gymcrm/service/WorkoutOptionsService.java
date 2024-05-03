@@ -17,11 +17,11 @@ public class WorkoutOptionsService {
     private WorkoutOptionsMapper workoutOptionsMapper;
 
 
-    public List<WorkoutCategory> getAllWorkoutCategory(){
-        return workoutOptionsMapper.getAllWorkoutCategory();
+    public List<WorkoutCategory> searchAllWorkoutCategory(){
+        return workoutOptionsMapper.findAllWorkoutCategory();
     }
 
-    public List<Workout> findAllWorkoutByWorkoutCategoryId(int workoutCategoryId) {
+    public List<Workout> searchAllWorkoutByWorkoutCategoryId(int workoutCategoryId) {
         List<Workout> workouts = workoutOptionsMapper.findAllWorkoutByWorkoutCategoryId(workoutCategoryId);
         return workouts;
     }

@@ -1,8 +1,8 @@
 package com.predev.gymcrm.entity;
 
-import com.predev.gymcrm.dto.resp.SearchUnreservedTrainerRespDto;
-import com.predev.gymcrm.dto.resp.TrainerForReservationRespDto;
-import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
+import com.predev.gymcrm.dto.resp.UserSearchUnreservedTrainerRespDto;
+import com.predev.gymcrm.dto.resp.TrainerSearchForReservationRespDto;
+import com.predev.gymcrm.dto.resp.TrainerSearchInfoRespDto;
 import lombok.Data;
 
 @Data
@@ -17,8 +17,8 @@ public class TrainerAccountView {
     private String phone;
     private String email;
 
-    public TrainerInfoRespDto toTrainerInfoRespDto() {
-        return TrainerInfoRespDto.builder()
+    public TrainerSearchInfoRespDto toTrainerInfoRespDto() {
+        return TrainerSearchInfoRespDto.builder()
                 .trainerId(trainerId)
                 .name(name)
                 .username(username)
@@ -28,16 +28,16 @@ public class TrainerAccountView {
                 .build();
     }
 
-    public TrainerForReservationRespDto trainerForReservationRespDto() {
-        return TrainerForReservationRespDto.builder()
+    public TrainerSearchForReservationRespDto trainerForReservationRespDto() {
+        return TrainerSearchForReservationRespDto.builder()
                 .trainerId(trainerId)
                 .trainerProfileImgUrl(trainerProfileImgUrl)
                 .name(name)
                 .build();
     }
 
-    public SearchUnreservedTrainerRespDto toSearchUnreservedTrainerRespDto() {
-        return SearchUnreservedTrainerRespDto.builder()
+    public UserSearchUnreservedTrainerRespDto toSearchUnreservedTrainerRespDto() {
+        return UserSearchUnreservedTrainerRespDto.builder()
                 .trainerId(trainerId)
                 .trainerProfileImgUrl(trainerProfileImgUrl)
                 .name(name)

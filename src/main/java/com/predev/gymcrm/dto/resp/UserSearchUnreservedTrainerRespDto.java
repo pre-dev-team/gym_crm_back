@@ -5,14 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class SearchAccountInfoRespDto {
-    private int accountId;
-    private String username;
+@Builder
+public class UserSearchUnreservedTrainerRespDto {
+    private int trainerId;
     private String name;
-    private String phone;
-    private String email;
+    private String trainerProfileImgUrl;
 }

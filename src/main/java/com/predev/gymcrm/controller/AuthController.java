@@ -18,9 +18,6 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @Autowired
-    private ReservationService reservationService;
-
     @ValidAspect
     @PostMapping("/user/signup")
     public ResponseEntity<?> userSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
@@ -51,7 +48,7 @@ public class AuthController {
 
     @GetMapping("admin/users")
     public ResponseEntity<?> getUsersByName(@RequestParam(value = "name") String name) {
-        return ResponseEntity.ok(authService.adminSearchUsersByName(name));
+        return ResponseEntity.ok(authService.searchAdminhUsersByName(name));
     }
 
     @DeleteMapping("/trainer")

@@ -13,14 +13,12 @@ AuthMapper {
     public int saveAccount(@Param("roleId")int roleId, @Param("account")Account account);
     public int saveUser(@Param("accountId") int accountId);
     public int saveTrainer(@Param("accountId")int accountId);
-
     public Account findAccountByNameAndEmail(@Param("name") String name, @Param("email") String email);
     public Account findAccountByUserNameAndEmail(@Param("username") String username, @Param("email") String email);
     public Account findAccountByUsername(String username);
     public Account findAccountByPhone(String phone);
     public Account findAccountByAccountId(int accountId);
     public Account findAccountByTrainerId(int trainerId);
-    public Account findAccountByUserId(int userId);
     public Integer findUserIdByAccountId(int accountId);
     public Integer findTrainerIdByAccountId(int accountId);
     public List<AdminSearchUser> findUserInfosWithReservationCountByName(String name);

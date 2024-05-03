@@ -18,8 +18,8 @@ public class WorkoutRoutineController {
     private WorkoutRoutineService workoutRoutineService;
 
     @PostMapping("/trainer")
-    public ResponseEntity<?> makeRoutine(@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
-        int successCount = workoutRoutineService.makeRoutine(routineMakeReqDtos);
+    public ResponseEntity<?> addRoutine(@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
+        int successCount = workoutRoutineService.insertRoutine(routineMakeReqDtos);
         if(successCount == 0) {
             return ResponseEntity.badRequest().body(Map.of("error", "이미 등록된 루틴이 존재합니다"));
         }
@@ -27,10 +27,10 @@ public class WorkoutRoutineController {
     }
     @GetMapping("/find")
     public ResponseEntity<?> findReservationRoutine(int reservationId) {
-        return ResponseEntity.ok(workoutRoutineService.findRoutinesByReservationId(reservationId));
+        return ResponseEntity.ok(workoutRoutineService.searchRoutinesByReservationId(reservationId));
     }
     @PostMapping("/edit")
-    public ResponseEntity<?> editRoutine(@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
+    public ResponseEntity<?> updateRoutine(@RequestBody List<RoutineMakeReqDto> routineMakeReqDtos) {
         return ResponseEntity.ok(workoutRoutineService.editRoutines(routineMakeReqDtos));
     }
 }

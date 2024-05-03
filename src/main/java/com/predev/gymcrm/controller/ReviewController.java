@@ -14,7 +14,6 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    // 트레이너에 대한 리뷰 작성 API
     @PostMapping("/user/make")
     public ResponseEntity<?> addReview(@RequestBody ReviewReqDto reviewReqDto) {
         return ResponseEntity.created(null).body(reviewService.insertReview(reviewReqDto));

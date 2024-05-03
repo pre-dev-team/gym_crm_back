@@ -1,9 +1,8 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.InbodyReqDto;
-import com.predev.gymcrm.dto.resp.InbodyRespDto;
-import com.predev.gymcrm.dto.resp.SearchInbodyRespDto;
-import com.predev.gymcrm.dto.resp.SearchUnreservedTrainerRespDto;
+import com.predev.gymcrm.dto.resp.UserSearchInbodyRespDto;
+import com.predev.gymcrm.dto.resp.TrainerSearchInbodyRespDto;
 import com.predev.gymcrm.entity.Inbody;
 import com.predev.gymcrm.repository.InbodyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,18 +17,18 @@ public class InbodyService {
     @Autowired
     private InbodyMapper inbodyMapper;
 
-    public int addInbody(InbodyReqDto inbodyReqDto) {
+    public int insertInbody(InbodyReqDto inbodyReqDto) {
         int successCount = 0;
         successCount =inbodyMapper.insertInbody(inbodyReqDto.toInbodyEntity());
         return successCount;
     }
 
-    public List<InbodyRespDto> selectInbodyByUserId(int accountId) {
+    public List<UserSearchInbodyRespDto> searchInbodyByUserId(int accountId) {
         List<Inbody> inbodyList = inbodyMapper.findInbodyByAccountId(accountId);
         return inbodyList.stream().map(Inbody::toInbodyRespDto).collect(Collectors.toList());
     }
 
-    public List<SearchInbodyRespDto> selectInbodyInformation(int userId) {
+    public List<TrainerSearchInbodyRespDto> searchInbodyInformation(int userId) {
         List<Inbody> inbodys = inbodyMapper.findInbodyByUserId(userId);
         return inbodys.stream().map(Inbody::toSearchInbodyRespDto).collect(Collectors.toList());
     }

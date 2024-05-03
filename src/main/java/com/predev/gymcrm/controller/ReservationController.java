@@ -1,16 +1,13 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.*;
-import com.predev.gymcrm.dto.resp.MyTodayScheduleRespDto;
-import com.predev.gymcrm.dto.resp.SearchReservationUserRespDto;
-import com.predev.gymcrm.dto.resp.SelectMyMembersInformationRespDto;
+import com.predev.gymcrm.dto.resp.TrainerSearchScheduleRespDto;
+import com.predev.gymcrm.dto.resp.TrainerSearchMyMembersInformationRespDto;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -43,7 +40,7 @@ public class ReservationController {
 
     @GetMapping("/trainer/schedulefor2days")
     public ResponseEntity<?> getTodayReservation(MyTodayScheduleReqDto reqDto) {
-        List<MyTodayScheduleRespDto> reservations = reservationService.searchTodayReservation(reqDto);
+        List<TrainerSearchScheduleRespDto> reservations = reservationService.searchTodayReservation(reqDto);
         return ResponseEntity.ok(reservations);
     }
 
@@ -65,18 +62,18 @@ public class ReservationController {
 
     @GetMapping("/user/information")
     public ResponseEntity<?> getMymemberInformation(SearchMymembersInformationReqDto searchMymembersInformationReqDto) {
-        List<SelectMyMembersInformationRespDto> respDtos = reservationService.selectMymembersInformation(searchMymembersInformationReqDto);
+        List<TrainerSearchMyMembersInformationRespDto> respDtos = reservationService.searchMymembersInformation(searchMymembersInformationReqDto);
         return ResponseEntity.ok(respDtos);
     }
 
     @GetMapping("/admin/reservations")
     public ResponseEntity<?> searchReservations(AdminSearchReservationReqDto reqDto) {
-        return ResponseEntity.ok(reservationService.SearchReservations(reqDto));
+        return ResponseEntity.ok(reservationService.searchReservations(reqDto));
     }
     
     @GetMapping("/mypage/members")
     public ResponseEntity<?> getMyMembers(@RequestParam(value = "accountId") int trainerAccountId) {
-        return ResponseEntity.ok(reservationService.selectMyMembers(trainerAccountId));
+        return ResponseEntity.ok(reservationService.searchMyMembers(trainerAccountId));
 
     }
 
