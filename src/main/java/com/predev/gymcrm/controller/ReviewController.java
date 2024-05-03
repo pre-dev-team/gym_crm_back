@@ -27,8 +27,8 @@ public class ReviewController {
 }
 
     // 상위 3명의 트레이너 정보 및 가장 높은 점수를 가진 리뷰 조회
-    @GetMapping("/toprated")
-    public ResponseEntity<?> getTopRatedTrainersInformation() {
-        return ResponseEntity.ok(reviewService.searchTopRatedReviews());
-    }
+//    @GetMapping("/toprated")
+//    public ResponseEntity<?> getTopRatedTrainersInformation() {
+//        return ResponseEntity.ok(reviewService.searchTopRatedReviews());
+//    }
 }
