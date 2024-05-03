@@ -5,7 +5,7 @@ import lombok.Data;
 
 
 @Data
-public class EditReservationReqDto {
+public class UserEditReservationReqDto {
 
     private int prevReservationId;
     private int accountId;

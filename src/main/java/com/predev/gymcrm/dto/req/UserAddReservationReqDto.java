@@ -6,7 +6,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class MakeReservationReqDto {
+public class UserAddReservationReqDto {
 
     private int accountId;
     private int trainerId;

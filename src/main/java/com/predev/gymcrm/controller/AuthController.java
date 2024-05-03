@@ -35,7 +35,6 @@ public class AuthController {
         return ResponseEntity.created(null).body(reqDto);
     }
 
-
     @ValidAspect
     @PostMapping("/oauth2/signup")
     public ResponseEntity<?> oAuth2Signup(@Valid @RequestBody OAuth2SignupReqDto oAuth2SignupReqDto, BindingResult bindingResult) {

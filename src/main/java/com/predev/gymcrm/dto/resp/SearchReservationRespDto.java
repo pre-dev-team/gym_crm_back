@@ -9,9 +9,12 @@ import java.time.LocalDateTime;
 @Data
 public class SearchReservationRespDto {
     private int reservationId;
-    private int trainerId;
     private String reservationDate;
+    private int trainerId;
+    private String trainerName;
+    private int userId;
+    private String userName;
+    private int userAccountId;
     private int timeId;
     private String timeDuration;
-    private String name;
 }

@@ -2,15 +2,12 @@ package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.*;
 import com.predev.gymcrm.dto.resp.MyTodayScheduleRespDto;
-import com.predev.gymcrm.dto.resp.SearchReservationUserRespDto;
 import com.predev.gymcrm.dto.resp.SelectMyMembersInformationRespDto;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -21,7 +18,7 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping("/user/make")
-    public ResponseEntity<?> getReservation(@RequestBody MakeReservationReqDto reqDto) {
+    public ResponseEntity<?> getReservation(@RequestBody UserAddReservationReqDto reqDto) {
         reservationService.insertReservation(reqDto);
         return ResponseEntity.ok(null);
     }
@@ -42,14 +39,14 @@ public class ReservationController {
     }
 
     @GetMapping("/trainer/schedulefor2days")
-    public ResponseEntity<?> getTodayReservation(MyTodayScheduleReqDto reqDto) {
+    public ResponseEntity<?> getTodayReservation(TrainerSearchTodayScheduleReqDto reqDto) {
         List<MyTodayScheduleRespDto> reservations = reservationService.searchTodayReservation(reqDto);
         return ResponseEntity.ok(reservations);
     }
 
     @GetMapping("/trainer/searchall")
-    public ResponseEntity<?> getSearchAllUser(SearchReservationUserReqDto searchReservationUserReqDto) {
-        return ResponseEntity.ok(reservationService.searchReservationsUser(searchReservationUserReqDto));
+    public ResponseEntity<?> getSearchAllUser(TrainerSearchReservationUserReqDto trainerSearchReservationUserReqDto) {
+        return ResponseEntity.ok(reservationService.searchReservationsUser(trainerSearchReservationUserReqDto));
     }
 
     @DeleteMapping("/user")
@@ -58,14 +55,14 @@ public class ReservationController {
     }
 
     @PutMapping("/user")
-    public ResponseEntity<?> updateReservation(@RequestBody EditReservationReqDto reqDto) {
+    public ResponseEntity<?> updateReservation(@RequestBody UserEditReservationReqDto reqDto) {
         reservationService.editReservation(reqDto);
         return ResponseEntity.ok(null);
     }
 
     @GetMapping("/user/information")
-    public ResponseEntity<?> getMymemberInformation(SearchMymembersInformationReqDto searchMymembersInformationReqDto) {
-        List<SelectMyMembersInformationRespDto> respDtos = reservationService.selectMymembersInformation(searchMymembersInformationReqDto);
+    public ResponseEntity<?> getMymemberInformation(TrainerSearchMembersInformationReqDto trainerSearchMembersInformationReqDto) {
+        List<SelectMyMembersInformationRespDto> respDtos = reservationService.selectMymembersInformation(trainerSearchMembersInformationReqDto);
         return ResponseEntity.ok(respDtos);
     }
 

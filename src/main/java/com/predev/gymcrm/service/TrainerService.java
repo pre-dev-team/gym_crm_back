@@ -1,19 +1,15 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
-import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
-import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.req.AdminSearchUnreservedTrainerReqDto;
 import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
 import com.predev.gymcrm.dto.resp.*;
 import com.predev.gymcrm.entity.*;
 import com.predev.gymcrm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +43,7 @@ public class TrainerService {
     public void updateTrainerProfileImg(UpdateTrainerProfileImgReqDto reqDto) {
         trainerMapper.updateTrainerProfileImgUrl(reqDto.toEntity());
     }
-    public List<SearchUnreservedTrainerRespDto> searchUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
+    public List<SearchUnreservedTrainerRespDto> searchUnreservedTrainers(AdminSearchUnreservedTrainerReqDto reqDto) {
         List<TrainerAccountView> trainers = trainerMapper.findAvailableTrainerAtDayAndTime(TimeService.trimDateString(reqDto.getDate()), reqDto.getTimeId());
         List<SearchUnreservedTrainerRespDto> respDtos = trainers.stream().map(TrainerAccountView::toSearchUnreservedTrainerRespDto).collect(Collectors.toList());
         return respDtos;

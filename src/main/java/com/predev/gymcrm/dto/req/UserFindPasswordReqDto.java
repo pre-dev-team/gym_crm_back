@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FindPwReqDto {
+public class UserFindPasswordReqDto {
     private String username;
     private String email;
 }

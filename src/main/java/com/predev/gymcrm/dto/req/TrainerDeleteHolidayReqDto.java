@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class CancelHolidayReqDto {
+public class TrainerDeleteHolidayReqDto {
     private int accountId;
     private String holidayDate;
 

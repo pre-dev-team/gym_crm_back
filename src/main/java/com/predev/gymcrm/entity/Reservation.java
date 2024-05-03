@@ -77,7 +77,9 @@ public class Reservation {
                 .reservationId(reservationId)
                 .reservationDate(reservationDate)
                 .trainerId(trainerId)
-                .name(trainerAccountView.getName())
+                .trainerName(trainerAccountView.getName())
+                .userId(userId)
+                .userName(userAccountView.getName())
                 .timeId(timeId)
                 .timeDuration(time.getTimeDuration())
                 .build();

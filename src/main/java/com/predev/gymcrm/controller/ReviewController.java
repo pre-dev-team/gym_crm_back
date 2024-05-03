@@ -1,7 +1,7 @@
 package com.predev.gymcrm.controller;
 
-import com.predev.gymcrm.dto.req.ReviewReqDto;
-import com.predev.gymcrm.dto.req.SearchUserReviewReqDto;
+import com.predev.gymcrm.dto.req.UserAddReviewReqDto;
+import com.predev.gymcrm.dto.req.UserSearchReviewReqDto;
 import com.predev.gymcrm.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,15 +14,14 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    // 트레이너에 대한 리뷰 작성 API
     @PostMapping("/user/make")
-    public ResponseEntity<?> addReview(@RequestBody ReviewReqDto reviewReqDto) {
-        return ResponseEntity.created(null).body(reviewService.insertReview(reviewReqDto));
+    public ResponseEntity<?> addReview(@RequestBody UserAddReviewReqDto userAddReviewReqDto) {
+        return ResponseEntity.created(null).body(reviewService.insertReview(userAddReviewReqDto));
     }
 
     @GetMapping("/user")
-    public ResponseEntity<?> getUserReviews(SearchUserReviewReqDto reqDto) {
-        return ResponseEntity.ok(reviewService.searchAllUserReviews(reqDto));
+    public ResponseEntity<?> getUserReviews(UserSearchReviewReqDto reqDto) {
+        return ResponseEntity.ok(reviewService.searchAllOfUserReviews(reqDto));
     }
     
     @GetMapping("/toprated")

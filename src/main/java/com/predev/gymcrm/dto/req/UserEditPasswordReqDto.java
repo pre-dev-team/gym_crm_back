@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
-public class EditPasswordReqDto {
+public class UserEditPasswordReqDto {
 
     private int accountId;
 

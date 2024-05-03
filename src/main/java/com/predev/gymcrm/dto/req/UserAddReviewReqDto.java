@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewReqDto {
+public class UserAddReviewReqDto {
     private int trainerId;
     private int accountId;
     private String reviewText;

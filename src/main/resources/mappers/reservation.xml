@@ -20,6 +20,19 @@
         <association property="trainerAccountView" resultMap="TrainerAccountViewResultMap"/>
     </resultMap>
 
+    <resultMap id="ReservationResultMap2" type="com.predev.gymcrm.entity.Reservation">
+        <id property="reservationId" column="reservation_id" />
+        <result property="userId" column="user_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="timeId" column="time_id" />
+        <result property="reservationDate" column="reservation_date" />
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date" />
+        <association property="time" resultMap="TimeResultMap" />
+        <association property="userAccountView" resultMap="UserAccountViewResultMap2"/>
+        <association property="trainerAccountView" resultMap="TrainerAccountViewResultMap2"/>
+    </resultMap>
+
     <resultMap id="UserAccountViewResultMap" type="com.predev.gymcrm.entity.UserAccountView">
         <id property="accountId" column="account_id" />
         <result property="userId" column="user_id" />
@@ -31,12 +44,34 @@
         <result property="email" column="email" />
     </resultMap>
 
+    <resultMap id="UserAccountViewResultMap2" type="com.predev.gymcrm.entity.UserAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="userId" column="user_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="user_name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
+
     <resultMap id="TrainerAccountViewResultMap" type="com.predev.gymcrm.entity.TrainerAccountView">
         <id property="accountId" column="account_id" />
         <result property="trainerId" column="trainer_id" />
         <result property="roleId" column="role_id" />
         <result property="username" column="username" />
         <result property="name" column="name" />
+        <result property="password" column="password" />
+        <result property="phone" column="phone" />
+        <result property="email" column="email" />
+    </resultMap>
+
+    <resultMap id="TrainerAccountViewResultMap2" type="com.predev.gymcrm.entity.TrainerAccountView">
+        <id property="accountId" column="account_id" />
+        <result property="trainerId" column="trainer_id" />
+        <result property="roleId" column="role_id" />
+        <result property="username" column="username" />
+        <result property="name" column="trainer_name" />
         <result property="password" column="password" />
         <result property="phone" column="phone" />
         <result property="email" column="email" />
@@ -115,7 +150,6 @@
         where
             reservation_id = #{reservation_id};
     </delete>
-
 
     <select id="findAllReservation"
             resultType="com.predev.gymcrm.entity.Reservation"
@@ -227,55 +261,36 @@
     </select>
 
     <select id="findReservationByNameAndPeriod"
-            resultMap="ReservationResultMap">
-        <choose>
-            <when test="searchType == 1">
-                select
-                    rt.reservation_id,
-                    rt.trainer_id,
-                    rt.user_id,
-                    ut.account_id,
-                    at.username,
-                    at.name,
-                    rt.time_id,
-                    tit.time_duration,
-                    rt.reservation_date
-                from
-                    reservation_tb rt
-                left outer join
-                    time_tb tit	on (tit.time_id = rt.time_id)
-                left outer join
-                    user_tb ut on (ut.user_id = rt.user_id)
-                left outer join
-                    account_tb at on (at.account_id = ut.account_id)
-                where
-                    reservation_date between #{startDate} and #{endDate}
-                    and at.name like concat('%', #{name}, '%')
-            </when>
-            <when test="searchType == 2">
-                select
-                    rt.reservation_id,
-                    rt.trainer_id,
-                    rt.user_id,
-                    tt.account_id,
-                    at.username,
-                    at.name,
-                    rt.time_id,
-                    tit.time_duration,
-                    rt.reservation_date
-                from
-                    reservation_tb rt
-                left outer join
-                    time_tb tit	on (rt.time_id = tit.time_id)
-                left outer join
-                    trainer_tb tt on (tt.trainer_id = rt.trainer_id)
-                left outer join
-                    account_tb at on (at.account_id = tt.account_id)
-                where
-                    reservation_date between #{startDate} and #{endDate}
-                    and name like concat('%', #{name}, '%')
-            </when>
-        </choose>
+            resultMap="ReservationResultMap2">
+        select
+            rt.reservation_id,
+            rt.reservation_date,
+            rt.time_id,
+            tit.time_duration,
+            rt.trainer_id,
+            tav.name as trainer_name,
+            rt.user_id,
+            uav.name as user_name,
+            uav.account_id,
+            uav.username
+        from
+            reservation_tb rt
+            left outer join
+                time_tb tit	on (rt.time_id = tit.time_id)
+            left outer join
+                user_account_view uav on (rt.user_id = uav.user_id)
+            left outer join
+                trainer_account_view tav on (rt.trainer_id = tav.trainer_id)
+        where
+            reservation_date between #{startDate} and #{endDate}
+            <choose>
+                <when test="searchType == 1">
+                    and uav.name like concat('%', #{name}, '%')
+                </when>
+                <when test="searchType == 2">
+                    and tav.name like concat('%', #{name}, '%')
+                </when>
+            </choose>
         order by
             rt.reservation_date desc
     </select>
@@ -357,7 +372,7 @@
         where
             tav.account_id = #{trainerAccountId}
         group by
-            user_id;
+            user_id
     </select>
 
 </mapper>

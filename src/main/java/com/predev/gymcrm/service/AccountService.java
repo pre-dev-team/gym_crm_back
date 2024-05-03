@@ -1,7 +1,7 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.AdminPasswordChangeReqDto;
-import com.predev.gymcrm.dto.req.EditPasswordReqDto;
+import com.predev.gymcrm.dto.req.AdminEditPasswordReqDto;
+import com.predev.gymcrm.dto.req.UserEditPasswordReqDto;
 import com.predev.gymcrm.dto.resp.SearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.exception.ValidException;
@@ -22,7 +22,7 @@ public class AccountService {
     private AuthMapper authMapper;
 
 
-    public void editAccountPassword(EditPasswordReqDto reqDto) {
+    public void editAccountPassword(UserEditPasswordReqDto reqDto) {
         Account account = authMapper.findAccountByAccountId(reqDto.getAccountId());
         String encodedPassword = account.getPassword();
 
@@ -39,7 +39,7 @@ public class AccountService {
         authMapper.updateAccountPassword(account);
     }
 
-    public int editAdminPassword(AdminPasswordChangeReqDto reqDto) {
+    public int editAdminPassword(AdminEditPasswordReqDto reqDto) {
         System.out.println(reqDto);
         Account account = authMapper.findAccountByUsername("admin");
         String encodedPassword = account.getPassword();

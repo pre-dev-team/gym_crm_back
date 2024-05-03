@@ -1,9 +1,8 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.InbodyReqDto;
+import com.predev.gymcrm.dto.req.TrainerAddInbodyReqDto;
 import com.predev.gymcrm.dto.resp.InbodyRespDto;
 import com.predev.gymcrm.dto.resp.SearchInbodyRespDto;
-import com.predev.gymcrm.dto.resp.SearchUnreservedTrainerRespDto;
 import com.predev.gymcrm.entity.Inbody;
 import com.predev.gymcrm.repository.InbodyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +17,9 @@ public class InbodyService {
     @Autowired
     private InbodyMapper inbodyMapper;
 
-    public int addInbody(InbodyReqDto inbodyReqDto) {
+    public int addInbody(TrainerAddInbodyReqDto trainerAddInbodyReqDto) {
         int successCount = 0;
-        successCount =inbodyMapper.insertInbody(inbodyReqDto.toInbodyEntity());
+        successCount =inbodyMapper.insertInbody(trainerAddInbodyReqDto.toInbodyEntity());
         return successCount;
     }
 

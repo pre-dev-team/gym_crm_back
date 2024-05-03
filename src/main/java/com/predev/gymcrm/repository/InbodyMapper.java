@@ -1,7 +1,5 @@
 package com.predev.gymcrm.repository;
 
-import com.predev.gymcrm.dto.req.InbodyReqDto;
-import com.predev.gymcrm.dto.resp.InbodyRespDto;
 import com.predev.gymcrm.entity.Inbody;
 import org.apache.ibatis.annotations.Mapper;
 

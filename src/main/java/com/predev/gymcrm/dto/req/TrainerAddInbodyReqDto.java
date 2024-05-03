@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class InbodyReqDto {
+public class TrainerAddInbodyReqDto {
     private int userId;
     private String inbodyUrl;
     private int weight;

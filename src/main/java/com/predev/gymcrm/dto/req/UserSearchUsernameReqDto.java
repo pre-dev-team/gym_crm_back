@@ -3,7 +3,7 @@ package com.predev.gymcrm.dto.req;
 import lombok.Data;
 
 @Data
-public class SearchUsernameReqDto {
+public class UserSearchUsernameReqDto {
     private String name;
     private String email;
 }

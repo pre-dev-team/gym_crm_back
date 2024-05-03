@@ -4,7 +4,7 @@ import com.predev.gymcrm.entity.WorkoutRoutine;
 import lombok.Data;
 
 @Data
-public class RoutineMakeReqDto {
+public class TrainerAddRoutineReqDto {
     private int reservationId;
     private int workoutId;
     private int workoutRoutineCount;

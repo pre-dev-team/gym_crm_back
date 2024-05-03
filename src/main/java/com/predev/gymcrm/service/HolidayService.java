@@ -1,8 +1,8 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.AdminDecideHolidayAppliesReqDto;
-import com.predev.gymcrm.dto.req.CancelHolidayReqDto;
-import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.req.TrainerDeleteHolidayReqDto;
+import com.predev.gymcrm.dto.req.TrainerAddHolidayReqDto;
 import com.predev.gymcrm.dto.resp.AdminSearchHolidayRespDto;
 import com.predev.gymcrm.dto.resp.SelectHolidayRespDto;
 import com.predev.gymcrm.entity.Account;
@@ -26,7 +26,7 @@ public class HolidayService {
     @Autowired
     private HolidayMapper holidayMapper;
 
-    public void insertTrainerHoliday(TrainerHolidayReqDto reqDto) {
+    public void insertTrainerHoliday(TrainerAddHolidayReqDto reqDto) {
         int trainerId = authMapper.findTrainerIdByAccountId(reqDto.getAccountId());
         String date = TimeService.trimDateString(reqDto.getHolidayDate());
         List<Integer> timeIds = new ArrayList<>();
@@ -45,7 +45,7 @@ public class HolidayService {
         holidayMapper.saveHoliday(timeIds, reqDto.toTrainerHolidayEntity(date, trainerId));
     }
 
-    public void deleteHoliday(CancelHolidayReqDto reqDto) {
+    public void deleteHoliday(TrainerDeleteHolidayReqDto reqDto) {
         int trainerId = authMapper.findTrainerIdByAccountId(reqDto.getAccountId());
         holidayMapper.deleteHoliday(reqDto.toDeleteHolidayEntity(trainerId));
     }

@@ -1,8 +1,8 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.AdminDecideHolidayAppliesReqDto;
-import com.predev.gymcrm.dto.req.CancelHolidayReqDto;
-import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.req.TrainerDeleteHolidayReqDto;
+import com.predev.gymcrm.dto.req.TrainerAddHolidayReqDto;
 import com.predev.gymcrm.service.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +16,15 @@ public class HolidayController {
     private HolidayService holidayService;
 
     @PostMapping("/insert")
-    public ResponseEntity<?> addTrainerHoliday(@RequestBody TrainerHolidayReqDto trainerHolidayReqDto) {
-        holidayService.insertTrainerHoliday(trainerHolidayReqDto);
+    public ResponseEntity<?> addTrainerHoliday(@RequestBody TrainerAddHolidayReqDto trainerAddHolidayReqDto) {
+        holidayService.insertTrainerHoliday(trainerAddHolidayReqDto);
         return ResponseEntity.created(null).body(true);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteHoliday(@RequestBody CancelHolidayReqDto cancelHolidayReqDto) {
-        holidayService.deleteHoliday(cancelHolidayReqDto);
-        return ResponseEntity.ok(cancelHolidayReqDto);
+    public ResponseEntity<?> deleteHoliday(@RequestBody TrainerDeleteHolidayReqDto trainerDeleteHolidayReqDto) {
+        holidayService.deleteHoliday(trainerDeleteHolidayReqDto);
+        return ResponseEntity.ok(trainerDeleteHolidayReqDto);
     }
 
     @GetMapping("/select")
