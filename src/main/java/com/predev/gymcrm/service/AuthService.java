@@ -1,15 +1,12 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.AccountSigninReqDto;
 import com.predev.gymcrm.dto.req.OAuth2MergeReqDto;
 import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
 import com.predev.gymcrm.dto.resp.AdminSearchUserRespDto;
-import com.predev.gymcrm.dto.resp.SearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.AdminSearchUser;
 import com.predev.gymcrm.entity.OAuth2;
-import com.predev.gymcrm.entity.User;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
 import com.predev.gymcrm.dto.req.AccountSignupReqDto;
@@ -83,7 +80,6 @@ public class AuthService {
 
     public void oAuth2Merge(OAuth2MergeReqDto oAuth2MergeReqDto) {
         Account account = authMapper.findAccountByUsername(oAuth2MergeReqDto.getUsername());
-
         if(account == null) {
             throw  new UsernameNotFoundException("사용자 정보를 확인하세요.");
         }
@@ -95,6 +91,8 @@ public class AuthService {
                 .accountId(account.getAccountId())
                 .oauth2ProviderName(oAuth2MergeReqDto.getOauth2ProviderName())
                 .build();
+
+        authMapper.saveOAuth2(oAuth2);
     }
 
     public void deleteTrainer(int trainerId) {
@@ -102,7 +100,7 @@ public class AuthService {
 
     }
 
-    public String Signin(AccountSigninReqDto reqDto) {
+    public String signIn(AccountSigninReqDto reqDto) {
         Account account = authMapper.findAccountByUsername(reqDto.getUsername());
 
         if(account == null ) {
@@ -114,17 +112,7 @@ public class AuthService {
         return jwtProvider.generateJwt(account);
     }
 
-    public int findUserIdByAccountId(int accountId) {
-        return authMapper.findUserIdByAccountId(accountId);
-    }
-
-    public int searchTrainerId(int accountId) {
-        int trainerId = authMapper.findTrainerIdByAccountId(accountId);
-
-        return trainerId;
-    }
-
-    public List<AdminSearchUserRespDto> adminSearchUsersByName(String name) {
+    public List<AdminSearchUserRespDto> searchAdminhUsersByName(String name) {
         List<AdminSearchUser> users = authMapper.findUserInfosWithReservationCountByName(name);
         if(users.isEmpty()) {
             return null;

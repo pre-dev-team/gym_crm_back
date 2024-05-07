@@ -1,7 +1,5 @@
 package com.predev.gymcrm.entity;
 
-import com.predev.gymcrm.dto.req.SearchUserReqDto;
-import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
 import com.predev.gymcrm.security.Principal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,12 +41,6 @@ public class Account {
                 .username(username)
                 .email(email)
                 .authorities(this.getAuthorities())
-                .build();
-    }
-
-    public SearchUserReqDto toSearchUserReqDto() {
-        return SearchUserReqDto.builder()
-                .accountId(accountId)
                 .build();
     }
 

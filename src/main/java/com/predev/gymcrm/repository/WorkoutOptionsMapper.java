@@ -8,7 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface WorkoutOptionsMapper {
-
-    public List<WorkoutCategory> getAllWorkoutCategory();
+    public List<WorkoutCategory> findAllWorkoutCategory();
     public List<Workout> findAllWorkoutByWorkoutCategoryId(int workoutCategoryId);
 }

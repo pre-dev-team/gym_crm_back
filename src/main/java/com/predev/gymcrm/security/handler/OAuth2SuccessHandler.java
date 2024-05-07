@@ -39,16 +39,13 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
             DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
             String providerName = oAuth2User.getAttribute("provider").toString();
 
-            response.sendRedirect("http://" + clientAddress + "/auth/oauth2/signup?name=" + name + "&provider=" + providerName);
+            response.sendRedirect("http://" + clientAddress + "/auth/oauth2?name=" + name + "&provider=" + providerName);
             return;
         }
 
         // OAuth2 로그인을 통해 회원가입을 진행한 기록이 있는 상태
         String accessToken = jwtProvider.generateJwt(account);
-        response.sendRedirect("http://" + clientAddress + "/auth/oauth2/merge?accessToken=" + accessToken);
-
-
-
+        response.sendRedirect("http://" + clientAddress + "/auth/oauth2/signin?accessToken=" + accessToken);
 
     }
 }

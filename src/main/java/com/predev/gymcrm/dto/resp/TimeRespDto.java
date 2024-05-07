@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class
 TimeRespDto {
-    private int timeId;         // 시간대 ID
-    private String timeDuration;  // 시간대
+    private int timeId;
+    private String timeDuration;
 
     public Time toEntity() {
         return Time.builder()

@@ -1,19 +1,11 @@
 package com.predev.gymcrm.controller;
 
-import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
-import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
-import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.req.AdminSearchUnreservedTrainerReqDto;
 import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
-import com.predev.gymcrm.dto.resp.SearchMyMembersRespDto;
-import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import com.predev.gymcrm.service.TrainerService;
-import com.predev.gymcrm.service.WorkoutRoutineService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/trainer")
@@ -24,32 +16,32 @@ public class TrainerController {
 
     @GetMapping("/mypage/trainerInfo")
     public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "accountId") int accountId) {
-        TrainerInfoRespDto trainerInfo = trainerService.selectAllTrainerInfo(accountId);
-        return ResponseEntity.ok(trainerInfo);
+        return ResponseEntity.ok(trainerService.searchAllTrainerInfo(accountId));
     }
 
-    @GetMapping("/trainers/user")
+    @GetMapping("/user/trainers")
     public ResponseEntity<?> getTrainers() {
-        return ResponseEntity.ok(trainerService.selectTrainersForReservation());
+        return ResponseEntity.ok(trainerService.searchTrainersForReservation());
     }
+
     @PutMapping("/mypage/trainerimg")
     public ResponseEntity<?> updateTrainerImg(@RequestBody UpdateTrainerProfileImgReqDto reqDto) {
-        trainerService.updateTrainerProfileImg(reqDto);
+        trainerService.editTrainerProfileImg(reqDto);
         return ResponseEntity.ok(true);
     }
 
     @GetMapping("/trainer/day")
-    public ResponseEntity<?> getUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
+    public ResponseEntity<?> getUnreservedTrainers(AdminSearchUnreservedTrainerReqDto reqDto) {
         return ResponseEntity.ok(trainerService.searchUnreservedTrainers(reqDto));
     }
 
     @GetMapping("/admin/trainers")
     public ResponseEntity<?> getTrainersByAdmin() {
-        return ResponseEntity.ok(trainerService.adminSearchTrainers());
+        return ResponseEntity.ok(trainerService.searchAdminTrainers());
     }
 
     @GetMapping("/admin/reservations/month/count")
     public ResponseEntity<?> getWeeklyTrainerReservationCounts() {
-        return ResponseEntity.ok(trainerService.getWeeklyTrainerReservationCounts());
+        return ResponseEntity.ok(trainerService.searchWeeklyTrainerReservationCounts());
     }
 }

@@ -1,8 +1,8 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.AdminDecideHolidayAppliesReqDto;
-import com.predev.gymcrm.dto.req.CancelHolidayReqDto;
-import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.req.TrainerDeleteHolidayReqDto;
+import com.predev.gymcrm.dto.req.TrainerAddHolidayReqDto;
 import com.predev.gymcrm.service.HolidayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,36 +15,36 @@ public class HolidayController {
     @Autowired
     private HolidayService holidayService;
 
-    @PostMapping("/insert")
-    public ResponseEntity<?> addTrainerHoliday(@RequestBody TrainerHolidayReqDto trainerHolidayReqDto) {
-        holidayService.insertTrainerHoliday(trainerHolidayReqDto);
+    @PostMapping("/trainer/insert")
+    public ResponseEntity<?> addTrainerHoliday(@RequestBody TrainerAddHolidayReqDto trainerAddHolidayReqDto) {
+        holidayService.insertTrainerHoliday(trainerAddHolidayReqDto);
         return ResponseEntity.created(null).body(true);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteHoliday(@RequestBody CancelHolidayReqDto cancelHolidayReqDto) {
-        holidayService.deleteHoliday(cancelHolidayReqDto);
-        return ResponseEntity.ok(cancelHolidayReqDto);
+    @DeleteMapping("/trainer/cancel")
+    public ResponseEntity<?> deleteHoliday(@RequestBody TrainerDeleteHolidayReqDto trainerDeleteHolidayReqDto) {
+        holidayService.deleteHoliday(trainerDeleteHolidayReqDto);
+        return ResponseEntity.ok(trainerDeleteHolidayReqDto);
     }
 
-    @GetMapping("/select")
+    @GetMapping("/trainer")
     public ResponseEntity<?> getHolidays(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(holidayService.selectHoliday(accountId));
+        return ResponseEntity.ok(holidayService.searchHoliday(accountId));
     }
 
-    @GetMapping("/find")
+    @GetMapping("/user/trainer/day")
     public ResponseEntity<?> getHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
-        return ResponseEntity.ok(holidayService.selectHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
+        return ResponseEntity.ok(holidayService.searchHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
     }
 
     @GetMapping("/admin/unconfirmed")
     public ResponseEntity<?> getUnconfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
-        return ResponseEntity.ok(holidayService.getUnconfirmedHolidays(trainerId));
+        return ResponseEntity.ok(holidayService.searchUnconfirmedHolidays(trainerId));
     }
 
     @GetMapping("/admin/confirmed")
     public ResponseEntity<?> getConfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
-        return ResponseEntity.ok(holidayService.getConfirmedHolidays(trainerId));
+        return ResponseEntity.ok(holidayService.searchConfirmedHolidays(trainerId));
     }
 
     @PutMapping("/admin/decide")

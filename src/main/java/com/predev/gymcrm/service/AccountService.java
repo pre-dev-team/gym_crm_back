@@ -1,8 +1,8 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.AdminPasswordChangeReqDto;
-import com.predev.gymcrm.dto.req.EditPasswordReqDto;
-import com.predev.gymcrm.dto.resp.SearchAccountInfoRespDto;
+import com.predev.gymcrm.dto.req.AdminEditPasswordReqDto;
+import com.predev.gymcrm.dto.req.UserEditPasswordReqDto;
+import com.predev.gymcrm.dto.resp.TrainerSearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.exception.ValidException;
 import com.predev.gymcrm.repository.AuthMapper;
@@ -22,7 +22,7 @@ public class AccountService {
     private AuthMapper authMapper;
 
 
-    public void editAccountPassword(EditPasswordReqDto reqDto) {
+    public void editAccountPassword(UserEditPasswordReqDto reqDto) {
         Account account = authMapper.findAccountByAccountId(reqDto.getAccountId());
         String encodedPassword = account.getPassword();
 
@@ -39,8 +39,7 @@ public class AccountService {
         authMapper.updateAccountPassword(account);
     }
 
-    public int editAdminPassword(AdminPasswordChangeReqDto reqDto) {
-        System.out.println(reqDto);
+    public int editAdminPassword(AdminEditPasswordReqDto reqDto) {
         Account account = authMapper.findAccountByUsername("admin");
         String encodedPassword = account.getPassword();
         if (!passwordEncoder.matches(reqDto.getPrevPassword(), encodedPassword)) {
@@ -49,22 +48,26 @@ public class AccountService {
         if (passwordEncoder.matches(reqDto.getPassword(), encodedPassword)) {
             throw new ValidException(Map.of("newPassword", "새로운 비밀번호는 이전 비밀번호와 같을 수 없습니다 \n다시입력하세요"));
         }
-        return authMapper.updateAdminPassword(reqDto.getPassword());
+        return authMapper.updateAdminPassword(passwordEncoder.encode(reqDto.getPassword()));
     }
 
-    public SearchAccountInfoRespDto getAccountInfoByAccountId(int accountId) {
+    public TrainerSearchAccountInfoRespDto searchAccountInfoByAccountId(int accountId) {
         Account account = authMapper.findAccountByAccountId(accountId);
-        System.out.println(account);
         if (account == null) {
             System.out.println("account가 null입니다");
             return null;
         }
-        return SearchAccountInfoRespDto.builder()
+        return TrainerSearchAccountInfoRespDto.builder()
                 .accountId(account.getAccountId())
                 .username(account.getUsername())
                 .name(account.getName())
                 .phone(account.getPhone())
                 .email(account.getEmail())
                 .build();
+    }
+    public int searchTrainerId(int accountId) {
+        int trainerId = authMapper.findTrainerIdByAccountId(accountId);
+
+        return trainerId;
     }
 }

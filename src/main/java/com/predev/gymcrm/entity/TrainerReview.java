@@ -1,6 +1,6 @@
 package com.predev.gymcrm.entity;
 
-import com.predev.gymcrm.dto.resp.ReviewRespDto;
+import com.predev.gymcrm.dto.resp.SearchReviewRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,8 +24,8 @@ public class TrainerReview {
     private Trainer trainer;
     private TrainerAccountView trainerAccountView;
     private UserAccountView userAccountView;
-    public ReviewRespDto toReviewRespDto() {
-        return ReviewRespDto.builder()
+    public SearchReviewRespDto toReviewRespDto() {
+        return SearchReviewRespDto.builder()
                 .trainerReviewId(this.trainerReviewId)
                 .trainerId(this.trainerId)
                 .userId(this.userId)

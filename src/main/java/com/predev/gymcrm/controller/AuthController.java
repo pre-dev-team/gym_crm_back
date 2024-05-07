@@ -18,9 +18,6 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @Autowired
-    private ReservationService reservationService;
-
     @ValidAspect
     @PostMapping("/user/signup")
     public ResponseEntity<?> userSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
@@ -29,12 +26,11 @@ public class AuthController {
     }
 
     @ValidAspect
-    @PostMapping("/trainer/signup")
+    @PostMapping("/admin/trainer/signup")
     public ResponseEntity<?> trainerSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {
         authService.trainerSignup(reqDto);
         return ResponseEntity.created(null).body(reqDto);
     }
-
 
     @ValidAspect
     @PostMapping("/oauth2/signup")
@@ -49,25 +45,22 @@ public class AuthController {
         return ResponseEntity.ok(true);
     }
 
-    @GetMapping("admin/users")
+    @GetMapping("/admin/users")
     public ResponseEntity<?> getUsersByName(@RequestParam(value = "name") String name) {
-        return ResponseEntity.ok(authService.adminSearchUsersByName(name));
+        return ResponseEntity.ok(authService.searchAdminhUsersByName(name));
     }
 
-    @DeleteMapping("/trainer")
+    @DeleteMapping("/admin/trainer/resign")
     public ResponseEntity<?> deleteTrainer(@RequestParam(value = "trainerId")int trainerId) {
         authService.deleteTrainer(trainerId);
         return ResponseEntity.ok(trainerId);
     }
 
-    @PostMapping("/account/signin")
+    @PostMapping("/user/signin")
     public ResponseEntity<?> userSignin(@RequestBody AccountSigninReqDto reqDto) {
-        return ResponseEntity.ok(authService.Signin(reqDto));
+        return ResponseEntity.ok(authService.signIn(reqDto));
     }
 
-    @GetMapping("/account/trainerid")
-    public ResponseEntity<?> getTrainerId(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(authService.searchTrainerId(accountId));
-    }
+
 
 }

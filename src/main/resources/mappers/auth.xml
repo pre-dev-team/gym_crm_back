@@ -11,6 +11,7 @@
         <result property="createDate" column="create_date" />
         <result property="updateDate" column="update_date" />
     </resultMap>
+
     <resultMap id="AccountResultMap" type="com.predev.gymcrm.entity.Account">
         <id property="accountId" column="account_id" />
         <result property="username" column="username" />
@@ -20,6 +21,7 @@
         <result property="email" column="email" />
         <association property="role" resultMap="RoleResultMap" />
     </resultMap>
+
     <resultMap id="OAuth2ResultMap" type="com.predev.gymcrm.entity.OAuth2">
         <id property="oauth2Id" column="oauth2_id" />
         <result property="oauth2Name" column="oauth2_name"/>
@@ -72,8 +74,10 @@
     </insert>
 
     <insert id="saveOAuth2" parameterType="com.predev.gymcrm.entity.OAuth2">
-        insert into oauth2_tb
-        values(0, #{oauth2Name}, #{accountId}, #{oauth2ProviderName}, now(), now())
+        insert into
+            oauth2_tb
+        values
+            (0, #{oauth2Name}, #{accountId}, #{oauth2ProviderName}, now(), now())
     </insert>
 
     <update id="updateAccountPassword" parameterType="com.predev.gymcrm.entity.Account">
@@ -171,25 +175,6 @@
             account_tb
         where
             account_id = #{accountId}
-    </select>
-
-    <select id="findAccountByUserId" resultType="com.predev.gymcrm.entity.Account">
-        select
-            ut.user_id,
-            at.account_id,
-            at.role_id,
-            at.username,
-            at.password,
-            at.name,
-            at.phone,
-            at.email,
-            at.create_date,
-            at.update_date
-        from
-            user_tb ut
-            left outer join account_tb at on(at.account_id = ut.account_id)
-        where
-            user_id = #{userId}
     </select>
 
     <select id="findAccountByTrainerId" resultMap="AccountResultMap">

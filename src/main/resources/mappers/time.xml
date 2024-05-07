@@ -29,7 +29,7 @@
         <result property="email" column="email" />
     </resultMap>
 
-    <select id="getTimes" resultMap="TimeResultMap">
+    <select id="findTimes" resultMap="TimeResultMap">
         select
             time_id,
             time_duration,

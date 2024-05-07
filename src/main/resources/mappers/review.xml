@@ -150,6 +150,25 @@
             left outer join user_account_view uav
                 on(trt.user_id = uav.user_id)
         where
+            uav.account_id = #{accountId}
+    </select>
+    <select id="findReviewsByUserId" resultType="com.predev.gymcrm.entity.TrainerReview">
+        select
+            trt.trainer_review_id,
+            trt.trainer_id,
+            trt.user_id,
+            trt.trainer_review_text,
+            trt.trainer_review_score,
+            tav.name,
+            tav.trainer_profile_img_url,
+            trt.create_date
+        from
+            trainer_review_tb trt
+            left outer join trainer_account_view tav
+                on(trt.trainer_id = tav.trainer_id)
+            left outer join user_account_view uav
+                on(trt.user_id = uav.user_id)
+        where
             uav.user_id = #{userId}
     </select>
 

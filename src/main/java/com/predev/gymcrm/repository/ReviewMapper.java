@@ -9,7 +9,8 @@ import java.util.List;
 @Mapper
 public interface ReviewMapper {
     List<TrainerReview> findReviewsByTrainerId(int trainerId);
-    List<TrainerReview> findReviewsByUserAccountId(int userId);
+    List<TrainerReview> findReviewsByUserAccountId(int userAccountId);
+    List<TrainerReview> findReviewsByUserId(int userId);
     int insertTrainerReview(TrainerReview trainerReview);
     List<TopRatedReview> findTopRatedReviews();
 }

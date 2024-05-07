@@ -1,19 +1,15 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.RoutineMakeReqDto;
-import com.predev.gymcrm.dto.req.SearchUnreservedTrainerReqDto;
-import com.predev.gymcrm.dto.req.TrainerHolidayReqDto;
+import com.predev.gymcrm.dto.req.AdminSearchUnreservedTrainerReqDto;
 import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
 import com.predev.gymcrm.dto.resp.*;
 import com.predev.gymcrm.entity.*;
 import com.predev.gymcrm.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,13 +22,7 @@ public class TrainerService {
     @Autowired
     private TrainerMapper trainerMapper;
 
-    @Autowired
-    private WorkoutRoutineMapper workoutRoutineMapper;
-
-    @Autowired
-    private AuthMapper authMapper;
-
-    public TrainerInfoRespDto selectAllTrainerInfo(int accountId) {
+    public TrainerSearchInfoRespDto searchAllTrainerInfo(int accountId) {
         TrainerAccountView trainer = trainerMapper.findAllTrainerInfo(accountId);
         if(trainer != null) {
             return trainer.toTrainerInfoRespDto();
@@ -40,23 +30,23 @@ public class TrainerService {
         return null;
     }
 
-    public List<TrainerForReservationRespDto> selectTrainersForReservation() {
+    public List<TrainerSearchForReservationRespDto> searchTrainersForReservation() {
         List<TrainerAccountView> trainers = trainerMapper.findTrainers();
         return trainers.stream().map(TrainerAccountView::trainerForReservationRespDto).collect(Collectors.toList());
     }
-    public void updateTrainerProfileImg(UpdateTrainerProfileImgReqDto reqDto) {
+    public void editTrainerProfileImg(UpdateTrainerProfileImgReqDto reqDto) {
         trainerMapper.updateTrainerProfileImgUrl(reqDto.toEntity());
     }
-    public List<SearchUnreservedTrainerRespDto> searchUnreservedTrainers(SearchUnreservedTrainerReqDto reqDto) {
+    public List<UserSearchUnreservedTrainerRespDto> searchUnreservedTrainers(AdminSearchUnreservedTrainerReqDto reqDto) {
         List<TrainerAccountView> trainers = trainerMapper.findAvailableTrainerAtDayAndTime(TimeService.trimDateString(reqDto.getDate()), reqDto.getTimeId());
-        List<SearchUnreservedTrainerRespDto> respDtos = trainers.stream().map(TrainerAccountView::toSearchUnreservedTrainerRespDto).collect(Collectors.toList());
+        List<UserSearchUnreservedTrainerRespDto> respDtos = trainers.stream().map(TrainerAccountView::toSearchUnreservedTrainerRespDto).collect(Collectors.toList());
         return respDtos;
     }
-    public List<AdminSearchTrainerRespDto> adminSearchTrainers() {
+    public List<AdminSearchTrainerRespDto> searchAdminTrainers() {
         List<AdminSearchTrainer> adminSearchTrainers = trainerMapper.findAdminSearchTrainers();
         return adminSearchTrainers.stream().map(AdminSearchTrainer::toAdminSearchTrainerRespDto).collect(Collectors.toList());
     }
-    public List<AdminSearchWeeklyTrainerReservationCountsRespDto> getWeeklyTrainerReservationCounts() {
+    public List<AdminSearchWeeklyTrainerReservationCountsRespDto> searchWeeklyTrainerReservationCounts() {
         LocalDate today = LocalDate.now();
         LocalDate firstDayOfMonth = today.with(TemporalAdjusters.firstDayOfMonth());
         LocalDate firstDayOfFirstWeek = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(DayOfWeek.SUNDAY));

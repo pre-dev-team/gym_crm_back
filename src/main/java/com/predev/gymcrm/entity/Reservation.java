@@ -29,8 +29,8 @@ public class Reservation {
     private UserAccountView userAccountView;
     private TrainerAccountView trainerAccountView;
 
-    public SearchReservationUserRespDto toSearchReservationUserRespDto() {
-        return SearchReservationUserRespDto.builder()
+    public AdminSearchReservationUserRespDto toSearchReservationUserRespDto() {
+        return AdminSearchReservationUserRespDto.builder()
                 .reservationId(reservationId)
                 .reservationDate(reservationDate)
                 .userId(userId)
@@ -40,8 +40,8 @@ public class Reservation {
                 .build();
     }
 
-    public SearchMyMembersRespDto toSearchMyMembersRespDto() {
-        return SearchMyMembersRespDto.builder()
+    public TrainerSearchMyMembersRespDto toSearchMyMembersRespDto() {
+        return TrainerSearchMyMembersRespDto.builder()
                 .userId(userId)
                 .accountId(userAccountView.getAccountId())
                 .name(userAccountView.getName())
@@ -50,8 +50,8 @@ public class Reservation {
                 .build();
     }
 
-    public SelectMyMembersInformationRespDto toSelectMyMembersInformationRespDto() {
-        return SelectMyMembersInformationRespDto.builder()
+    public TrainerSearchMyMembersInformationRespDto toSelectMyMembersInformationRespDto() {
+        return TrainerSearchMyMembersInformationRespDto.builder()
                 .accountId(trainerAccountView.getAccountId())
                 .userId(userId)
                 .reservationDate(reservationDate)
@@ -61,8 +61,8 @@ public class Reservation {
                 .build();
     }
 
-    public MyTodayScheduleRespDto toMyTodayScheduleRespDto() {
-        return MyTodayScheduleRespDto.builder()
+    public TrainerSearchScheduleRespDto toMyTodayScheduleRespDto() {
+        return TrainerSearchScheduleRespDto.builder()
                 .reservationId(reservationId)
                 .trainerId(trainerId)
                 .timeId(timeId)
@@ -72,19 +72,21 @@ public class Reservation {
                 .build();
     }
 
-    public SearchReservationRespDto toSearchReservationRespDto() {
-        return SearchReservationRespDto.builder()
+    public AdminSearchReservationRespDto toSearchReservationRespDto() {
+        return AdminSearchReservationRespDto.builder()
                 .reservationId(reservationId)
                 .reservationDate(reservationDate)
                 .trainerId(trainerId)
-                .name(trainerAccountView.getName())
+                .trainerName(trainerAccountView.getName())
+                .userId(userId)
+                .userName(userAccountView.getName())
                 .timeId(timeId)
                 .timeDuration(time.getTimeDuration())
                 .build();
     }
 
-    public SearchAllReservationRespDto toSearchAllReservationRespDto() {
-        return SearchAllReservationRespDto.builder()
+    public TrainerSearchAllReservationRespDto toSearchAllReservationRespDto() {
+        return TrainerSearchAllReservationRespDto.builder()
                 .reservationId(reservationId)
                 .userId(userId)
                 .username(userAccountView.getUsername())

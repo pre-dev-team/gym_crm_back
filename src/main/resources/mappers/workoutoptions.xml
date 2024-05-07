@@ -19,7 +19,7 @@
         <association property="workoutCategory" resultMap="WorkoutCategoryResultMap" />
     </resultMap>
 
-    <select id="getAllWorkoutCategory" resultMap="WorkoutCategoryResultMap">
+    <select id="findAllWorkoutCategory" resultMap="WorkoutCategoryResultMap">
         select
             workout_category_id,
             workout_category_name,
