@@ -1,6 +1,5 @@
 package com.predev.gymcrm.dto.resp;
 
-import com.predev.gymcrm.entity.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SearchAllReservationRespDto {
+public class TrainerSearchAllReservationRespDto {
     private int reservationId;
     private int userId;
     private String username;

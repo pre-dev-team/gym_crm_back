@@ -17,17 +17,18 @@ public class TrainerController {
 
     @GetMapping("/mypage/trainerInfo")
     public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "accountId") int accountId) {
-        TrainerInfoRespDto trainerInfo = trainerService.selectAllTrainerInfo(accountId);
+        TrainerSearchInfoRespDto trainerInfo = trainerService.searchAllTrainerInfo(accountId);
         return ResponseEntity.ok(trainerInfo);
     }
 
     @GetMapping("/trainers/user")
     public ResponseEntity<?> getTrainers() {
-        return ResponseEntity.ok(trainerService.selectTrainersForReservation());
+        return ResponseEntity.ok(trainerService.searchTrainersForReservation());
     }
+
     @PutMapping("/mypage/trainerimg")
     public ResponseEntity<?> updateTrainerImg(@RequestBody UpdateTrainerProfileImgReqDto reqDto) {
-        trainerService.updateTrainerProfileImg(reqDto);
+        trainerService.editTrainerProfileImg(reqDto);
         return ResponseEntity.ok(true);
     }
 
@@ -38,11 +39,11 @@ public class TrainerController {
 
     @GetMapping("/admin/trainers")
     public ResponseEntity<?> getTrainersByAdmin() {
-        return ResponseEntity.ok(trainerService.adminSearchTrainers());
+        return ResponseEntity.ok(trainerService.searchAdminTrainers());
     }
 
     @GetMapping("/admin/reservations/month/count")
     public ResponseEntity<?> getWeeklyTrainerReservationCounts() {
-        return ResponseEntity.ok(trainerService.getWeeklyTrainerReservationCounts());
+        return ResponseEntity.ok(trainerService.searchWeeklyTrainerReservationCounts());
     }
 }

@@ -2,7 +2,7 @@ package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.UserAddReviewReqDto;
 import com.predev.gymcrm.dto.req.UserSearchReviewReqDto;
-import com.predev.gymcrm.dto.resp.ReviewRespDto;
+import com.predev.gymcrm.dto.resp.SearchReviewRespDto;
 import com.predev.gymcrm.dto.resp.TopRatedReviewsRespDto;
 import com.predev.gymcrm.entity.TopRatedReview;
 import com.predev.gymcrm.entity.TrainerReview;
@@ -29,7 +29,8 @@ public class ReviewService {
         trainerReview.setUserId(userId);
         return reviewMapper.insertTrainerReview(trainerReview);
     }
-    public List<ReviewRespDto> searchAllOfUserReviews(UserSearchReviewReqDto reqDto) {
+    // 모든 리뷰를 조회하는 메서드
+    public List<SearchReviewRespDto> searchAllUserReviews(UserSearchReviewReqDto reqDto) {
         List<TrainerReview> reviewsByUserAccountId = reviewMapper.findReviewsByUserAccountId(reqDto.getUserId());
         return reviewsByUserAccountId.stream().map(TrainerReview::toReviewRespDto).collect(Collectors.toList());
     }

@@ -1,7 +1,7 @@
 package com.predev.gymcrm.entity;
 
-import com.predev.gymcrm.dto.resp.InbodyRespDto;
-import com.predev.gymcrm.dto.resp.SearchInbodyRespDto;
+import com.predev.gymcrm.dto.resp.UserSearchInbodyRespDto;
+import com.predev.gymcrm.dto.resp.TrainerSearchInbodyRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,8 +26,8 @@ public class Inbody {
 
     private UserAccountView userAccountView;
 
-    public InbodyRespDto toInbodyRespDto() {
-        return InbodyRespDto.builder()
+    public UserSearchInbodyRespDto toInbodyRespDto() {
+        return UserSearchInbodyRespDto.builder()
                 .inbodyId(inbodyId)
                 .inbodyUrl(inbodyUrl)
                 .weight(weight)
@@ -37,8 +37,8 @@ public class Inbody {
                 .build();
     }
 
-    public SearchInbodyRespDto toSearchInbodyRespDto() {
-        return SearchInbodyRespDto.builder()
+    public TrainerSearchInbodyRespDto toSearchInbodyRespDto() {
+        return TrainerSearchInbodyRespDto.builder()
                 .inbodyId(inbodyId)
                 .inbodyUrl(inbodyUrl)
                 .name(userAccountView.getName())

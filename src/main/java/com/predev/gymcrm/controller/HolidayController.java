@@ -29,22 +29,22 @@ public class HolidayController {
 
     @GetMapping("/select")
     public ResponseEntity<?> getHolidays(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(holidayService.selectHoliday(accountId));
+        return ResponseEntity.ok(holidayService.searchHoliday(accountId));
     }
 
     @GetMapping("/find")
     public ResponseEntity<?> getHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
-        return ResponseEntity.ok(holidayService.selectHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
+        return ResponseEntity.ok(holidayService.searchHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
     }
 
     @GetMapping("/admin/unconfirmed")
     public ResponseEntity<?> getUnconfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
-        return ResponseEntity.ok(holidayService.getUnconfirmedHolidays(trainerId));
+        return ResponseEntity.ok(holidayService.searchUnconfirmedHolidays(trainerId));
     }
 
     @GetMapping("/admin/confirmed")
     public ResponseEntity<?> getConfirmedHolidayApplies(@RequestParam(value = "trainerId") int trainerId) {
-        return ResponseEntity.ok(holidayService.getConfirmedHolidays(trainerId));
+        return ResponseEntity.ok(holidayService.searchConfirmedHolidays(trainerId));
     }
 
     @PutMapping("/admin/decide")

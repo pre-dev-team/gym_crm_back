@@ -30,9 +30,8 @@ public class ReservationService {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public List<SearchAllReservationRespDto> searchAll() {
-        return reservationMapper.findAllReservation().stream().map(Reservation::toSearchAllReservationRespDto)
-                .collect(Collectors.toList());
+    public List<TrainerSearchAllReservationRespDto> searchAll() {
+        return reservationMapper.findAllReservation().stream().map(Reservation::toSearchAllReservationRespDto).collect(Collectors.toList());
     }
 
     public void insertReservation(UserAddReservationReqDto reqDto) {
@@ -46,7 +45,7 @@ public class ReservationService {
         fcmPushNotificationService.sendFCMOneToOne(trainerAccountId, title, message);
     }
 
-    public List<SearchReservationRespDto> searchReservationsByUserId(int accountId) {
+    public List<AdminSearchReservationRespDto> searchReservationsByUserId(int accountId) {
         int userId = authMapper.findUserIdByAccountId(accountId);
         List<Reservation> reservations = reservationMapper.findReservationsByUserId(userId);
         return reservations.stream().map(Reservation::toSearchReservationRespDto).collect(Collectors.toList());
@@ -63,14 +62,16 @@ public class ReservationService {
         return reservations.stream().map(Reservation::getTime).collect(Collectors.toList());
     }
 
-    public List<MyTodayScheduleRespDto> searchTodayReservation(TrainerSearchTodayScheduleReqDto reqDto) {
+
+
+    public List<TrainerSearchScheduleRespDto> searchTodayReservation(MyTodayScheduleReqDto reqDto) {
         String today = TimeService.trimDateString(reqDto.getToday());
         List<Reservation> reservations = reservationMapper.findTodayReservation(reqDto.getTrainerId(), today);
         return reservations.stream().map(Reservation::toMyTodayScheduleRespDto).collect(Collectors.toList());
 
     }
 
-    public List<SearchReservationUserRespDto> searchReservationsUser (TrainerSearchReservationUserReqDto reqDto) {
+    public List<AdminSearchReservationUserRespDto> searchReservationsUser (SearchReservationUserReqDto reqDto) {
         String startDate = TimeService.trimDateString(reqDto.getStartDate());
         String endDate = TimeService.trimDateString(reqDto.getEndDate());
         List<Reservation> reservations = reservationMapper.findReservationByAccountIdAndPeriod(reqDto.getAccountId(), startDate, endDate);
@@ -95,19 +96,19 @@ public class ReservationService {
         reservationMapper.updateReservationByReservationId(reqDto.getPrevReservationId(), reqDto.toReservationEntity(date,userId));
     }
 
-    public List<SelectMyMembersInformationRespDto> selectMymembersInformation(TrainerSearchMembersInformationReqDto reqDto) {
+    public List<TrainerSearchMyMembersInformationRespDto> searchMymembersInformation(SearchMymembersInformationReqDto reqDto) {
         List<Reservation> reservations = reservationMapper.findMyMembersInformationByAccountIdByUserId(reqDto.getAccountId(), reqDto.getUserId());
         return reservations.stream().map(Reservation::toSelectMyMembersInformationRespDto).collect(Collectors.toList());
     }
 
-    public List<SearchReservationRespDto> SearchReservations(AdminSearchReservationReqDto reqDto) {
+    public List<AdminSearchReservationRespDto> searchReservations(AdminSearchReservationReqDto reqDto) {
         String startDate = TimeService.trimDateString(reqDto.getStartDate());
         String endDate = TimeService.trimDateString(reqDto.getEndDate());
         List<Reservation> reservations = reservationMapper.findReservationByNameAndPeriod(reqDto.getSearchType(), reqDto.getName(), startDate, endDate);
         return reservations.stream().map(Reservation::toSearchReservationRespDto).collect(Collectors.toList());
     }
 
-    public List<SearchMyMembersRespDto> selectMyMembers(int trainerAccountId) {
+    public List<TrainerSearchMyMembersRespDto> searchMyMembers(int trainerAccountId) {
         List<Reservation> reservations = reservationMapper.findMyMembersByTrainerAccountId(trainerAccountId);
         return reservations.stream().map(Reservation::toSearchMyMembersRespDto).collect(Collectors.toList());
     }

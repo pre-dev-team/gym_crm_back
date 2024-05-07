@@ -1,17 +1,16 @@
 package com.predev.gymcrm.dto.resp;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Builder
 @Data
-public class SearchMyMembersRespDto {
+public class TrainerSearchScheduleRespDto {
+    private int reservationId;
+    private int trainerId;
     private int userId;
-    private int accountId;
     private String name;
     private String phone;
-    private String email;
-
+    private int timeId;
+    private String timeDuration;
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TrainerForReservationRespDto {
+public class TrainerSearchForReservationRespDto {
     private int trainerId;
     private String trainerProfileImgUrl;
     private String name;

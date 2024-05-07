@@ -1,15 +1,12 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.AccountSigninReqDto;
 import com.predev.gymcrm.dto.req.OAuth2MergeReqDto;
 import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
 import com.predev.gymcrm.dto.resp.AdminSearchUserRespDto;
-import com.predev.gymcrm.dto.resp.SearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.AdminSearchUser;
 import com.predev.gymcrm.entity.OAuth2;
-import com.predev.gymcrm.entity.User;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
 import com.predev.gymcrm.dto.req.AccountSignupReqDto;
@@ -124,7 +121,7 @@ public class AuthService {
         return trainerId;
     }
 
-    public List<AdminSearchUserRespDto> adminSearchUsersByName(String name) {
+    public List<AdminSearchUserRespDto> searchAdminhUsersByName(String name) {
         List<AdminSearchUser> users = authMapper.findUserInfosWithReservationCountByName(name);
         if(users.isEmpty()) {
             return null;

@@ -5,12 +5,11 @@ import lombok.Data;
 
 @Builder
 @Data
-public class MyTodayScheduleRespDto {
+public class AdminSearchReservationUserRespDto {
     private int reservationId;
-    private int trainerId;
     private int userId;
     private String name;
-    private String phone;
     private int timeId;
     private String timeDuration;
+    private String reservationDate;
 }

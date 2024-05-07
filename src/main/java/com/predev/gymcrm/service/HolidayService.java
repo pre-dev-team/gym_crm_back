@@ -4,7 +4,7 @@ import com.predev.gymcrm.dto.req.AdminDecideHolidayAppliesReqDto;
 import com.predev.gymcrm.dto.req.TrainerDeleteHolidayReqDto;
 import com.predev.gymcrm.dto.req.TrainerAddHolidayReqDto;
 import com.predev.gymcrm.dto.resp.AdminSearchHolidayRespDto;
-import com.predev.gymcrm.dto.resp.SelectHolidayRespDto;
+import com.predev.gymcrm.dto.resp.SearchHolidayRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.AdminSearchHoliday;
 import com.predev.gymcrm.entity.Holiday;
@@ -50,18 +50,18 @@ public class HolidayService {
         holidayMapper.deleteHoliday(reqDto.toDeleteHolidayEntity(trainerId));
     }
 
-    public List<SelectHolidayRespDto> selectHoliday(int accountId) {
+    public List<SearchHolidayRespDto> searchHoliday(int accountId) {
         List<Holiday> holidays = holidayMapper.findHolidayByAccountId(accountId);
         Account account = authMapper.findAccountByAccountId(accountId);
         return holidays.stream().map(holiday -> holiday.toSelectHolidayRespDto(account.getName())).collect(Collectors.toList());
     }
 
-    public List<AdminSearchHolidayRespDto> getUnconfirmedHolidays(int trainerId) {
+    public List<AdminSearchHolidayRespDto> searchUnconfirmedHolidays(int trainerId) {
         List<AdminSearchHoliday> holidays = holidayMapper.findAllAdminSearchHolidyByTrainerId(trainerId, 1);
         return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
     }
 
-    public List<AdminSearchHolidayRespDto> getConfirmedHolidays(int trainerId) {
+    public List<AdminSearchHolidayRespDto> searchConfirmedHolidays(int trainerId) {
         List<AdminSearchHoliday> holidays = holidayMapper.findAllAdminSearchHolidyByTrainerId(trainerId, 2);
         return holidays.stream().map(AdminSearchHoliday::toAdminSearchHolidayRespDto).collect(Collectors.toList());
     }
@@ -74,7 +74,7 @@ public class HolidayService {
         );
     }
 
-    public List<Integer> selectHolidaytimeIdsByTrainerIdAndHolidayDate(int trainerId, String holidayDate) {
+    public List<Integer> searchHolidaytimeIdsByTrainerIdAndHolidayDate(int trainerId, String holidayDate) {
         String trimedHolidayDate = TimeService.trimDateString(holidayDate);
         List<Holiday> holidays = holidayMapper.findHolidayByTrainerIdAndDate(trainerId,trimedHolidayDate);
         List<Integer> timeIds = new ArrayList<>();

@@ -1,8 +1,13 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.*;
+<<<<<<< HEAD
 import com.predev.gymcrm.dto.resp.MyTodayScheduleRespDto;
 import com.predev.gymcrm.dto.resp.SelectMyMembersInformationRespDto;
+=======
+import com.predev.gymcrm.dto.resp.TrainerSearchScheduleRespDto;
+import com.predev.gymcrm.dto.resp.TrainerSearchMyMembersInformationRespDto;
+>>>>>>> origin/sejin2
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -68,12 +73,12 @@ public class ReservationController {
 
     @GetMapping("/admin/reservations")
     public ResponseEntity<?> searchReservations(AdminSearchReservationReqDto reqDto) {
-        return ResponseEntity.ok(reservationService.SearchReservations(reqDto));
+        return ResponseEntity.ok(reservationService.searchReservations(reqDto));
     }
     
     @GetMapping("/mypage/members")
     public ResponseEntity<?> getMyMembers(@RequestParam(value = "accountId") int trainerAccountId) {
-        return ResponseEntity.ok(reservationService.selectMyMembers(trainerAccountId));
+        return ResponseEntity.ok(reservationService.searchMyMembers(trainerAccountId));
 
     }
 

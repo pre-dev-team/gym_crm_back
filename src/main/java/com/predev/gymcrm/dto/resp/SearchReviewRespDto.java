@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class ReviewRespDto {
+public class SearchReviewRespDto {
     private int trainerReviewId;
     private int trainerId;
     private int userId;

@@ -28,7 +28,7 @@ public class AccountMailService {
     @Value("${server.deploy-address}")
     private String serverAddress;
 
-    public Account getAccountByNameAndEmail(String name, String email) {
+    public Account searchAccountByNameAndEmail(String name, String email) {
         return authMapper.findAccountByNameAndEmail(name, email);
     }
     public boolean searchAccountByMail(Account account) {
@@ -61,7 +61,7 @@ public class AccountMailService {
         return result;
     }
 
-    public Account findAccountByNameAndEmail(String username, String email) {
+    public Account searchAccountByUsernameAndEmail(String username, String email) {
         return authMapper.findAccountByUserNameAndEmail(username, email);
     }
 

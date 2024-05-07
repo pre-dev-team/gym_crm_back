@@ -27,18 +27,18 @@ public class AccountController {
 
     @ValidAspect
     @PutMapping("/password")
-    public ResponseEntity<?> editPassword(@RequestBody UserEditPasswordReqDto reqDto) {
+    public ResponseEntity<?> updatePassword(@RequestBody UserEditPasswordReqDto reqDto) {
         accountService.editAccountPassword(reqDto);
         return ResponseEntity.ok(reqDto);
     }
 
     @PutMapping("/admin/password")
-    public ResponseEntity<?> changeAdminPassword(@RequestBody AdminEditPasswordReqDto reqDto) {
+    public ResponseEntity<?> updateAdminPassword(@RequestBody AdminEditPasswordReqDto reqDto) {
         return ResponseEntity.ok(accountService.editAdminPassword(reqDto));
     }
 
     @GetMapping("/myinfo")
     public ResponseEntity<?> getMyInfo(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(accountService.getAccountInfoByAccountId(accountId));
+        return ResponseEntity.ok(accountService.selectAccountInfoByAccountId(accountId));
     }
 }
