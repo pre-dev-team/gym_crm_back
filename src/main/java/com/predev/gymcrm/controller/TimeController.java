@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/common")
+@RequestMapping("/time")
 public class TimeController {
 
     @Autowired
@@ -22,7 +22,5 @@ public class TimeController {
         List<TimeRespDto> timePeriods = timeService.searchTimes();
         return ResponseEntity.ok(timePeriods);
     }
-
-
 
 }

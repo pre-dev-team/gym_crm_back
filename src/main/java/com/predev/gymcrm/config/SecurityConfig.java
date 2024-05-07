@@ -45,19 +45,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //web mvc cors 설정 가져옴
         http.cors();
-        //jwt 토큰으로 인증할것이기 때문에 csrf 비활성
         http.csrf().disable();
-        //auth로 받는 모든 요청제외하고 jwt인가받겠습니다
         http.authorizeRequests()
-                .antMatchers("/auth/**","/admin/**","/common/**",
-                        "/reservation/**","/trainer/**", "/review/**",
-                        "/options/**", "/holiday/**", "/inbody/**",
-                        "/routine/**","/mail/**", "/oauth2/**","/notification/**")
+                .antMatchers("/auth/**","/time/**","/options/**","/mail/**", "/oauth2/**","/notification/**","/review/top","/account/principal")
                 .permitAll()
-                .antMatchers("/user/**")
+                .antMatchers("/reservation/user/**", "/trainer/user/**","review/user/**",
+                        "/holiday/user/**","/inbody/user/**","/routine/user/**","account/user/**")
                 .hasRole("USER")
+                .antMatchers("/auth/trainer/**", "/reservation/trainer/**", "/trainer/trainer/**","review/trainer/**",
+                        "/holiday/trainer/**","/inbody/trainer/**","/routine/trainer/**","account/trainer/**")
+                .hasRole("TRAINER")
+                .antMatchers("/auth/admin/**", "/reservation/admin/**", "/trainer/admin/**","review/admin/**",
+                        "/holiday/admin/**","/inbody/admin/**","/routine/admin/**","account/admin/**")
+                .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()

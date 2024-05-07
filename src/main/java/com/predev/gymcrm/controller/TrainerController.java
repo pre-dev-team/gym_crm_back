@@ -19,7 +19,7 @@ public class TrainerController {
         return ResponseEntity.ok(trainerService.searchAllTrainerInfo(accountId));
     }
 
-    @GetMapping("/trainers/user")
+    @GetMapping("/user/trainers")
     public ResponseEntity<?> getTrainers() {
         return ResponseEntity.ok(trainerService.searchTrainersForReservation());
     }

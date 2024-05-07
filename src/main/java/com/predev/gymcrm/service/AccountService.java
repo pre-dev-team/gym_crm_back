@@ -40,7 +40,6 @@ public class AccountService {
     }
 
     public int editAdminPassword(AdminEditPasswordReqDto reqDto) {
-        System.out.println(reqDto);
         Account account = authMapper.findAccountByUsername("admin");
         String encodedPassword = account.getPassword();
         if (!passwordEncoder.matches(reqDto.getPrevPassword(), encodedPassword)) {
@@ -49,12 +48,11 @@ public class AccountService {
         if (passwordEncoder.matches(reqDto.getPassword(), encodedPassword)) {
             throw new ValidException(Map.of("newPassword", "새로운 비밀번호는 이전 비밀번호와 같을 수 없습니다 \n다시입력하세요"));
         }
-        return authMapper.updateAdminPassword(reqDto.getPassword());
+        return authMapper.updateAdminPassword(passwordEncoder.encode(reqDto.getPassword()));
     }
 
-    public TrainerSearchAccountInfoRespDto selectAccountInfoByAccountId(int accountId) {
+    public TrainerSearchAccountInfoRespDto searchAccountInfoByAccountId(int accountId) {
         Account account = authMapper.findAccountByAccountId(accountId);
-        System.out.println(account);
         if (account == null) {
             System.out.println("account가 null입니다");
             return null;
@@ -66,5 +64,10 @@ public class AccountService {
                 .phone(account.getPhone())
                 .email(account.getEmail())
                 .build();
+    }
+    public int searchTrainerId(int accountId) {
+        int trainerId = authMapper.findTrainerIdByAccountId(accountId);
+
+        return trainerId;
     }
 }

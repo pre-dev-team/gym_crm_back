@@ -22,12 +22,6 @@ public class TrainerService {
     @Autowired
     private TrainerMapper trainerMapper;
 
-    @Autowired
-    private WorkoutRoutineMapper workoutRoutineMapper;
-
-    @Autowired
-    private AuthMapper authMapper;
-
     public TrainerSearchInfoRespDto searchAllTrainerInfo(int accountId) {
         TrainerAccountView trainer = trainerMapper.findAllTrainerInfo(accountId);
         if(trainer != null) {

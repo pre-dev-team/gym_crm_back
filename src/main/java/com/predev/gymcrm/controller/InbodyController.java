@@ -16,18 +16,18 @@ public class InbodyController {
     @Autowired
     private InbodyService inbodyService;
 
-    @PostMapping("/add")
+    @PostMapping("/trainer")
     public ResponseEntity<?> addInbody(@RequestBody TrainerAddInbodyReqDto trainerAddInbodyReqDto) {
         return ResponseEntity.ok(inbodyService.insertInbody(trainerAddInbodyReqDto));
     }
 
-    @GetMapping("/account")
+    @GetMapping("/user")
     public ResponseEntity<?> getInbodyByAccountId(int accountId) {
         List<UserSearchInbodyRespDto> userSearchInbodyRespDtoList = inbodyService.searchInbodyByUserId(accountId);
         return ResponseEntity.ok(userSearchInbodyRespDtoList);
     }
 
-    @GetMapping("/user/information")
+    @GetMapping("/trainer/user")
     public ResponseEntity<?> getInbodyInformation(@RequestParam(value = "userId") int userId) {
         return ResponseEntity.ok(inbodyService.searchInbodyInformation(userId));
     }

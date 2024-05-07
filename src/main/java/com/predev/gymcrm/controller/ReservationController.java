@@ -18,36 +18,10 @@ public class ReservationController {
     @Autowired
     private ReservationService reservationService;
 
-    @PostMapping("/user/make")
+    @PostMapping("/user")
     public ResponseEntity<?> getReservation(@RequestBody UserAddReservationReqDto reqDto) {
         reservationService.insertReservation(reqDto);
         return ResponseEntity.ok(null);
-    }
-
-    @GetMapping("user/find")
-    public ResponseEntity<?> getUserAllReservation(@RequestParam(value = "accountId") int accountId) {
-        return ResponseEntity.ok(reservationService.searchReservationsByUserId(accountId));
-    }
-
-    @GetMapping("/day")
-    public ResponseEntity<?> getDayReservations(SearchDayReservationReqDto reqDto) {
-        return ResponseEntity.ok(reservationService.searchDayReservation(reqDto));
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<?> getAllReservation() {
-        return ResponseEntity.ok(reservationService.searchAll());
-    }
-
-    @GetMapping("/trainer/schedulefor2days")
-    public ResponseEntity<?> getTodayReservation(TrainerSearchTodayScheduleReqDto reqDto) {
-        List<TrainerSearchScheduleRespDto> reservations = reservationService.searchTodayReservation(reqDto);
-        return ResponseEntity.ok(reservations);
-    }
-
-    @GetMapping("/trainer/searchall")
-    public ResponseEntity<?> getSearchAllUser(TrainerSearchReservationUserReqDto trainerSearchReservationUserReqDto) {
-        return ResponseEntity.ok(reservationService.searchReservationsUser(trainerSearchReservationUserReqDto));
     }
 
     @DeleteMapping("/user")
@@ -61,6 +35,27 @@ public class ReservationController {
         return ResponseEntity.ok(null);
     }
 
+    @GetMapping("/user/all")
+    public ResponseEntity<?> getUserAllReservation(@RequestParam(value = "accountId") int accountId) {
+        return ResponseEntity.ok(reservationService.searchReservationsByUserId(accountId));
+    }
+
+    @GetMapping("/user/day")
+    public ResponseEntity<?> getDayReservations(SearchDayReservationReqDto reqDto) {
+        return ResponseEntity.ok(reservationService.searchDayReservation(reqDto));
+    }
+
+    @GetMapping("/trainer/schedulefor2days")
+    public ResponseEntity<?> getTodayReservation(TrainerSearchTodayScheduleReqDto reqDto) {
+        List<TrainerSearchScheduleRespDto> reservations = reservationService.searchTodayReservation(reqDto);
+        return ResponseEntity.ok(reservations);
+    }
+
+    @GetMapping("/trainer/all")
+    public ResponseEntity<?> getSearchAllUser(TrainerSearchReservationUserReqDto trainerSearchReservationUserReqDto) {
+        return ResponseEntity.ok(reservationService.searchReservationsUser(trainerSearchReservationUserReqDto));
+    }
+
     @GetMapping("/user/information")
     public ResponseEntity<?> getMymemberInformation(TrainerSearchMembersInformationReqDto trainerSearchMembersInformationReqDto) {
         List<TrainerSearchMyMembersInformationRespDto> respDtos = reservationService.searchMymembersInformation(trainerSearchMembersInformationReqDto);
@@ -72,10 +67,9 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.searchReservations(reqDto));
     }
     
-    @GetMapping("/mypage/members")
+    @GetMapping("/trainer/mypage/members")
     public ResponseEntity<?> getMyMembers(@RequestParam(value = "accountId") int trainerAccountId) {
         return ResponseEntity.ok(reservationService.searchMyMembers(trainerAccountId));
-
     }
 
 }

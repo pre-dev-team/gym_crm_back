@@ -11,6 +11,7 @@ import com.predev.gymcrm.repository.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,10 +30,14 @@ public class ReviewService {
         trainerReview.setUserId(userId);
         return reviewMapper.insertTrainerReview(trainerReview);
     }
-    // 모든 리뷰를 조회하는 메서드
     public List<SearchReviewRespDto> searchAllUserReviews(UserSearchReviewReqDto reqDto) {
-        List<TrainerReview> reviewsByUserAccountId = reviewMapper.findReviewsByUserAccountId(reqDto.getUserId());
-        return reviewsByUserAccountId.stream().map(TrainerReview::toReviewRespDto).collect(Collectors.toList());
+        List<TrainerReview> trainerReviews = new ArrayList<>();
+        if(reqDto.getAccountId() == 0) {
+            trainerReviews = reviewMapper.findReviewsByUserId(reqDto.getUserId());
+        } else if(reqDto.getUserId() == 0){
+            trainerReviews = reviewMapper.findReviewsByUserAccountId(reqDto.getAccountId());
+        }
+        return trainerReviews.stream().map(TrainerReview::toReviewRespDto).collect(Collectors.toList());
     }
     public List<TopRatedReviewsRespDto> searchTopRatedReviews() {
         List<TopRatedReview> topRatedReviews = reviewMapper.findTopRatedReviews();

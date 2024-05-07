@@ -74,8 +74,10 @@
     </insert>
 
     <insert id="saveOAuth2" parameterType="com.predev.gymcrm.entity.OAuth2">
-        insert into oauth2_tb
-        values(0, #{oauth2Name}, #{accountId}, #{oauth2ProviderName}, now(), now())
+        insert into
+            oauth2_tb
+        values
+            (0, #{oauth2Name}, #{accountId}, #{oauth2ProviderName}, now(), now())
     </insert>
 
     <update id="updateAccountPassword" parameterType="com.predev.gymcrm.entity.Account">

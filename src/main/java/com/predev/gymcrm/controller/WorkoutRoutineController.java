@@ -25,11 +25,13 @@ public class WorkoutRoutineController {
         }
         return ResponseEntity.ok(successCount);
     }
-    @GetMapping("/find")
+
+    @GetMapping("/user")
     public ResponseEntity<?> findReservationRoutine(int reservationId) {
         return ResponseEntity.ok(workoutRoutineService.searchRoutinesByReservationId(reservationId));
     }
-    @PostMapping("/edit")
+
+    @PostMapping("/trainer/addtion")
     public ResponseEntity<?> updateRoutine(@RequestBody List<TrainerAddRoutineReqDto> TrainerAddRoutineReqDto) {
         return ResponseEntity.ok(workoutRoutineService.editRoutines(TrainerAddRoutineReqDto));
     }

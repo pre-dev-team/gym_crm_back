@@ -30,10 +30,6 @@ public class ReservationService {
         return LocalDateTime.parse(date, DateTimeFormatter.ISO_DATE_TIME).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 
-    public List<TrainerSearchAllReservationRespDto> searchAll() {
-        return reservationMapper.findAllReservation().stream().map(Reservation::toSearchAllReservationRespDto).collect(Collectors.toList());
-    }
-
     public void insertReservation(UserAddReservationReqDto reqDto) {
         int userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
         String date = reqDto.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -56,7 +52,7 @@ public class ReservationService {
         try{
             userId = authMapper.findUserIdByAccountId(reqDto.getAccountId());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
         }
         List<Reservation> reservations = reservationMapper.findReservationByDate(userId, reqDto.getTrainerId(), TimeService.trimDateString(reqDto.getDate()));
         return reservations.stream().map(Reservation::getTime).collect(Collectors.toList());

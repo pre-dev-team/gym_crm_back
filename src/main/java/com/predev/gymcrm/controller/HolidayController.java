@@ -15,24 +15,24 @@ public class HolidayController {
     @Autowired
     private HolidayService holidayService;
 
-    @PostMapping("/insert")
+    @PostMapping("/trainer/insert")
     public ResponseEntity<?> addTrainerHoliday(@RequestBody TrainerAddHolidayReqDto trainerAddHolidayReqDto) {
         holidayService.insertTrainerHoliday(trainerAddHolidayReqDto);
         return ResponseEntity.created(null).body(true);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/trainer/cancel")
     public ResponseEntity<?> deleteHoliday(@RequestBody TrainerDeleteHolidayReqDto trainerDeleteHolidayReqDto) {
         holidayService.deleteHoliday(trainerDeleteHolidayReqDto);
         return ResponseEntity.ok(trainerDeleteHolidayReqDto);
     }
 
-    @GetMapping("/select")
+    @GetMapping("/trainer")
     public ResponseEntity<?> getHolidays(@RequestParam(value = "accountId") int accountId) {
         return ResponseEntity.ok(holidayService.searchHoliday(accountId));
     }
 
-    @GetMapping("/find")
+    @GetMapping("/user/trainer/day")
     public ResponseEntity<?> getHolidayTimeIds(@RequestParam int trainerId, @RequestParam String holidayDate) {
         return ResponseEntity.ok(holidayService.searchHolidaytimeIdsByTrainerIdAndHolidayDate(trainerId,holidayDate));
     }

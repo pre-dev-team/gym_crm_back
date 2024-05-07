@@ -14,7 +14,7 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @PostMapping("/user/make")
+    @PostMapping("/user")
     public ResponseEntity<?> addReview(@RequestBody UserAddReviewReqDto userAddReviewReqDto) {
         return ResponseEntity.created(null).body(reviewService.insertReview(userAddReviewReqDto));
     }
@@ -24,7 +24,7 @@ public class ReviewController {
         return ResponseEntity.ok(reviewService.searchAllUserReviews(reqDto));
     }
     
-    @GetMapping("/toprated")
+    @GetMapping("/top")
     public ResponseEntity<?> getTopRatedTrainersInformation() {
         return ResponseEntity.ok(reviewService.searchTopRatedReviews());
     }
