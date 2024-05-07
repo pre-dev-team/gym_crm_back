@@ -1,6 +1,7 @@
 package com.predev.gymcrm.service;
 
 import com.predev.gymcrm.dto.req.AdminEditPasswordReqDto;
+import com.predev.gymcrm.dto.req.TrainerEditPasswordReqDto;
 import com.predev.gymcrm.dto.req.UserEditPasswordReqDto;
 import com.predev.gymcrm.dto.resp.TrainerSearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
@@ -41,6 +42,18 @@ public class AccountService {
 
     public int editAdminPassword(AdminEditPasswordReqDto reqDto) {
         Account account = authMapper.findAccountByUsername("admin");
+        String encodedPassword = account.getPassword();
+        if (!passwordEncoder.matches(reqDto.getPrevPassword(), encodedPassword)) {
+            throw new ValidException(Map.of("oldPassword", "비밀번호 인증에 실패하였습니다 \n다시입력하세요"));
+        }
+        if (passwordEncoder.matches(reqDto.getPassword(), encodedPassword)) {
+            throw new ValidException(Map.of("newPassword", "새로운 비밀번호는 이전 비밀번호와 같을 수 없습니다 \n다시입력하세요"));
+        }
+        return authMapper.updateAdminPassword(passwordEncoder.encode(reqDto.getPassword()));
+    }
+
+    public int editTrainerPassword(TrainerEditPasswordReqDto reqDto) {
+        Account account = authMapper.findAccountByUsername("trainer");
         String encodedPassword = account.getPassword();
         if (!passwordEncoder.matches(reqDto.getPrevPassword(), encodedPassword)) {
             throw new ValidException(Map.of("oldPassword", "비밀번호 인증에 실패하였습니다 \n다시입력하세요"));
