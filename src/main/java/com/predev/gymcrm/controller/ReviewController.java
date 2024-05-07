@@ -21,7 +21,7 @@ public class ReviewController {
 
     @GetMapping("/user")
     public ResponseEntity<?> getUserReviews(UserSearchReviewReqDto reqDto) {
-        return ResponseEntity.ok(reviewService.searchAllOfUserReviews(reqDto));
+        return ResponseEntity.ok(reviewService.searchAllUserReviews(reqDto));
     }
     
     @GetMapping("/toprated")

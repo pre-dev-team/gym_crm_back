@@ -64,14 +64,14 @@ public class ReservationService {
 
 
 
-    public List<TrainerSearchScheduleRespDto> searchTodayReservation(MyTodayScheduleReqDto reqDto) {
+    public List<TrainerSearchScheduleRespDto> searchTodayReservation(TrainerSearchTodayScheduleReqDto reqDto) {
         String today = TimeService.trimDateString(reqDto.getToday());
         List<Reservation> reservations = reservationMapper.findTodayReservation(reqDto.getTrainerId(), today);
         return reservations.stream().map(Reservation::toMyTodayScheduleRespDto).collect(Collectors.toList());
 
     }
 
-    public List<AdminSearchReservationUserRespDto> searchReservationsUser (SearchReservationUserReqDto reqDto) {
+    public List<AdminSearchReservationUserRespDto> searchReservationsUser (TrainerSearchReservationUserReqDto reqDto) {
         String startDate = TimeService.trimDateString(reqDto.getStartDate());
         String endDate = TimeService.trimDateString(reqDto.getEndDate());
         List<Reservation> reservations = reservationMapper.findReservationByAccountIdAndPeriod(reqDto.getAccountId(), startDate, endDate);
@@ -96,7 +96,7 @@ public class ReservationService {
         reservationMapper.updateReservationByReservationId(reqDto.getPrevReservationId(), reqDto.toReservationEntity(date,userId));
     }
 
-    public List<TrainerSearchMyMembersInformationRespDto> searchMymembersInformation(SearchMymembersInformationReqDto reqDto) {
+    public List<TrainerSearchMyMembersInformationRespDto> searchMymembersInformation(TrainerSearchMembersInformationReqDto reqDto) {
         List<Reservation> reservations = reservationMapper.findMyMembersInformationByAccountIdByUserId(reqDto.getAccountId(), reqDto.getUserId());
         return reservations.stream().map(Reservation::toSelectMyMembersInformationRespDto).collect(Collectors.toList());
     }

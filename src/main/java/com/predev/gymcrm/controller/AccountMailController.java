@@ -34,7 +34,7 @@ public class AccountMailController {
     @PostMapping("/send/temporary/password")
     public ResponseEntity<?> sendTemporaryPassword(HttpServletRequest request, @RequestBody UserFindPasswordReqDto userFindPasswordReqDto) {
         request.getSession().setAttribute("timer", new Date());
-        Account account = accountMailService.searchAccountByUsernameAndEmail(findPwReqDto.getUsername(), findPwReqDto.getEmail());
+        Account account = accountMailService.searchAccountByUsernameAndEmail(userFindPasswordReqDto.getUsername(), userFindPasswordReqDto.getEmail());
         accountMailService.sendTemporaryPassword(account);
 
         if (account != null && accountMailService.sendTemporaryPassword(account)) {

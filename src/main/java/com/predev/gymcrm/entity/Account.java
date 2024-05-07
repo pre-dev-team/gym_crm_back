@@ -1,6 +1,5 @@
 package com.predev.gymcrm.entity;
 
-import com.predev.gymcrm.dto.req.SearchUserReqDto;
 import com.predev.gymcrm.security.Principal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

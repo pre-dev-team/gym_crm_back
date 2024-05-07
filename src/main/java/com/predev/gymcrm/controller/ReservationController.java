@@ -1,13 +1,9 @@
 package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.*;
-<<<<<<< HEAD
-import com.predev.gymcrm.dto.resp.MyTodayScheduleRespDto;
-import com.predev.gymcrm.dto.resp.SelectMyMembersInformationRespDto;
-=======
-import com.predev.gymcrm.dto.resp.TrainerSearchScheduleRespDto;
 import com.predev.gymcrm.dto.resp.TrainerSearchMyMembersInformationRespDto;
->>>>>>> origin/sejin2
+import com.predev.gymcrm.dto.resp.TrainerSearchMyMembersRespDto;
+import com.predev.gymcrm.dto.resp.TrainerSearchScheduleRespDto;
 import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +41,7 @@ public class ReservationController {
 
     @GetMapping("/trainer/schedulefor2days")
     public ResponseEntity<?> getTodayReservation(TrainerSearchTodayScheduleReqDto reqDto) {
-        List<MyTodayScheduleRespDto> reservations = reservationService.searchTodayReservation(reqDto);
+        List<TrainerSearchScheduleRespDto> reservations = reservationService.searchTodayReservation(reqDto);
         return ResponseEntity.ok(reservations);
     }
 
@@ -67,7 +63,7 @@ public class ReservationController {
 
     @GetMapping("/user/information")
     public ResponseEntity<?> getMymemberInformation(TrainerSearchMembersInformationReqDto trainerSearchMembersInformationReqDto) {
-        List<SelectMyMembersInformationRespDto> respDtos = reservationService.selectMymembersInformation(trainerSearchMembersInformationReqDto);
+        List<TrainerSearchMyMembersInformationRespDto> respDtos = reservationService.searchMymembersInformation(trainerSearchMembersInformationReqDto);
         return ResponseEntity.ok(respDtos);
     }
 

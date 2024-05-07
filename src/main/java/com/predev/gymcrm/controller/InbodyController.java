@@ -1,12 +1,7 @@
 package com.predev.gymcrm.controller;
 
-<<<<<<< HEAD
 import com.predev.gymcrm.dto.req.TrainerAddInbodyReqDto;
-import com.predev.gymcrm.dto.resp.InbodyRespDto;
-=======
-import com.predev.gymcrm.dto.req.InbodyReqDto;
 import com.predev.gymcrm.dto.resp.UserSearchInbodyRespDto;
->>>>>>> origin/sejin2
 import com.predev.gymcrm.service.InbodyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +18,7 @@ public class InbodyController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addInbody(@RequestBody TrainerAddInbodyReqDto trainerAddInbodyReqDto) {
-        return ResponseEntity.ok(inbodyService.addInbody(trainerAddInbodyReqDto));
+        return ResponseEntity.ok(inbodyService.insertInbody(trainerAddInbodyReqDto));
     }
 
     @GetMapping("/account")

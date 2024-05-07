@@ -17,9 +17,9 @@ public class InbodyService {
     @Autowired
     private InbodyMapper inbodyMapper;
 
-    public int insertInbody(InbodyReqDto inbodyReqDto) {
+    public int insertInbody(TrainerAddInbodyReqDto reqDto) {
         int successCount = 0;
-        successCount =inbodyMapper.saveInbody(trainerAddInbodyReqDto.toInbodyEntity());
+        successCount =inbodyMapper.saveInbody(reqDto.toInbodyEntity());
         return successCount;
     }
 

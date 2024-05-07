@@ -2,7 +2,6 @@ package com.predev.gymcrm.controller;
 
 import com.predev.gymcrm.dto.req.AdminSearchUnreservedTrainerReqDto;
 import com.predev.gymcrm.dto.req.UpdateTrainerProfileImgReqDto;
-import com.predev.gymcrm.dto.resp.TrainerInfoRespDto;
 import com.predev.gymcrm.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,7 @@ public class TrainerController {
 
     @GetMapping("/mypage/trainerInfo")
     public ResponseEntity<?> getAllTrainerInfo(@RequestParam(value = "accountId") int accountId) {
-        TrainerSearchInfoRespDto trainerInfo = trainerService.searchAllTrainerInfo(accountId);
-        return ResponseEntity.ok(trainerInfo);
+        return ResponseEntity.ok(trainerService.searchAllTrainerInfo(accountId));
     }
 
     @GetMapping("/trainers/user")
