@@ -58,7 +58,6 @@ public class AuthService {
         successCount += authMapper.saveUser(account.getAccountId());
         successCount += authMapper.saveOAuth2(oAuth2SignupReqDto.toOAuth2Entity(account.getAccountId()));
 
-
         if(successCount < 3) {
             throw new SaveException();
         }
@@ -100,6 +99,10 @@ public class AuthService {
 
     }
 
+    public int deleteUser(int userAccountId) {
+        return authMapper.deleteUser(userAccountId);
+    }
+
     public String signIn(AccountSigninReqDto reqDto) {
         Account account = authMapper.findAccountByUsername(reqDto.getUsername());
 
@@ -112,13 +115,14 @@ public class AuthService {
         return jwtProvider.generateJwt(account);
     }
 
-    public List<AdminSearchUserRespDto> searchAdminhUsersByName(String name) {
+    public List<AdminSearchUserRespDto> searchAdminUsersByName(String name) {
         List<AdminSearchUser> users = authMapper.findUserInfosWithReservationCountByName(name);
         if(users.isEmpty()) {
             return null;
         }
         return users.stream().map(AdminSearchUser::toAdminSearchUserRespDto).collect(Collectors.toList());
     }
+
 
 
 }

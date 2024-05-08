@@ -9,7 +9,6 @@ import java.util.List;
 @Mapper
 public interface
 AuthMapper {
-
     public int saveAccount(@Param("roleId")int roleId, @Param("account")Account account);
     public int saveUser(@Param("accountId") int accountId);
     public int saveTrainer(@Param("accountId")int accountId);
@@ -24,6 +23,7 @@ AuthMapper {
     public List<AdminSearchUser> findUserInfosWithReservationCountByName(String name);
     public Account findAccountByOAuth2Name(String oAuth2Name);
     public int deleteTrainer(int trainerId);
+    public int deleteUser(int userAccountId);
     public int updateAccountPassword(Account account);
     public int updateAdminPassword(String newPassword);
     public int saveOAuth2(OAuth2 oAuth2);
