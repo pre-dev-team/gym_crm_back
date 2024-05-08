@@ -23,7 +23,7 @@ public class AccountService {
     private AuthMapper authMapper;
 
 
-    public void editAccountPassword(UserEditPasswordReqDto reqDto) {
+    public int editAccountPassword(UserEditPasswordReqDto reqDto) {
         Account account = authMapper.findAccountByAccountId(reqDto.getAccountId());
         String encodedPassword = account.getPassword();
 
@@ -37,31 +37,40 @@ public class AccountService {
             throw new ValidException(Map.of("newPasswordCheck", "새로운 비밀번호가 서로 일치하지 않습니다 \n다시입력하세요"));
         }
         account.setPassword(passwordEncoder.encode(reqDto.getPassword()));
-        authMapper.updateAccountPassword(account);
+        return authMapper.updateAccountPassword(account);
     }
 
     public int editAdminPassword(AdminEditPasswordReqDto reqDto) {
         Account account = authMapper.findAccountByUsername("admin");
         String encodedPassword = account.getPassword();
+
         if (!passwordEncoder.matches(reqDto.getPrevPassword(), encodedPassword)) {
             throw new ValidException(Map.of("oldPassword", "비밀번호 인증에 실패하였습니다 \n다시입력하세요"));
         }
         if (passwordEncoder.matches(reqDto.getPassword(), encodedPassword)) {
             throw new ValidException(Map.of("newPassword", "새로운 비밀번호는 이전 비밀번호와 같을 수 없습니다 \n다시입력하세요"));
+        }
+        if (!reqDto.getPassword().equals(reqDto.getCheckPassword())) {
+            throw new ValidException(Map.of("newPasswordCheck", "새로운 비밀번호가 서로 일치하지 않습니다 \n다시입력하세요"));
         }
         return authMapper.updateAdminPassword(passwordEncoder.encode(reqDto.getPassword()));
     }
 
     public int editTrainerPassword(TrainerEditPasswordReqDto reqDto) {
-        Account account = authMapper.findAccountByUsername("trainer");
+        Account account = authMapper.findAccountByAccountId(reqDto.getAccountId());
         String encodedPassword = account.getPassword();
+
         if (!passwordEncoder.matches(reqDto.getPrevPassword(), encodedPassword)) {
             throw new ValidException(Map.of("oldPassword", "비밀번호 인증에 실패하였습니다 \n다시입력하세요"));
         }
         if (passwordEncoder.matches(reqDto.getPassword(), encodedPassword)) {
             throw new ValidException(Map.of("newPassword", "새로운 비밀번호는 이전 비밀번호와 같을 수 없습니다 \n다시입력하세요"));
         }
-        return authMapper.updateAdminPassword(passwordEncoder.encode(reqDto.getPassword()));
+        if (!reqDto.getPassword().equals(reqDto.getCheckPassword())) {
+            throw new ValidException(Map.of("newPasswordCheck", "새로운 비밀번호가 서로 일치하지 않습니다 \n다시입력하세요"));
+        }
+        account.setPassword(passwordEncoder.encode(reqDto.getPassword()));
+        return authMapper.updateAccountPassword(account);
     }
 
     public TrainerSearchAccountInfoRespDto searchAccountInfoByAccountId(int accountId) {

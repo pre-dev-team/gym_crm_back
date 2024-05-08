@@ -24,7 +24,7 @@ AuthMapper {
     public List<AdminSearchUser> findUserInfosWithReservationCountByName(String name);
     public Account findAccountByOAuth2Name(String oAuth2Name);
     public int deleteTrainer(int trainerId);
-    public void updateAccountPassword(Account account);
+    public int updateAccountPassword(Account account);
     public int updateAdminPassword(String newPassword);
     public int saveOAuth2(OAuth2 oAuth2);
     public void updateAccountTemporaryPw(@Param("accountId") int accountId, @Param("password") String password);
