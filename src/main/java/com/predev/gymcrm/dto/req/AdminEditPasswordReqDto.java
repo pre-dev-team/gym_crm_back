@@ -6,4 +6,5 @@ import lombok.Data;
 public class AdminEditPasswordReqDto {
     private String prevPassword;
     private String Password;
+    private String checkPassword;
 }

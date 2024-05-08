@@ -29,8 +29,7 @@ public class AccountController {
     @ValidAspect
     @PutMapping("/user/password")
     public ResponseEntity<?> updatePassword(@RequestBody UserEditPasswordReqDto reqDto) {
-        accountService.editAccountPassword(reqDto);
-        return ResponseEntity.ok(reqDto);
+        return ResponseEntity.ok(accountService.editAccountPassword(reqDto));
     }
 
     @PutMapping("/admin/password")
@@ -38,7 +37,7 @@ public class AccountController {
         return ResponseEntity.ok(accountService.editAdminPassword(reqDto));
     }
 
-    @PutMapping("/tariner/password")
+    @PutMapping("/trainer/password")
     public ResponseEntity<?> updateTrainerPassword(@RequestBody TrainerEditPasswordReqDto reqDto) {
         return ResponseEntity.ok(accountService.editTrainerPassword(reqDto));
     }
