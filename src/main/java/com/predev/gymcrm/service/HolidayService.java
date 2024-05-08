@@ -8,9 +8,11 @@ import com.predev.gymcrm.dto.resp.SearchHolidayRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.AdminSearchHoliday;
 import com.predev.gymcrm.entity.Holiday;
+import com.predev.gymcrm.entity.Reservation;
 import com.predev.gymcrm.exception.HolidayException;
 import com.predev.gymcrm.repository.AuthMapper;
 import com.predev.gymcrm.repository.HolidayMapper;
+import com.predev.gymcrm.repository.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class HolidayService {
 
     @Autowired
     private HolidayMapper holidayMapper;
+
+    @Autowired
+    private ReservationMapper reservationMapper;
 
     public void insertTrainerHoliday(TrainerAddHolidayReqDto reqDto) {
         int trainerId = authMapper.findTrainerIdByAccountId(reqDto.getAccountId());
@@ -41,6 +46,14 @@ public class HolidayService {
         if (!isAlreadyHoliday.isEmpty()) {
             throw new HolidayException("이미 신청된 연차입니다.");
         }
+
+        List<Reservation> reservations = reservationMapper.findReservationByAccountIdAndPeriod(reqDto.getAccountId(), date, date);
+        reservations.forEach(reservation -> {
+            int reservationTimeId = reservation.getTimeId();
+            if(reservationTimeId >= reqDto.getStartTimeId() && reservationTimeId <= reqDto.getEndTimeId()) {
+                throw new HolidayException("신청하신 연차기간에 신청된 예약이 있습니다.");
+            }
+        });
 
         holidayMapper.saveHoliday(timeIds, reqDto.toTrainerHolidayEntity(date, trainerId));
     }
