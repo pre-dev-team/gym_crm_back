@@ -104,7 +104,6 @@ public class ValidAop {
                 throw new ValidException(errorMap);
             }
         }
-
         return proceedingJoinPoint.proceed();
     }
 }

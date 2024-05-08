@@ -47,7 +47,7 @@ public class AuthController {
 
     @GetMapping("/admin/users")
     public ResponseEntity<?> getUsersByName(@RequestParam(value = "name") String name) {
-        return ResponseEntity.ok(authService.searchAdminhUsersByName(name));
+        return ResponseEntity.ok(authService.searchAdminUsersByName(name));
     }
 
     @DeleteMapping("/admin/trainer/resign")
@@ -61,6 +61,9 @@ public class AuthController {
         return ResponseEntity.ok(authService.signIn(reqDto));
     }
 
-
+    @DeleteMapping("/user/resign/{accountId}")
+    public ResponseEntity<?> userResign(@PathVariable int accountId) {
+        return ResponseEntity.ok(authService.deleteUser(accountId));
+    }
 
 }

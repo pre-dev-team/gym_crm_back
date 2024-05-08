@@ -106,6 +106,12 @@
         where
             trainer_id = #{trainerId}
     </delete>
+    <delete id="deleteUser">
+        delete from
+            account_tb
+        where
+            account_id = #{userAccountId}
+    </delete>
 
     <select
             id="findAccountByUsername"
