@@ -53,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/reservation/user/**", "/trainer/user/**","review/user/**",
                         "/holiday/user/**","/inbody/user/**","/routine/user/**","account/user/**")
                 .hasRole("USER")
-                .antMatchers("/auth/trainer/**", "/reservation/trainer/**", "/trainer/trainer/**","review/trainer/**",
-                        "/holiday/trainer/**","/inbody/trainer/**","/routine/trainer/**","account/trainer/**")
+                .antMatchers("/auth/trainer/**","/reservation/user/**","/reservation/trainer/**", "/trainer/trainer/**","review/trainer/**",
+                        "/holiday/trainer/**","/inbody/trainer/**","/routine/user/**","/routine/trainer/**","account/trainer/**")
                 .hasRole("TRAINER")
                 .antMatchers("/auth/admin/**", "/reservation/admin/**", "/trainer/admin/**","review/admin/**",
                         "/holiday/admin/**","/inbody/admin/**","/routine/admin/**","account/admin/**")
