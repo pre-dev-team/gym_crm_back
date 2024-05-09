@@ -31,7 +31,7 @@ public class WorkoutRoutineController {
         return ResponseEntity.ok(workoutRoutineService.searchRoutinesByReservationId(reservationId));
     }
 
-    @PostMapping("/trainer/addtion")
+    @PostMapping("/trainer/addition")
     public ResponseEntity<?> updateRoutine(@RequestBody List<TrainerAddRoutineReqDto> TrainerAddRoutineReqDto) {
         return ResponseEntity.ok(workoutRoutineService.editRoutines(TrainerAddRoutineReqDto));
     }
