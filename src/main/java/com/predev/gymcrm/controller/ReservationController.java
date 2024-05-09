@@ -56,7 +56,7 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.searchReservationsUser(trainerSearchReservationUserReqDto));
     }
 
-    @GetMapping("/user/information")
+    @GetMapping("/trainer/information")
     public ResponseEntity<?> getMymemberInformation(TrainerSearchMembersInformationReqDto trainerSearchMembersInformationReqDto) {
         List<TrainerSearchMyMembersInformationRespDto> respDtos = reservationService.searchMymembersInformation(trainerSearchMembersInformationReqDto);
         return ResponseEntity.ok(respDtos);

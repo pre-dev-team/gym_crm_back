@@ -3,7 +3,7 @@ package com.predev.gymcrm.service;
 import com.predev.gymcrm.dto.req.AdminEditPasswordReqDto;
 import com.predev.gymcrm.dto.req.TrainerEditPasswordReqDto;
 import com.predev.gymcrm.dto.req.UserEditPasswordReqDto;
-import com.predev.gymcrm.dto.resp.TrainerSearchAccountInfoRespDto;
+import com.predev.gymcrm.dto.resp.SearchAccountInfoRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.exception.ValidException;
 import com.predev.gymcrm.repository.AuthMapper;
@@ -73,13 +73,13 @@ public class AccountService {
         return authMapper.updateAccountPassword(account);
     }
 
-    public TrainerSearchAccountInfoRespDto searchAccountInfoByAccountId(int accountId) {
+    public SearchAccountInfoRespDto searchAccountInfoByAccountId(int accountId) {
         Account account = authMapper.findAccountByAccountId(accountId);
         if (account == null) {
             System.out.println("account가 null입니다");
             return null;
         }
-        return TrainerSearchAccountInfoRespDto.builder()
+        return SearchAccountInfoRespDto.builder()
                 .accountId(account.getAccountId())
                 .username(account.getUsername())
                 .name(account.getName())
