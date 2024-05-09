@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class TrainerSearchAccountInfoRespDto {
+public class SearchAccountInfoRespDto {
     private int accountId;
     private String username;
     private String name;

@@ -43,7 +43,7 @@ public class AccountController {
     }
 
     @GetMapping("/user/info")
-    public ResponseEntity<?> getTrainerInfo(@RequestParam(value = "accountId") int accountId) {
+    public ResponseEntity<?> getUserInfo(@RequestParam(value = "accountId") int accountId) {
         return ResponseEntity.ok(accountService.searchAccountInfoByAccountId(accountId));
     }
 
