@@ -18,6 +18,7 @@ public class AdminSearchHoliday {
     private String holidayDate;
     private int startTimeId;
     private int endTimeId;
+    private int confirm;
     private LocalDateTime createDate;
     private String name;
 
@@ -27,6 +28,7 @@ public class AdminSearchHoliday {
                 .holidayDate(holidayDate)
                 .startTimeId(startTimeId)
                 .endTimeId(endTimeId)
+                .confirm(confirm)
                 .createDate(createDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
                 .name(name)
                 .build();

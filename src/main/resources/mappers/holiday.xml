@@ -147,6 +147,7 @@
             min(ht.time_id) as startTimeId,
             max(ht.time_id) as endTimeId,
             ht.create_date as createDate,
+            ht.confirm,
             tav.name as name
         from
             holiday_tb ht

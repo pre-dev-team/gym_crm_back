@@ -16,6 +16,7 @@ public class AdminSearchHolidayRespDto {
     private String holidayDate;
     private int startTimeId;
     private int endTimeId;
+    private int confirm;
     private String createDate;
     private String name;
 }
