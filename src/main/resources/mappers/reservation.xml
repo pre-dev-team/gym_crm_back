@@ -226,7 +226,7 @@
             LEFT OUTER JOIN user_account_view uav ON (uav.user_id = rst.user_id)
             LEFT OUTER JOIN time_tb tt ON (rst.time_id = tt.time_id)
         WHERE
-            rst.trainer_id = 6
+            rst.trainer_id = #{trainerId}
             AND rst.reservation_date = #{today}
     </select>
 

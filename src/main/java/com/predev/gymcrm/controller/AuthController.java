@@ -25,6 +25,14 @@ public class AuthController {
         return ResponseEntity.created(null).body(reqDto);
     }
 
+    @PostMapping("/admin/signup")
+    public ResponseEntity<?> adminSignup(@RequestBody AdminSignupReqDto reqDto) {
+        if(authService.adminSignup(reqDto) == 0) {
+            return ResponseEntity.badRequest().body(reqDto);
+        }
+        return ResponseEntity.created(null).body(reqDto);
+    }
+
     @ValidAspect
     @PostMapping("/admin/trainer/signup")
     public ResponseEntity<?> trainerSignup(@Valid @RequestBody AccountSignupReqDto reqDto, BindingResult bindingResult) {

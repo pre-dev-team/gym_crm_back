@@ -18,7 +18,7 @@ public class AccountController {
 
     @Autowired
     AccountService accountService;
-
+    
     @GetMapping("/principal")
     public ResponseEntity<?> getPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
