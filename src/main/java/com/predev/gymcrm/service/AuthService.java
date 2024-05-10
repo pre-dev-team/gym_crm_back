@@ -1,17 +1,15 @@
 package com.predev.gymcrm.service;
 
-import com.predev.gymcrm.dto.req.AccountSigninReqDto;
-import com.predev.gymcrm.dto.req.OAuth2MergeReqDto;
-import com.predev.gymcrm.dto.req.OAuth2SignupReqDto;
+import com.predev.gymcrm.dto.req.*;
 import com.predev.gymcrm.dto.resp.AdminSearchUserRespDto;
 import com.predev.gymcrm.entity.Account;
 import com.predev.gymcrm.entity.AdminSearchUser;
 import com.predev.gymcrm.entity.OAuth2;
 import com.predev.gymcrm.exception.SaveException;
 import com.predev.gymcrm.jwt.JwtProvider;
-import com.predev.gymcrm.dto.req.AccountSignupReqDto;
 import com.predev.gymcrm.repository.AuthMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,6 +31,9 @@ public class AuthService {
 
     @Autowired
     private JwtProvider jwtProvider;
+
+    @Value("${admin.secret}")
+    private String secretForAdminSignup;
 
     public boolean isDuplicatedUsername(String username) {
         return authMapper.findAccountByUsername(username) != null;
@@ -121,6 +123,14 @@ public class AuthService {
             return null;
         }
         return users.stream().map(AdminSearchUser::toAdminSearchUserRespDto).collect(Collectors.toList());
+    }
+
+    public int adminSignup(AdminSignupReqDto reqDto) {
+        int successCount = 0;
+        if(Objects.equals(reqDto.getSecret(), secretForAdminSignup)) {
+            successCount += authMapper.saveAccount(99, reqDto.toAccountEntity(passwordEncoder));
+        }
+        return successCount;
     }
 
 

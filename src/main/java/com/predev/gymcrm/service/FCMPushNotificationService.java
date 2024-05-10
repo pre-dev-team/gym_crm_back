@@ -25,7 +25,6 @@ public class FCMPushNotificationService {
     private final Map<Integer, String> tokenMap = new HashMap<>(); // 서버에 저장(실제 서비스에서는 저장공간을 redis로 바꾸는 듯함)
 
     public int register(final int accountId, final String token) {
-        System.out.println(tokenMap);
         tokenMap.put(accountId, token);
         return tokenMap.size();
     }
@@ -39,7 +38,6 @@ public class FCMPushNotificationService {
     }
 
     public void sendFCMOneToOne(int accountId, String title, String message) {
-        System.out.println(tokenMap);
         String token = getToken(accountId);
         if(token != null) {
             send(NotificationMessage.builder()
@@ -66,7 +64,6 @@ public class FCMPushNotificationService {
         String token = notificationMessage.getToken();
 
         if (token == null || token.isEmpty()) {
-            System.out.println(token);
             throw new IllegalArgumentException("Token은 null이거나 비어있을 수 없습니다.");
         }
 
@@ -80,7 +77,6 @@ public class FCMPushNotificationService {
         System.out.println(message.toString());
         try {
             firebaseMessaging.sendAsync(message).get();
-            System.out.println("메세지전송 완료");
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }

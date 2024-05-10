@@ -16,7 +16,7 @@ public class PermitAllFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String uri = request.getRequestURI();
         List<String> antMatchers = List.of(
-                "/auth/user","/auth/oauth2","/time","/options","/mail", "/oauth2","/review/top"
+                "/auth/user","/auth/oauth2","/time","/options","/mail", "/oauth2","/review/top","/auth/admin/signup"
         );
         boolean isPermitAll = antMatchers.stream().anyMatch(uri::startsWith);
         request.setAttribute("isPermitAll", isPermitAll);
