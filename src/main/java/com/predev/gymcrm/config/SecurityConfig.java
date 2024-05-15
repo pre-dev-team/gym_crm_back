@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/auth/**","/time/**","/options/**","/mail/**",
                         "/oauth2/**","/notification/**","/review/top",
-                        "/account/principal","/auth/admin/signup")
+                        "/account/principal","/auth/admin/signup","/server/**")
                 .permitAll()
                 .antMatchers( "/trainer/user/**","review/user/**","/reservation/user/**",
                         "/holiday/user/**","/inbody/user/**","account/user/**")
