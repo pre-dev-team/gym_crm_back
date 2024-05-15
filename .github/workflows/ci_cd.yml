@@ -21,7 +21,7 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
           
-      - name: Decode JSON
+      - name: Decode Firebase JSON and SECRET Yml Files
         run: |
           echo "${{ secrets.APPLICATION_SECRET }}" | base64 --decode > ./src/main/resources/application-secret.yml
           echo "${{ secrets.JSON_FILE }}" | base64 --decode > ./src/main/resources/predev-21d70-firebase-adminsdk-iemjd-98ee9d7c02.json
