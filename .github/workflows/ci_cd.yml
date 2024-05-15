@@ -23,6 +23,7 @@ jobs:
           
       - name: Decode JSON
         run: |
+          echo "${{ secrets.APPLICATION_SECRET }}" | base64 --decode > ./src/main/resources/application-secret.yml
           echo "${{ secrets.JSON_FILE }}" | base64 --decode > ./src/main/resources/predev-21d70-firebase-adminsdk-iemjd-98ee9d7c02.json
 
       - name: Build with Maven
