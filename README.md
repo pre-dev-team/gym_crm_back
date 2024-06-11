@@ -96,7 +96,7 @@ gantt
 <br>
 
 ## 🌈 팀 소개
-|<span style="font-size:16px">박화목(팀장)</span>&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">김도훈</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">김세진</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">안근수</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|
+|<span style="font-size:16px">박화목(팀장)</span>&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">김도훈</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">김세진</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">안근수</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|
 |--|--|--|--|
 
 <a href="https://github.com/elikese" >
@@ -232,7 +232,7 @@ gantt
 ## 📊 프로젝트 진행 상황 관리
 
 - <a href="https://github.com/pre-dev-team" target="_blank">🔘 GitHub Issues</a>
-    - 간편한 이슈 생성을 위해 기능에 따른 이슈를 만들어 진행하였습니다.
+   - 간편한 이슈 생성을 위해 기능에 따른 이슈를 만들어 진행하였습니다.
 <!-- - <a href="" target="_blank">🗂️ GitHub Projects</a>
     - 칸반 보드로 프로젝트 진행 상황을 한 눈에 확인할 수 있어 일정을 관리하기 수월했습니다. -->
 
@@ -587,5 +587,3 @@ npm start
 ```
 
 <p align="right"><a href="#top">TOP 🔼</a></p>
-
-
