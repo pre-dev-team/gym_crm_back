@@ -3,7 +3,6 @@ package com.predev.gymcrm.controller;
 import com.predev.gymcrm.aop.annotation.ValidAspect;
 import com.predev.gymcrm.dto.req.*;
 import com.predev.gymcrm.service.AuthService;
-import com.predev.gymcrm.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
