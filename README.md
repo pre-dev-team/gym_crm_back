@@ -96,7 +96,7 @@ gantt
 <br>
 
 ## 🌈 팀 소개
-|&emsp;<span style="font-size:16px">박화목(팀장)</span>&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">김도훈</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">김세진&emsp;&emsp;&emsp;&emsp;</span>|<span style="font-size:16px">안근수&emsp;&emsp;&emsp;&emsp;</span>|
+|<span style="font-size:16px">박화목(팀장)</span>&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">김도훈</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">김세진</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|<span style="font-size:16px">안근수</span>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;|
 |--|--|--|--|
 
 <a href="https://github.com/elikese" >
